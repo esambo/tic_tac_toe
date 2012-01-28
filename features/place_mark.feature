@@ -7,3 +7,8 @@ Feature: Place Mark
     Given it is my turn
     When I place a mark
     Then I should see my new possitions
+
+  Scenario: players take turn
+    Given a new game
+    When "X" marks a space
+    Then "O" should be the current player

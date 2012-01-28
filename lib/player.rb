@@ -14,4 +14,8 @@ Player = Struct.new(:current) do
   def none?
     self.current == :none
   end
+
+  def turn
+    Player.new x? ? :o : :x
+  end
 end

@@ -42,4 +42,22 @@ describe Player do
       Player.x.should == Player.new(:x)
     end
   end
+
+  describe '#turn' do
+    context 'with X' do
+      let(:player) { Player.new :x }
+
+      it 'should be O' do
+        player.turn.should be_o
+      end
+    end
+
+    context 'with O' do
+      let(:player) { Player.new :o }
+
+      it 'should be X' do
+        player.turn.should be_x
+      end
+    end
+  end
 end
