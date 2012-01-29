@@ -4,3 +4,4 @@ require 'rspec/expectations'
 
 require 'game'
 require 'player'
+require 'grid_mark_converter'

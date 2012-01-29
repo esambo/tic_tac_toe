@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Player do
-  context 'with none' do
+  context 'with :none' do
     let(:player) { Player.new :none }
 
     it 'should be #none?' do
@@ -17,7 +17,7 @@ describe Player do
     end
   end
 
-  context 'with X' do
+  context 'with :x' do
     let(:player) { Player.new :x }
 
     it 'should be #x?' do
@@ -29,7 +29,7 @@ describe Player do
     end
   end
 
-  context 'with O' do
+  context 'with :o' do
     let(:player) { Player.new :o }
 
     it 'should be #o?' do
@@ -37,9 +37,23 @@ describe Player do
     end
   end
 
+  context "with 'X'" do
+    let(:player) { Player.new 'X' }
+
+    it 'should be #x?' do
+      player.should be_x
+    end
+  end
+
   describe 'x' do
     it 'should return a new player X' do
       Player.x.should == Player.new(:x)
+    end
+  end
+
+  describe 'none' do
+    it 'should return a new player none existing player' do
+      Player.none.should == Player.new(:none)
     end
   end
 

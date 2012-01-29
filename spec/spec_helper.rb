@@ -12,3 +12,4 @@ end
 
 require 'game'
 require 'player'
+require 'grid_mark_converter'

@@ -1,6 +1,15 @@
 Player = Struct.new(:current) do
+
+  def initialize(current)
+    self.current = current.downcase.to_sym
+  end
+
   def self.x
     Player.new :x
+  end
+
+  def self.none
+    Player.new :none
   end
 
   def x?

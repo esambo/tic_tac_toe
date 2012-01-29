@@ -6,9 +6,15 @@ Feature: Place Mark
   Scenario: place a mark
     Given it is my turn
     When I place a mark
-    Then I should see my new possitions
+    Then I should see my new positions
 
   Scenario: players take turn
     Given a new game
     When "X" marks a space
     Then "O" should be the current player
+
+  @wip
+  Scenario: place last mark
+    Given one empyt space
+    When "X" marks a space
+    Then the game should be a "draw"
