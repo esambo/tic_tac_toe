@@ -5,7 +5,7 @@ class Game
   def initialize
     @length = 3
     @marks = 0
-    @player = Player.x
+    @player = Player.X
     @positions = Array.new(size, Player.none)
   end
 
@@ -20,9 +20,7 @@ class Game
   end
 
   def winner
-    w = winners
-    return w.first if w.count >= 1
-    return Player.none
+    return winners.first || Player.draw
   end
 
   def winners

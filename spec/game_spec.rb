@@ -6,13 +6,13 @@ def draw_grid
     3 D 5'.split
 end
 
-def win_x_grid
+def win_X_grid
   ' 1 A B
     2 _ _
     3 _ _'.split
 end
 
-def win_o_grid
+def win_O_grid
   ' A B C
     2 1 _
     3 _ _'.split
@@ -39,13 +39,17 @@ end
 describe Game do
   let(:game) { Game.new }
 
-  it 'should have a default player X' do
-    game.player.should be_x
+  describe '#new' do
+    it 'should have a default player X' do
+      game.player.should be_X
+    end
   end
 
-  it 'should have the #player take turns' do
-    game.player.should_receive(:turn)
-    game.place_mark 1
+  describe '#place_mark' do
+    it 'should have the #player take turns' do
+      game.player.should_receive(:turn)
+      game.place_mark 1
+    end
   end
 
   describe '#positions' do
@@ -76,33 +80,33 @@ describe Game do
   describe '#winner' do
     context "with 'X' winning" do
       it "should be return 'X'" do
-        GridMarkConverter.new.to_sequential_numbers(win_x_grid).each do |space|
+        GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
           game.place_mark space
         end
-        game.winner.should == Player.x
+        game.winner.should == Player.X
       end
 
       it "should not be return 'O'" do
-        GridMarkConverter.new.to_sequential_numbers(win_x_grid).each do |space|
+        GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
           game.place_mark space
         end
-        game.winner.should_not == Player.o
+        game.winner.should_not == Player.O
       end
 
       it 'should not be a draw' do
-        GridMarkConverter.new.to_sequential_numbers(win_x_grid).each do |space|
+        GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
           game.place_mark space
         end
-        game.winner.should_not == Player.none
+        game.winner.should_not == Player.draw
       end
     end
 
     context "with 'O' winning" do
       it "should be return 'O'" do
-        GridMarkConverter.new.to_sequential_numbers(win_o_grid).each do |space|
+        GridMarkConverter.new.to_sequential_numbers(win_O_grid).each do |space|
           game.place_mark space
         end
-        game.winner.should == Player.o
+        game.winner.should == Player.O
       end
     end
 
@@ -111,7 +115,7 @@ describe Game do
         GridMarkConverter.new.to_sequential_numbers(draw_grid).each do |space|
           game.place_mark space
         end
-        game.winner.should == Player.none
+        game.winner.should == Player.draw
       end
     end
   end

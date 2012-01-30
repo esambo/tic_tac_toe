@@ -1,35 +1,42 @@
-Player = Struct.new(:current) do
-
-  def initialize(current)
-    self.current = current.downcase.to_sym
-    self.current = :none unless x? or o?
+Player = Struct.new(:mark) do
+  def initialize(mark)
+    self.mark = mark.upcase.to_sym
+    self.mark = :none unless X? or O?
   end
 
-  def self.x
-    Player.new :x
+  def self.X
+    Player.new :X
   end
 
-  def self.o
-    Player.new :o
+  def self.O
+    Player.new :O
   end
 
   def self.none
     Player.new :none
   end
 
-  def x?
-    self.current == :x
+  def self.draw
+    self.none
   end
 
-  def o?
-    self.current == :o
+  def X?
+    self.mark == :X
+  end
+
+  def O?
+    self.mark == :O
   end
 
   def none?
-    self.current == :none
+    self.mark == :none
+  end
+
+  def draw?
+    none?
   end
 
   def turn
-    Player.new x? ? :o : :x
+    Player.new X? ? :O : :X
   end
 end

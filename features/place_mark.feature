@@ -4,16 +4,22 @@ Feature: Place Mark
   I want to place a mark
 
   Scenario: place a mark
-    Given it is my turn
+    Given I am the first player "X"
     When I place a mark
     Then I should see my new positions
 
   Scenario: players take turn
-    Given a new game
-    When "X" marks a space
+    Given I am the first player "X"
+    When I place a mark
     Then "O" should be the current player
 
   Scenario: draw
-    Given one empty space
-    When "X" marks a space
+    Given a game
+    When the board is full without a three in a row
     Then the game should be a draw
+
+  Scenario: win
+    Given I am the first player "X"
+    When I win
+    Then "X" should "win"
+    And "O" should "lose"

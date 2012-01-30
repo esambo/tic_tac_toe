@@ -9,12 +9,6 @@
 ## ToDo
 
 - Valid move check
-- _Player_
-  - Rename _:current_ to _:mark_
-  - UpperCase:
-     - _char_
-     - _sym_
-     - _methods_
 - Rename _GridMarkConverter_ to _GameTestController_
   - Make use of it
 - Extract _GameTestPresenter_
