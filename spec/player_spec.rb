@@ -109,4 +109,18 @@ describe Player do
       end
     end
   end
+
+  describe '#to_s' do
+    context 'with :X' do
+      it "should be 'X'" do
+        Player.X.to_s.should == 'X'
+      end
+    end
+
+    context 'with :none' do
+      it "should be ''" do
+        Player.none.to_s.should == ''
+      end
+    end
+  end
 end

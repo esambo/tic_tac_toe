@@ -5,12 +5,21 @@ Feature: Place Mark
 
   Scenario: place a mark
     Given I am the first player "X"
-    When I place a mark
-    Then I should see my new positions
+    When I place the mark:
+      | X |   |   |
+      |   |   |   |
+      |   |   |   |
+    Then I should see the new positions:
+      | X |   |   |
+      |   |   |   |
+      |   |   |   |
 
   Scenario: players take turn
     Given I am the first player "X"
-    When I place a mark
+    When I place the mark:
+      | X |   |   |
+      |   |   |   |
+      |   |   |   |
     Then "O" should be the current player
 
   Scenario: draw

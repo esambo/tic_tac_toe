@@ -39,4 +39,8 @@ Player = Struct.new(:mark) do
   def turn
     Player.new X? ? :O : :X
   end
+
+  def to_s
+    draw? ? '' : self.mark.to_s
+  end
 end
