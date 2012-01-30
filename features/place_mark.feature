@@ -13,8 +13,7 @@ Feature: Place Mark
     When "X" marks a space
     Then "O" should be the current player
 
-  @wip
-  Scenario: place last mark
-    Given one empyt space
+  Scenario: draw
+    Given one empty space
     When "X" marks a space
-    Then the game should be a "draw"
+    Then the game should be a draw

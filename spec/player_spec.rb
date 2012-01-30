@@ -45,13 +45,26 @@ describe Player do
     end
   end
 
-  describe 'x' do
+  context "with something other than 'X' or 'O'" do
+    let(:player) { Player.new '_' }
+    it 'should be :none' do
+      player.should be_none
+    end
+  end
+
+  describe '#x' do
     it 'should return a new player X' do
       Player.x.should == Player.new(:x)
     end
   end
 
-  describe 'none' do
+  describe '#o' do
+    it 'should return a new player O' do
+      Player.o.should == Player.new(:o)
+    end
+  end
+
+  describe '#none' do
     it 'should return a new player none existing player' do
       Player.none.should == Player.new(:none)
     end

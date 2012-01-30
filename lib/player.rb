@@ -2,10 +2,15 @@ Player = Struct.new(:current) do
 
   def initialize(current)
     self.current = current.downcase.to_sym
+    self.current = :none unless x? or o?
   end
 
   def self.x
     Player.new :x
+  end
+
+  def self.o
+    Player.new :o
   end
 
   def self.none
