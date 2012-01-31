@@ -18,7 +18,7 @@ end
 
 def mark_number(board)
   index = []
-  board.raw.flatten.each_with_index do |player, i|
+  board.each_with_index do |player, i|
     index << i + 1 unless player.empty?
   end
   index.first
@@ -32,6 +32,18 @@ def list_to_grid(list, groups_of)
   groups_of.times.map{ |i| list[i * groups_of, groups_of] }
 end
 
+def board_to_marks(board)
+  marks = {'X' => [], 'O' => []}
+  board.each_with_index do |space, i|
+    marks[space] << i + 1 unless space.empty?
+  end
+  marks
+end
+
+def marks_in_sequence(marks_by_player)
+  marks_by_player['X'].zip(marks_by_player['O']).flatten.compact
+end
+
 Given /^a game$/ do
   @game = Game.new
 end
@@ -41,15 +53,27 @@ Given /^I am the first player "([^\"]+)"$/ do |player|
   @player = Player.new player
 end
 
-When /^I place the mark:$/ do |board|
-  @game.place_mark mark_number(board)
+Given /^the positions:$/ do |table|
+  @game = Game.new
+  board = table.raw.flatten
+  marks_by_player = board_to_marks(board)
+  placeable_marks = marks_in_sequence(marks_by_player)
+  placeable_marks.each do |mark|
+    @game.place_mark mark
+  end
 end
 
-Given /^the positions:$/ do |board|
+Given /^the sequential positions:$/ do |table|
   @game = Game.new
-  GridMarkConverter.new.to_sequential_numbers(board.raw.flatten).each do |space|
+  board = table.raw.flatten
+  GridMarkConverter.new.to_sequential_numbers(board).each do |space|
     @game.place_mark space
   end
+end
+
+When /^I place the mark:$/ do |table|
+  board = table.raw.flatten
+  @game.place_mark mark_number(board)
 end
 
 When /^I win$/ do
@@ -75,18 +99,16 @@ Then /^the game should be a draw$/ do
   @game.winner.should == Player.draw
 end
 
-Then /^I should see the new positions:$/ do |board|
+Then /^I should see the new positions:$/ do |table|
   positions_list = players_to_board(@game.positions)
   positions_grid = list_to_grid(positions_list, @game.length)
-  board.raw.should == positions_grid
-
-  actual = Cucumber::Ast::Table.new positions_grid
-  # board.diff! actual #Tables were not identical
-  board.raw.should == actual.raw
-  board.to_s.should == actual.to_s
-  board.to_sexp.should == actual.to_sexp
+  table.raw.should == positions_grid
 end
 
 Then /^"([^\"]+)" should be the current player$/ do |player|
   @game.player.should == Player.new(player)
+end
+
+Then /^the last placed mark should not be valid$/ do
+  @game.should_not be_valid_move
 end

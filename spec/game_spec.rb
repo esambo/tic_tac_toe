@@ -18,10 +18,6 @@ def win_O_grid
     3 _ _'.split
 end
 
-def board_of_marks_to_sequental_players(grid_of_string_marks)
-  grid_of_string_marks.split.map { |mark| Player.new mark }
-end
-
 def string_element_array_to_i(array_of_elements_in_string)
   array_of_elements_in_string.map { |elements_in_string|
     elements_in_string.split.map(&:to_i)
@@ -30,10 +26,12 @@ end
 
 def string_element_array_to_player(array_of_elements_in_string)
   array_of_elements_in_string.map { |elements_in_string|
-    elements_in_string.split.map  { |mark|
-      Player.new mark
-    }
+    board_of_marks_to_sequental_players(elements_in_string)
   }
+end
+
+def board_of_marks_to_sequental_players(grid_of_string_marks)
+  grid_of_string_marks.split.map { |mark| Player.new mark }
 end
 
 describe Game do
@@ -116,6 +114,23 @@ describe Game do
           game.place_mark space
         end
         game.winner.should == Player.draw
+      end
+    end
+  end
+
+  describe '#valid_move?' do
+    context 'with free space' do
+      it 'should be true' do
+        game.place_mark 1
+        game.should be_valid_move
+      end
+    end
+
+    context 'with place mark on already taken space' do
+      it 'shuold be false' do
+        game.place_mark 1
+        game.place_mark 1
+        game.should_not be_valid_move
       end
     end
   end

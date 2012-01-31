@@ -10,9 +10,19 @@ class Game
   end
 
   def place_mark(number)
+    return @valid_move = false if move_taken?(number)
+    @valid_move = true
     @positions[number.to_i - 1] = @player
     @marks += 1
     take_turn
+  end
+
+  def move_taken?(number)
+    !@positions[number.to_i - 1].none?
+  end
+
+  def valid_move?
+    @valid_move
   end
 
   def take_turn

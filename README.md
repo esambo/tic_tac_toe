@@ -8,7 +8,6 @@
 
 ## ToDo
 
-- Valid move check
 - Rename _GridMarkConverter_ to _GameTestController_
   - Make use of it
 - Extract _GameTestPresenter_

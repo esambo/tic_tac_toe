@@ -32,3 +32,14 @@ Feature: Place Mark
     When I win
     Then "X" should "win"
     And "O" should "lose"
+
+  Scenario: validate place mark space
+    Given the positions:
+      | X |   |   |
+      |   |   |   |
+      |   |   |   |
+    When I place the mark:
+      | O |   |   |
+      |   |   |   |
+      |   |   |   |
+    Then the last placed mark should not be valid
