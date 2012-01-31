@@ -1,8 +1,8 @@
 class GridMarkConverter
-  
+
   def to_sequential_numbers(grid)
     to_sequential(grid).map { |mark|
-      x?(mark) ? mark : find_letter_index(mark)
+      X?(mark) ? mark : find_letter_index(mark)
     }
   end
 
@@ -19,7 +19,7 @@ class GridMarkConverter
   private
 
     def find_letter_index(letter)
-      (find_next_mark(o_player_index, letter) + 1).to_s
+      (find_next_mark(O_player_index(), letter) + 1).to_s
     end
 
     def players_take_turns
@@ -39,28 +39,28 @@ class GridMarkConverter
     end
 
     def next_mark_for_player(space, player)
-      value = x_player_index[space] if x? player
-      value = o_player_index[space] if o? player
+      value = X_player_index()[space] if X? player
+      value = O_player_index()[space] if O? player
       value
     end
 
-      def x_player_index
+      def X_player_index
         ' 1 2 3
           4 5 6
           7 8 9'.split
       end
 
-      def o_player_index
+      def O_player_index
         ' A B C
           D E F
           G H I'.split
       end
-      
-    def x? player
+
+    def X? player
       /^[1-9]$/ === player
     end
 
-    def o? player
+    def O? player
       /^[A-I]$/ === player
     end
 end
