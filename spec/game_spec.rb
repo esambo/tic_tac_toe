@@ -136,26 +136,6 @@ describe Game do
   end
 
   context 'internal ' do
-    describe '#marks' do
-      context 'with no marks' do
-        it 'should be 0' do
-          game.marks.should == 0
-        end
-      end
-
-      context 'with all marks' do
-        before :each do
-          1.upto(9) do |space|
-            game.place_mark space
-          end
-        end
-
-        it 'should be 9' do
-          game.marks.should == 9
-        end
-      end
-    end
-
     describe '#win_positions' do
       context 'with zero based index' do
         it 'should have 3 rows, 3 cols and 2 diagonals' do

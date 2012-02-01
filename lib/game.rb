@@ -1,19 +1,20 @@
 class Game
-  attr_reader   :marks, :positions, :length
-  attr_accessor :player
+  attr_reader :player, :positions, :length
 
   def initialize
     @length = 3
-    @marks = 0
     @player = Player.X
     @positions = Array.new(size, Player.none)
+  end
+
+  def size
+    length * length
   end
 
   def place_mark(number)
     return @valid_move = false if move_taken?(number)
     @valid_move = true
     @positions[number.to_i - 1] = @player
-    @marks += 1
     take_turn
   end
 
@@ -21,12 +22,12 @@ class Game
     !@positions[number.to_i - 1].none?
   end
 
-  def valid_move?
-    @valid_move
-  end
-
   def take_turn
     @player = @player.turn
+  end
+
+  def valid_move?
+    @valid_move
   end
 
   def winner
@@ -43,6 +44,14 @@ class Game
     }.map(&:keys).flatten
   end
 
+  def marks_to_win_positions
+    win_positions.map { |line|
+      line.map { |p|
+        @positions[p]
+      }
+    }
+  end
+
   def win_positions
     rows = @length.times.map { |row|
       Array.new(@length)     { |col| col + (row * @length) }
@@ -52,18 +61,5 @@ class Game
     }
     diags = [[0, 4, 8], [2, 4, 6]]
     rows + cols + diags
-  end
-
-  def marks_to_win_positions
-    players_in_win_positions = []
-    win_positions.map { |line|
-      line.map { |p|
-        @positions[p]
-      }
-    }
-  end
-
-  def size
-    length * length
   end
 end
