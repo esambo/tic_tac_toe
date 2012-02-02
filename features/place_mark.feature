@@ -9,7 +9,7 @@ Feature: Place Mark
       | X |   |   |
       |   |   |   |
       |   |   |   |
-    Then I should see the new positions:
+    Then I should see the grid:
       | X |   |   |
       |   |   |   |
       |   |   |   |
@@ -33,8 +33,8 @@ Feature: Place Mark
     Then "X" should "win"
     And "O" should "lose"
 
-  Scenario: validate place mark space
-    Given the positions:
+  Scenario: validate ply
+    Given the grid:
       | X |   |   |
       |   |   |   |
       |   |   |   |
@@ -43,3 +43,4 @@ Feature: Place Mark
       |   |   |   |
       |   |   |   |
     Then the last placed mark should not be valid
+

@@ -1,7 +1,7 @@
 class GridMarkConverter
 
-  def to_sequential_numbers(grid)
-    to_sequential(grid).map { |mark|
+  def to_sequential_numbers(grid_sequence)
+    to_sequential(grid_sequence).map { |mark|
       X?(mark) ? mark : find_letter_index(mark)
     }
   end

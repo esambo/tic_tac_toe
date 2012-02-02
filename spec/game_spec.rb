@@ -118,11 +118,11 @@ describe Game do
     end
   end
 
-  describe '#valid_move?' do
+  describe '#valid_ply?' do
     context 'with free space' do
       it 'should be true' do
         game.place_mark 1
-        game.should be_valid_move
+        game.should be_valid_ply
       end
     end
 
@@ -130,7 +130,7 @@ describe Game do
       it 'shuold be false' do
         game.place_mark 1
         game.place_mark 1
-        game.should_not be_valid_move
+        game.should_not be_valid_ply
       end
     end
   end
