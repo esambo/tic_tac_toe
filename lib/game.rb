@@ -59,7 +59,9 @@ class Game
     cols = @length.times.map { |row|
       Array.new(@length)     { |col| row + (col * @length) }
     }
-    diags = [[0, 4, 8], [2, 4, 6]]
+    diag1 = Array.new(@length) { |col| (col * @length) +               col }
+    diag2 = Array.new(@length) { |col| (col * @length) + @length - 1 - col }
+    diags = [diag1] + [diag2]
     rows + cols + diags
   end
 end
