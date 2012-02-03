@@ -1,6 +1,6 @@
-class GridMarkConverter
+class BoardMarkConverter
 
-  def to_sequential_numbers(grid_sequence)
+  def to_alternating_sequence_numbers(grid_sequence)
     to_sequential(grid_sequence).map { |mark|
       X?(mark) ? mark : find_letter_index(mark)
     }

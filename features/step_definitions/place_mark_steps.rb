@@ -74,7 +74,7 @@ end
 Given /^the grid sequence:$/ do |data_table|
   @board_state = BoardState.new
   board = data_table_to_board(data_table)
-  GridMarkConverter.new.to_sequential_numbers(board).each do |mark|
+  BoardMarkConverter.new.to_alternating_sequence_numbers(board).each do |mark|
     @board_state.place_mark mark
   end
 end
@@ -86,14 +86,14 @@ end
 
 When /^I win$/ do
   grid_sequence = grid_sequence_to_win_for_current_player
-  GridMarkConverter.new.to_sequential_numbers(grid_sequence).each do |mark|
+  BoardMarkConverter.new.to_alternating_sequence_numbers(grid_sequence).each do |mark|
     @board_state.place_mark mark
   end
 end
 
 When /^the board is full without a win$/ do
   grid_sequence = draw_grid_sequence
-  GridMarkConverter.new.to_sequential_numbers(grid_sequence).each do |mark|
+  BoardMarkConverter.new.to_alternating_sequence_numbers(grid_sequence).each do |mark|
     @board_state.place_mark mark
   end
 end

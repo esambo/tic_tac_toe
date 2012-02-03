@@ -63,7 +63,7 @@ describe BoardState do
           1 2 B
           C A 4
           3 D 5'.split
-        GridMarkConverter.new.to_sequential_numbers(sequence).each do |space|
+        BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |space|
           board_state.place_mark space
         end
         board_state.positions.should == board_of_marks_to_sequental_players('
@@ -78,21 +78,21 @@ describe BoardState do
   describe '#winner' do
     context "with 'X' winning" do
       it "should be return 'X'" do
-        GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
+        BoardMarkConverter.new.to_alternating_sequence_numbers(win_X_grid).each do |space|
           board_state.place_mark space
         end
         board_state.winner.should == Player.X
       end
 
       it "should not be return 'O'" do
-        GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
+        BoardMarkConverter.new.to_alternating_sequence_numbers(win_X_grid).each do |space|
           board_state.place_mark space
         end
         board_state.winner.should_not == Player.O
       end
 
       it 'should not be a draw' do
-        GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
+        BoardMarkConverter.new.to_alternating_sequence_numbers(win_X_grid).each do |space|
           board_state.place_mark space
         end
         board_state.winner.should_not == Player.draw
@@ -101,7 +101,7 @@ describe BoardState do
 
     context "with 'O' winning" do
       it "should be return 'O'" do
-        GridMarkConverter.new.to_sequential_numbers(win_O_grid).each do |space|
+        BoardMarkConverter.new.to_alternating_sequence_numbers(win_O_grid).each do |space|
           board_state.place_mark space
         end
         board_state.winner.should == Player.O
@@ -110,7 +110,7 @@ describe BoardState do
 
     context 'with a draw' do
       it 'should be a draw' do
-        GridMarkConverter.new.to_sequential_numbers(draw_grid).each do |space|
+        BoardMarkConverter.new.to_alternating_sequence_numbers(draw_grid).each do |space|
           board_state.place_mark space
         end
         board_state.winner.should == Player.draw
@@ -173,7 +173,7 @@ describe BoardState do
             1 A B
             2 _ _
             3 _ _'.split
-          GridMarkConverter.new.to_sequential_numbers(sequence).each do |space|
+          BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |space|
             board_state.place_mark space
           end
           board_state.marks_to_win_positions.should ==

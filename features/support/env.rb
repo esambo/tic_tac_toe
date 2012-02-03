@@ -4,4 +4,4 @@ require 'rspec/expectations'
 
 require 'board_state'
 require 'player'
-require 'grid_mark_converter'
+require 'board_mark_converter'

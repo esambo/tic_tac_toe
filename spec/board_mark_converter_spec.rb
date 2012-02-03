@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe GridMarkConverter do
-  let(:converter) { GridMarkConverter.new }
+describe BoardMarkConverter do
+  let(:converter) { BoardMarkConverter.new }
 
-  describe '#to_sequential_numbers generates alternating numbers for both X and O players assuming X goes first' do
-    
-    context 'with empty grid' do
+  describe '#to_alternating_sequence_numbers generates alternating numbers for both X and O players assuming X goes first' do
+
+    context 'with empty board' do
       it 'should have 0 numbers' do
-        converter.to_sequential_numbers('
+        converter.to_alternating_sequence_numbers('
           _ _ _
           _ _ _
           _ _ _
@@ -15,9 +15,9 @@ describe GridMarkConverter do
       end
     end
 
-    context 'with fast win grid' do
+    context 'with fast win board' do
       it 'should have 5 different place mark numbers' do
-        numbers = converter.to_sequential_numbers('
+        numbers = converter.to_alternating_sequence_numbers('
           1 A B
           2 _ _
           3 _ _ '.split)
@@ -26,9 +26,9 @@ describe GridMarkConverter do
       end
     end
 
-    context 'with full grid' do
+    context 'with full board' do
       it 'should have 9 different place mark numbers' do
-        numbers = converter.to_sequential_numbers('
+        numbers = converter.to_alternating_sequence_numbers('
           1 2 B
           C A 4
           3 D 5 '.split)
@@ -40,7 +40,7 @@ describe GridMarkConverter do
 
   describe '#to_sequential' do
 
-    context 'with empty grid' do
+    context 'with empty board' do
       it 'should generate nothing' do
         converter.to_sequential('
           _ _ _
@@ -92,7 +92,7 @@ describe GridMarkConverter do
       end
     end
 
-    context 'with fast win grid' do
+    context 'with fast win board' do
       it 'should generate numbers for X and letters for O player' do
         converter.to_sequential('
           1 A B
@@ -104,7 +104,7 @@ describe GridMarkConverter do
       end
     end
 
-    context 'with full grid' do
+    context 'with full board' do
       it 'should generate numbers for X and letters for O player' do
         converter.to_sequential('
           1 2 B
