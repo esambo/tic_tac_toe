@@ -10,6 +10,6 @@ RSpec.configure do |config|
   config.filter_run :focus
 end
 
-require 'game'
+require 'board_state'
 require 'player'
 require 'grid_mark_converter'

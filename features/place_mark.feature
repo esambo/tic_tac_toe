@@ -23,8 +23,8 @@ Feature: Place Mark
     Then "O" should be the current player
 
   Scenario: draw
-    Given a game
-    When the board is full without a three in a row
+    Given a board state
+    When the board is full without a win
     Then the game should be a draw
 
   Scenario: win

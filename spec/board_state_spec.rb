@@ -34,26 +34,26 @@ def board_of_marks_to_sequental_players(grid_of_string_marks)
   grid_of_string_marks.split.map { |mark| Player.new mark }
 end
 
-describe Game do
-  let(:game) { Game.new }
+describe BoardState do
+  let(:board_state) { BoardState.new }
 
   describe '#new' do
     it 'should have a default player X' do
-      game.player.should be_X
+      board_state.player.should be_X
     end
   end
 
   describe '#place_mark' do
     it 'should have the #player take turns' do
-      game.player.should_receive(:turn)
-      game.place_mark 1
+      board_state.player.should_receive(:turn)
+      board_state.place_mark 1
     end
   end
 
   describe '#positions' do
     context 'with no marks' do
       it 'should have 9 empty player spaces' do
-        game.positions.should == Array.new(9, Player.none)
+        board_state.positions.should == Array.new(9, Player.none)
       end
     end
 
@@ -64,9 +64,9 @@ describe Game do
           C A 4
           3 D 5'.split
         GridMarkConverter.new.to_sequential_numbers(sequence).each do |space|
-          game.place_mark space
+          board_state.place_mark space
         end
-        game.positions.should == board_of_marks_to_sequental_players('
+        board_state.positions.should == board_of_marks_to_sequental_players('
           X X O
           O O X
           X O X
@@ -79,41 +79,41 @@ describe Game do
     context "with 'X' winning" do
       it "should be return 'X'" do
         GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
-          game.place_mark space
+          board_state.place_mark space
         end
-        game.winner.should == Player.X
+        board_state.winner.should == Player.X
       end
 
       it "should not be return 'O'" do
         GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
-          game.place_mark space
+          board_state.place_mark space
         end
-        game.winner.should_not == Player.O
+        board_state.winner.should_not == Player.O
       end
 
       it 'should not be a draw' do
         GridMarkConverter.new.to_sequential_numbers(win_X_grid).each do |space|
-          game.place_mark space
+          board_state.place_mark space
         end
-        game.winner.should_not == Player.draw
+        board_state.winner.should_not == Player.draw
       end
     end
 
     context "with 'O' winning" do
       it "should be return 'O'" do
         GridMarkConverter.new.to_sequential_numbers(win_O_grid).each do |space|
-          game.place_mark space
+          board_state.place_mark space
         end
-        game.winner.should == Player.O
+        board_state.winner.should == Player.O
       end
     end
 
     context 'with a draw' do
       it 'should be a draw' do
         GridMarkConverter.new.to_sequential_numbers(draw_grid).each do |space|
-          game.place_mark space
+          board_state.place_mark space
         end
-        game.winner.should == Player.draw
+        board_state.winner.should == Player.draw
       end
     end
   end
@@ -121,16 +121,16 @@ describe Game do
   describe '#valid_ply?' do
     context 'with free space' do
       it 'should be true' do
-        game.place_mark 1
-        game.should be_valid_ply
+        board_state.place_mark 1
+        board_state.should be_valid_ply
       end
     end
 
     context 'with place mark on already taken space' do
       it 'shuold be false' do
-        game.place_mark 1
-        game.place_mark 1
-        game.should_not be_valid_ply
+        board_state.place_mark 1
+        board_state.place_mark 1
+        board_state.should_not be_valid_ply
       end
     end
   end
@@ -139,7 +139,7 @@ describe Game do
     describe '#win_positions' do
       context 'with zero based index' do
         it 'should have 3 rows, 3 cols and 2 diagonals' do
-          game.win_positions.should ==
+          board_state.win_positions.should ==
             string_element_array_to_i([
               '0 1 2',
               '3 4 5',
@@ -174,9 +174,9 @@ describe Game do
             2 _ _
             3 _ _'.split
           GridMarkConverter.new.to_sequential_numbers(sequence).each do |space|
-            game.place_mark space
+            board_state.place_mark space
           end
-          game.marks_to_win_positions.should ==
+          board_state.marks_to_win_positions.should ==
             string_element_array_to_player([
               'X O O',
               'X _ _',

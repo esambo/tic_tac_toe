@@ -52,71 +52,71 @@ def numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
   numbers_by_marks['X'].zip(numbers_by_marks['O']).flatten.compact
 end
 
-Given /^a game$/ do
-  @game = Game.new
+Given /^a board state$/ do
+  @board_state = BoardState.new
 end
 
 Given /^I am the first player "([^\"]+)"$/ do |mark|
-  @game = Game.new
+  @board_state = BoardState.new
   @player = Player.new mark
 end
 
 Given /^the grid:$/ do |data_table|
-  @game = Game.new
+  @board_state = BoardState.new
   board = data_table_to_board(data_table)
   numbers_by_marks = board_to_numbers_by_marks(board)
   alternating_mark_sequence = numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
   alternating_mark_sequence.each do |mark|
-    @game.place_mark mark
+    @board_state.place_mark mark
   end
 end
 
 Given /^the grid sequence:$/ do |data_table|
-  @game = Game.new
+  @board_state = BoardState.new
   board = data_table_to_board(data_table)
   GridMarkConverter.new.to_sequential_numbers(board).each do |mark|
-    @game.place_mark mark
+    @board_state.place_mark mark
   end
 end
 
 When /^I place the mark:$/ do |data_table|
   board = data_table_to_board(data_table)
-  @game.place_mark board_to_next_mark_number(board)
+  @board_state.place_mark board_to_next_mark_number(board)
 end
 
 When /^I win$/ do
   grid_sequence = grid_sequence_to_win_for_current_player
   GridMarkConverter.new.to_sequential_numbers(grid_sequence).each do |mark|
-    @game.place_mark mark
+    @board_state.place_mark mark
   end
 end
 
-When /^the board is full without a three in a row$/ do
+When /^the board is full without a win$/ do
   grid_sequence = draw_grid_sequence
   GridMarkConverter.new.to_sequential_numbers(grid_sequence).each do |mark|
-    @game.place_mark mark
+    @board_state.place_mark mark
   end
 end
 
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
-  @game.winner.should     == Player.new(mark) if outcome == 'win'
-  @game.winner.should_not == Player.new(mark) if outcome == 'lose'
+  @board_state.winner.should     == Player.new(mark) if outcome == 'win'
+  @board_state.winner.should_not == Player.new(mark) if outcome == 'lose'
 end
 
 Then /^the game should be a draw$/ do
-  @game.winner.should == Player.draw
+  @board_state.winner.should == Player.draw
 end
 
 Then /^I should see the grid:$/ do |data_table|
-  board = positions_to_board(@game.positions)
-  raw_table = board_to_raw_table(board, @game.length)
+  board = positions_to_board(@board_state.positions)
+  raw_table = board_to_raw_table(board, @board_state.length)
   data_table.raw.should == raw_table
 end
 
 Then /^"([^\"]+)" should be the current player$/ do |mark|
-  @game.player.should == Player.new(mark)
+  @board_state.player.should == Player.new(mark)
 end
 
 Then /^the last placed mark should not be valid$/ do
-  @game.should_not be_valid_ply
+  @board_state.should_not be_valid_ply
 end

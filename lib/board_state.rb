@@ -1,4 +1,4 @@
-class Game
+class BoardState
   attr_reader :player, :positions, :length
 
   def initialize
