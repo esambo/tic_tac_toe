@@ -16,21 +16,59 @@ def win_O_grid_sequence
     3 _ _'.split
 end
 
+
 def grid_sequence_to_win_for_current_player
   @player.X? ? win_X_grid_sequence : win_O_grid_sequence
 end
+
 
 def data_table_to_board(data_table)
   data_table.raw.flatten
 end
 
-def board_to_next_mark_number(board)
-  numbers = []
-  board.each_with_index do |space, i|
-    numbers << i + 1 unless space.empty?
-  end
-  numbers.first
+
+def place_board_with_single_mark(board)
+  place_mark board_to_next_mark_number(board)
 end
+
+  def board_to_next_mark_number(board)
+    numbers = []
+    board.each_with_index do |space, i|
+      numbers << i + 1 unless space.empty?
+    end
+    numbers.first
+  end
+
+def place_board_with_alternating_marks(board)
+  numbers_by_marks = board_to_numbers_by_marks(board)
+  alternating_mark_sequence = numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
+  alternating_mark_sequence.each do |mark|
+    place_mark mark
+  end
+end
+
+  def board_to_numbers_by_marks(board)
+    marks = {'X' => [], 'O' => []}
+    board.each_with_index do |space, i|
+      marks[space] << i + 1 unless space.empty?
+    end
+    marks
+  end
+
+  def numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
+    numbers_by_marks['X'].zip(numbers_by_marks['O']).flatten.compact
+  end
+
+def place_alternating_sequence_numbers(sequence)
+  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |mark|
+    place_mark mark
+  end
+end
+
+def place_mark(mark)
+  @board_state.place_mark mark
+end
+
 
 def positions_to_board(positions)
   positions.map(&:to_s)
@@ -40,17 +78,6 @@ def board_to_raw_table(board, groups_of_length)
   groups_of_length.times.map{ |i| board[i * groups_of_length, groups_of_length] }
 end
 
-def board_to_numbers_by_marks(board)
-  marks = {'X' => [], 'O' => []}
-  board.each_with_index do |space, i|
-    marks[space] << i + 1 unless space.empty?
-  end
-  marks
-end
-
-def numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
-  numbers_by_marks['X'].zip(numbers_by_marks['O']).flatten.compact
-end
 
 Given /^a board state$/ do
   @board_state = BoardState.new
@@ -64,38 +91,26 @@ end
 Given /^the grid:$/ do |data_table|
   @board_state = BoardState.new
   board = data_table_to_board(data_table)
-  numbers_by_marks = board_to_numbers_by_marks(board)
-  alternating_mark_sequence = numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
-  alternating_mark_sequence.each do |mark|
-    @board_state.place_mark mark
-  end
+  place_board_with_alternating_marks board
 end
 
 Given /^the grid sequence:$/ do |data_table|
   @board_state = BoardState.new
   board = data_table_to_board(data_table)
-  BoardMarkConverter.new.to_alternating_sequence_numbers(board).each do |mark|
-    @board_state.place_mark mark
-  end
+  place_alternating_sequence_numbers board
 end
 
 When /^I place the mark:$/ do |data_table|
   board = data_table_to_board(data_table)
-  @board_state.place_mark board_to_next_mark_number(board)
+  place_board_with_single_mark board
 end
 
 When /^I win$/ do
-  grid_sequence = grid_sequence_to_win_for_current_player
-  BoardMarkConverter.new.to_alternating_sequence_numbers(grid_sequence).each do |mark|
-    @board_state.place_mark mark
-  end
+  place_alternating_sequence_numbers grid_sequence_to_win_for_current_player
 end
 
 When /^the board is full without a win$/ do
-  grid_sequence = draw_grid_sequence
-  BoardMarkConverter.new.to_alternating_sequence_numbers(grid_sequence).each do |mark|
-    @board_state.place_mark mark
-  end
+  place_alternating_sequence_numbers draw_grid_sequence
 end
 
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|

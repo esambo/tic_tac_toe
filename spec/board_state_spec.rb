@@ -18,20 +18,14 @@ def win_O_grid
     3 _ _'.split
 end
 
-def string_element_array_to_i(array_of_elements_in_string)
-  array_of_elements_in_string.map { |elements_in_string|
-    elements_in_string.split.map(&:to_i)
-  }
-end
-
-def string_element_array_to_player(array_of_elements_in_string)
-  array_of_elements_in_string.map { |elements_in_string|
-    board_of_marks_to_sequental_players(elements_in_string)
-  }
-end
-
 def board_of_marks_to_sequental_players(grid_of_string_marks)
   grid_of_string_marks.split.map { |mark| Player.new mark }
+end
+
+def setup_board_state(sequence)
+  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |mark|
+    board_state.place_mark mark
+  end
 end
 
 describe BoardState do
@@ -63,9 +57,7 @@ describe BoardState do
           1 2 B
           C A 4
           3 D 5'.split
-        BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |space|
-          board_state.place_mark space
-        end
+        setup_board_state(sequence)
         board_state.positions.should == board_of_marks_to_sequental_players('
           X X O
           O O X
@@ -78,41 +70,31 @@ describe BoardState do
   describe '#winner' do
     context "with 'X' winning" do
       it "should be return 'X'" do
-        BoardMarkConverter.new.to_alternating_sequence_numbers(win_X_grid).each do |space|
-          board_state.place_mark space
-        end
+        setup_board_state(win_X_grid)
         board_state.winner.should == Player.X
       end
 
       it "should not be return 'O'" do
-        BoardMarkConverter.new.to_alternating_sequence_numbers(win_X_grid).each do |space|
-          board_state.place_mark space
-        end
+        setup_board_state(win_X_grid)
         board_state.winner.should_not == Player.O
       end
 
       it 'should not be a draw' do
-        BoardMarkConverter.new.to_alternating_sequence_numbers(win_X_grid).each do |space|
-          board_state.place_mark space
-        end
+        setup_board_state(win_X_grid)
         board_state.winner.should_not == Player.draw
       end
     end
 
     context "with 'O' winning" do
       it "should be return 'O'" do
-        BoardMarkConverter.new.to_alternating_sequence_numbers(win_O_grid).each do |space|
-          board_state.place_mark space
-        end
+        setup_board_state(win_O_grid)
         board_state.winner.should == Player.O
       end
     end
 
     context 'with a draw' do
       it 'should be a draw' do
-        BoardMarkConverter.new.to_alternating_sequence_numbers(draw_grid).each do |space|
-          board_state.place_mark space
-        end
+        setup_board_state(draw_grid)
         board_state.winner.should == Player.draw
       end
     end
@@ -138,6 +120,12 @@ describe BoardState do
   context 'internal ' do
     describe '#win_positions' do
       context 'with zero based index' do
+        def string_element_array_to_i(array_of_elements_in_string)
+          array_of_elements_in_string.map { |elements_in_string|
+            elements_in_string.split.map(&:to_i)
+          }
+        end
+
         it 'should have 3 rows, 3 cols and 2 diagonals' do
           board_state.win_positions.should ==
             string_element_array_to_i([
@@ -168,14 +156,18 @@ describe BoardState do
 
     describe '#marks_to_win_positions' do
       context 'with win' do
+        def string_element_array_to_player(array_of_elements_in_string)
+          array_of_elements_in_string.map { |elements_in_string|
+            board_of_marks_to_sequental_players(elements_in_string)
+          }
+        end
+
         it 'should handle empty marks' do
           sequence = '
             1 A B
             2 _ _
             3 _ _'.split
-          BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |space|
-            board_state.place_mark space
-          end
+          setup_board_state(sequence)
           board_state.marks_to_win_positions.should ==
             string_element_array_to_player([
               'X O O',
