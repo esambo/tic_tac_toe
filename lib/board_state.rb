@@ -30,8 +30,13 @@ class BoardState
     @valid_ply
   end
 
+  def full?
+    spaces = @positions.count(Player.none)
+    spaces == 0
+  end
+
   def winner
-    return winners.first || Player.draw
+    return winners.first || (Player.draw if full?)
   end
 
   def winners

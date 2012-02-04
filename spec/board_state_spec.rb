@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-def draw_grid
-  ' 1 2 B
-    C A 4
-    3 D 5'.split
-end
-
 def win_X_grid
   ' 1 A B
     2 _ _
@@ -15,6 +9,18 @@ end
 def win_O_grid
   ' A B C
     2 1 _
+    3 _ _'.split
+end
+
+def draw_grid
+  ' 1 2 B
+    C A 4
+    3 D 5'.split
+end
+
+def eventual_draw_grid
+  ' 1 2 B
+    C A 4
     3 _ _'.split
 end
 
@@ -95,7 +101,16 @@ describe BoardState do
     context 'with a draw' do
       it 'should be a draw' do
         setup_board_state(draw_grid)
+        board_state.should be_full
         board_state.winner.should == Player.draw
+      end
+    end
+
+    context 'with eventual draw' do
+      it 'should not yet be a draw and return nil' do
+        setup_board_state(eventual_draw_grid)
+        board_state.should_not be_full
+        board_state.winner.should be_nil
       end
     end
   end
