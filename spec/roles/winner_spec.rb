@@ -24,6 +24,7 @@ def eventual_draw_grid
     3 _ _'.split
 end
 
+
 def board_of_marks_to_sequental_players(grid_of_string_marks)
   grid_of_string_marks.split.map { |mark| Player.new mark }
 end
@@ -34,44 +35,10 @@ def setup_board_state(sequence)
   end
 end
 
-describe BoardState do
+
+describe Winner do
   let(:board_state) { BoardState.new }
 
-  describe '#new' do
-    it 'should have a default player X' do
-      board_state.player.should be_X
-    end
-  end
-
-  describe '#place_mark' do
-    it 'should have the #player take turns' do
-      board_state.player.should_receive(:turn)
-      board_state.place_mark 1
-    end
-  end
-
-  describe '#positions' do
-    context 'with no marks' do
-      it 'should have 9 empty player spaces' do
-        board_state.positions.should == Array.new(9, Player.none)
-      end
-    end
-
-    context 'with all marks' do
-      it 'should have each mark in the correct space' do
-        sequence = '
-          1 2 B
-          C A 4
-          3 D 5'.split
-        setup_board_state(sequence)
-        board_state.positions.should == board_of_marks_to_sequental_players('
-          X X O
-          O O X
-          X O X
-        ')
-      end
-    end
-  end
 
   describe '#winner' do
     context "with 'X' winning" do
@@ -111,23 +78,6 @@ describe BoardState do
         setup_board_state(eventual_draw_grid)
         board_state.should_not be_full
         board_state.winner.should be_nil
-      end
-    end
-  end
-
-  describe '#valid_ply?' do
-    context 'with free space' do
-      it 'should be true' do
-        board_state.place_mark 1
-        board_state.should be_valid_ply
-      end
-    end
-
-    context 'with place mark on already taken space' do
-      it 'shuold be false' do
-        board_state.place_mark 1
-        board_state.place_mark 1
-        board_state.should_not be_valid_ply
       end
     end
   end
