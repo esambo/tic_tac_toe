@@ -3,7 +3,7 @@ require 'spec_helper'
 describe BoardMarkConverter do
   let(:converter) { BoardMarkConverter.new }
 
-  describe '#to_alternating_sequence_numbers generates alternating numbers for both X and O players assuming X goes first' do
+  describe '#to_alternating_sequence_numbers for both X and O players (having their ply order indicated by numbers and characters respectively) assuming X goes first' do
 
     context 'with empty board' do
       it 'should have 0 numbers' do
@@ -12,6 +12,26 @@ describe BoardMarkConverter do
           _ _ _
           _ _ _
         '.split).should == []
+      end
+    end
+
+    context "with first mark for 'X'" do
+      it 'should get the number of its position' do
+        numbers = converter.to_alternating_sequence_numbers('
+          _ _ 1
+          _ _ _
+          _ _ _ '.split)
+        numbers.should == '3'.split
+      end
+    end
+
+    context "with first mark for 'X' and then one for 'O'" do
+      it "should get the position numbers in the correct alternating ply order starting with 'X'" do
+        numbers = converter.to_alternating_sequence_numbers('
+          _ _ 1
+          _ _ _
+          A _ _ '.split)
+        numbers.should == '3 7'.split
       end
     end
 
@@ -37,84 +57,5 @@ describe BoardMarkConverter do
       end
     end
   end
-
-  describe '#to_sequential' do
-
-    context 'with empty board' do
-      it 'should generate nothing' do
-        converter.to_sequential('
-          _ _ _
-          _ _ _
-          _ _ _
-        '.split).should == []
-      end
-    end
-
-    context 'with single mark X in different spaces' do
-      it 'should be 1 for the top left' do
-        converter.to_sequential('
-          1 _ _
-          _ _ _
-          _ _ _
-        '.split).should == ['1']
-      end
-
-      it 'should be 2 for the top middle' do
-        converter.to_sequential('
-          _ 1 _
-          _ _ _
-          _ _ _
-        '.split).should == ['2']
-      end
-
-      it 'should be 3 for the top right' do
-        converter.to_sequential('
-          _ _ 1
-          _ _ _
-          _ _ _
-        '.split).should == ['3']
-      end
-
-      it 'should be 5 for the center' do
-        converter.to_sequential('
-          _ _ _
-          _ 1 _
-          _ _ _
-        '.split).should == ['5']
-      end
-
-      it 'should be 9 for the bottom right' do
-        converter.to_sequential('
-          _ _ _
-          _ _ _
-          _ _ 1
-        '.split).should == ['9']
-      end
-    end
-
-    context 'with fast win board' do
-      it 'should generate numbers for X and letters for O player' do
-        converter.to_sequential('
-          1 A B
-          2 _ _
-          3 _ _
-        '.split).should == '
-          1 B 4 C 7
-        '.split
-      end
-    end
-
-    context 'with full board' do
-      it 'should generate numbers for X and letters for O player' do
-        converter.to_sequential('
-          1 2 B
-          C A 4
-          3 D 5
-        '.split
-        ).should == '
-          1 E 2 C 7 D 6 H 9
-        '.split
-      end
-    end
-  end
 end
+
