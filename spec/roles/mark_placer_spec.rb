@@ -46,21 +46,21 @@ describe MarkPlacer do
       board_state.player.should_receive(:turn)
       board_state.place_mark 1
     end
-  end
 
-  describe '#valid_ply?' do
-    context 'with free space' do
-      it 'should be true' do
-        board_state.place_mark 1
-        board_state.should be_valid_ply
+    describe 'returns valid_ply' do
+      context 'with place mark on a free space' do
+        it 'should be true' do
+          valid_ply = board_state.place_mark 1
+          valid_ply.should == true
+        end
       end
-    end
 
-    context 'with place mark on already taken space' do
-      it 'shuold be false' do
-        board_state.place_mark 1
-        board_state.place_mark 1
-        board_state.should_not be_valid_ply
+      context 'with place mark on already taken space' do
+        it 'shuold be false' do
+                      board_state.place_mark 1
+          valid_ply = board_state.place_mark 1
+          valid_ply.should == false
+        end
       end
     end
   end

@@ -20,7 +20,7 @@ describe PlaceMarkContext do
 
       context 'without a valid ply' do
         before :each do
-          context.board_state.stub(:valid_ply?) { true }
+          context.board_state.stub(:place_mark) { true }
         end
 
         it 'should call #winner' do
@@ -31,7 +31,7 @@ describe PlaceMarkContext do
 
       context 'without a valid ply' do
         before :each do
-          context.board_state.stub(:valid_ply?) { false }
+          context.board_state.stub(:place_mark) { false }
         end
 
         it 'should not call #winner' do
@@ -44,7 +44,7 @@ describe PlaceMarkContext do
 
         it 'should including valid_ply' do
           valid_ply = true
-          context.board_state.should_receive(:valid_ply?) { valid_ply }
+          context.board_state.should_receive(:place_mark) { valid_ply }
           response_set = context.call
           response_set.valid_ply.should == valid_ply
         end
@@ -65,7 +65,7 @@ describe PlaceMarkContext do
 
         context 'with a valid ply' do
           before :each do
-            context.board_state.stub(:valid_ply?) { true }
+            context.board_state.stub(:place_mark) { true }
           end
 
           it 'should include winner' do
@@ -92,7 +92,7 @@ describe PlaceMarkContext do
 
         context 'without a valid ply' do
           before :each do
-            context.board_state.stub(:valid_ply?) { false }
+            context.board_state.stub(:place_mark) { false }
           end
 
           it 'should not include a terminal value' do

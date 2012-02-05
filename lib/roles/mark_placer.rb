@@ -1,21 +1,19 @@
 module MarkPlacer
 
   def place_mark(number)
-    return @valid_ply = false if move_taken?(number)
-    @valid_ply = true
+    return valid_ply = false if move_taken?(number)
     self.positions[number.to_i - 1] = self.player
     take_turn
+    valid_ply = true
   end
 
-  def move_taken?(number)
-    !self.positions[number.to_i - 1].none?
-  end
+  private
 
-  def take_turn
-    self.player = self.player.turn
-  end
+    def move_taken?(number)
+      !self.positions[number.to_i - 1].none?
+    end
 
-  def valid_ply?
-    @valid_ply
-  end
+    def take_turn
+      self.player = self.player.turn
+    end
 end
