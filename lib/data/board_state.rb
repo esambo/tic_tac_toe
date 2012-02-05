@@ -1,7 +1,5 @@
 class BoardState
-  attr_reader :player, :positions, :length
-  include MarkPlacer
-  include Winner
+  attr_accessor :player, :positions, :length
 
   def initialize
     @length = 3
@@ -10,6 +8,6 @@ class BoardState
   end
 
   def size
-    length * length
+    @length * @length
   end
 end

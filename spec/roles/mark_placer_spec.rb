@@ -1,17 +1,25 @@
 require 'spec_helper'
+require 'data/player'
+require 'data/board_state'
+require 'roles/mark_placer'
+require 'board_mark_converter'
 
 def board_of_marks_to_sequental_players(grid_of_string_marks)
   grid_of_string_marks.split.map { |mark| Player.new mark }
 end
 
 def setup_board_state(sequence)
-  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |mark|
-    board_state.place_mark mark
+  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |number|
+    board_state.place_mark number
   end
 end
 
 describe MarkPlacer do
   let(:board_state) { BoardState.new }
+
+  before :each do
+    board_state.extend MarkPlacer
+  end
 
   describe '#place_mark' do
     context 'with no marks' do

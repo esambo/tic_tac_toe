@@ -66,7 +66,13 @@ def place_alternating_sequence_numbers(sequence)
 end
 
 def place_mark(mark)
+  @board_state.extend MarkPlacer
   @board_state.place_mark mark
+end
+
+def winner
+  @board_state.extend Winner
+  @board_state.winner
 end
 
 
@@ -114,12 +120,12 @@ When /^the board is full without a win$/ do
 end
 
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
-  @board_state.winner.should     == Player.new(mark) if outcome == 'win'
-  @board_state.winner.should_not == Player.new(mark) if outcome == 'lose'
+  winner.should     == Player.new(mark) if outcome == 'win'
+  winner.should_not == Player.new(mark) if outcome == 'lose'
 end
 
 Then /^the game should be a draw$/ do
-  @board_state.winner.should == Player.draw
+  winner.should == Player.draw
 end
 
 Then /^I should see the grid:$/ do |data_table|

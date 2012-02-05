@@ -1,4 +1,8 @@
 require 'spec_helper'
+require 'data/player'
+require 'data/board_state'
+require 'roles/winner'
+require 'board_mark_converter'
 
 def win_X_grid
   ' 1 A B
@@ -30,15 +34,25 @@ def board_of_marks_to_sequental_players(grid_of_string_marks)
 end
 
 def setup_board_state(sequence)
-  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |mark|
-    board_state.place_mark mark
-  end
+  setup_players(
+    BoardMarkConverter.new.to_alternating_sequence_numbers(sequence)
+  )
 end
+
+  def setup_players(alternating_sequence_numbers)
+    player = Player.X
+    alternating_sequence_numbers.each do |number|
+      board_state.positions[number.to_i - 1] = player
+      player = player.turn
+    end
+  end
 
 
 describe Winner do
   let(:board_state) { BoardState.new }
-
+  before :each do
+    board_state.extend Winner
+  end
 
   describe '#winner' do
     context "with 'X' winning" do

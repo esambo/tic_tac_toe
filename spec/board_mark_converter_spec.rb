@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'board_mark_converter'
 
 describe BoardMarkConverter do
   let(:converter) { BoardMarkConverter.new }

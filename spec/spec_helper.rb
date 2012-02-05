@@ -9,10 +9,3 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 end
-
-require 'contexts/place_mark_context'
-require 'roles/mark_placer'
-require 'roles/winner'
-require 'data/board_state'
-require 'data/player'
-require 'board_mark_converter'
