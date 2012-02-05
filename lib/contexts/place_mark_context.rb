@@ -14,27 +14,29 @@ class PlaceMarkContext
     response
   end
 
-  def place_mark
-    @board_state.extend MarkPlacer
-    @valid_ply   = @board_state.place_mark @number
-    @next_player = @board_state.player
-    @positions   = @board_state.positions
-    @valid_ply
-  end
+  private
 
-  def winner
-    @board_state.extend Winner
-    @winner   = @board_state.winner
-    @terminal = !@winner.nil?
-  end
+    def place_mark
+      @board_state.extend MarkPlacer
+      @valid_ply   = @board_state.place_mark @number
+      @next_player = @board_state.player
+      @positions   = @board_state.positions
+      @valid_ply
+    end
 
-  def response
-    ResponseSet.new(
-      @valid_ply,
-      @next_player,
-      @positions,
-      @terminal,
-      @winner
-    )
-  end
+    def winner
+      @board_state.extend Winner
+      @winner   = @board_state.winner
+      @terminal = !@winner.nil?
+    end
+
+    def response
+      ResponseSet.new(
+        @valid_ply,
+        @next_player,
+        @positions,
+        @terminal,
+        @winner
+      )
+    end
 end

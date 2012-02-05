@@ -106,7 +106,7 @@ describe Winner do
         end
 
         it 'should have 3 rows, 3 cols and 2 diagonals' do
-          board_state.win_positions.should ==
+          board_state.send(:win_positions).should ==
             string_element_array_to_i([
               '0 1 2',
               '3 4 5',
@@ -147,7 +147,7 @@ describe Winner do
             2 _ _
             3 _ _'.split
           setup_board_state(sequence)
-          board_state.marks_to_win_positions.should ==
+          board_state.send(:marks_to_win_positions).should ==
             string_element_array_to_player([
               'X O O',
               'X _ _',

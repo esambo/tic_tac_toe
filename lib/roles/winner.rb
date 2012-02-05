@@ -4,6 +4,8 @@ module Winner
     return winners.first || (Player.draw if full?)
   end
 
+  private
+
     def winners
       marks_to_win_positions.map { |line|
         line.group_by { |player|
