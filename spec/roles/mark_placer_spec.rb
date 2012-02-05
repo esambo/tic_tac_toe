@@ -15,8 +15,7 @@ def setup_board_state(sequence)
 end
 
 describe MarkPlacer do
-  let(:board_state) { BoardState.new }
-
+  let(:board_state) { BoardState.new 3, Player.none, Player.X }
   before :each do
     board_state.extend MarkPlacer
   end

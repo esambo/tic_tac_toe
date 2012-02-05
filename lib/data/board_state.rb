@@ -1,10 +1,10 @@
 class BoardState
   attr_accessor :player, :positions, :length
 
-  def initialize
-    @length = 3
-    @player = Player.X
-    @positions = Array.new(size, Player.none)
+  def initialize(length, empty_space, first_player)
+    @length = length
+    @positions = Array.new(size, empty_space)
+    @player = first_player
   end
 
   def size

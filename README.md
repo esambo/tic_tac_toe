@@ -8,21 +8,21 @@
 
 ## ToDo
 
-- Rename _GridMarkConverter_ to _GameTestController_
+- Rename _BoardMarkConverter_ to _GameTestController_
   - Make use of it
 - Extract _GameTestPresenter_
-- Add missing _PlaceMarkInteractor_
-  - coordinate business tasks, like a controller
+- Add missing _PlaceMarkContext_
   - check for:
      - _valid?_
+     - _terminal?_
      - _winner?_
-     - _full?_
-- Add new _PlacePerfectMarkInteractor_
+- Add new _GetBestNumberContext_
+ - call _PlaceMarkContext_ with result
 - GUI
   - Command Line Interface
 - Living Documentation
   - RelishApp
-- DCI: Extract toles out of the Game to increase cohesion and logical grouping of code & tests
+- DCI: Extract roles out of the Game to increase cohesion and logical grouping of code & tests
   - _MakeMove_
   - _MakeGameTree_
   - _MakeNextBestMove_

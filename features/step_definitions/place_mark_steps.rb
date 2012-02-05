@@ -27,6 +27,10 @@ def data_table_to_board(data_table)
 end
 
 
+def new_board_state
+  @board_state = BoardState.new 3, Player.none, Player.X
+end
+
 def place_board_with_single_mark(board)
   place_mark board_to_next_mark_number(board)
 end
@@ -86,22 +90,22 @@ end
 
 
 Given /^a board state$/ do
-  @board_state = BoardState.new
+  new_board_state
 end
 
 Given /^I am the first player "([^\"]+)"$/ do |mark|
-  @board_state = BoardState.new
+  new_board_state
   @player = Player.new mark
 end
 
 Given /^the grid:$/ do |data_table|
-  @board_state = BoardState.new
+  new_board_state
   board = data_table_to_board(data_table)
   place_board_with_alternating_marks board
 end
 
 Given /^the grid sequence:$/ do |data_table|
-  @board_state = BoardState.new
+  new_board_state
   board = data_table_to_board(data_table)
   place_alternating_sequence_numbers board
 end
