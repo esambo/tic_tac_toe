@@ -18,3 +18,25 @@
   - Command Line Interface
 - Living Documentation
   - RelishApp
+
+
+## Design Decisions
+
+- Living Documentation
+- Architecture based on
+  - DCI
+  - MVC
+  - CleanCoders.com on [Architecture](http://www.cleancoders.com/codecast/clean-code-episode-7/show)
+  - SRP
+  - DRY
+  - BDD
+  - TDD
+  - names of the domain language
+- Delivery Mechanism
+  - independent of the domain logic
+  - CLI
+- Infrastructure
+  - Ruby 1.9.3
+  - git
+  - Cucumber
+  - RSpec
