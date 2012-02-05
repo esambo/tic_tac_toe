@@ -11,11 +11,15 @@
 - Rename _BoardMarkConverter_ to _GameTestController_
   - Make use of it
 - Extract _GameTestPresenter_
+  - Use DI from Objects on Rails
 - Add missing _PlaceMarkContext_
-  - check for:
+  - return _ResponseModel_:
      - _valid?_
+       - have it returned by _place_mark_
+     - _player_
      - _terminal?_
      - _winner?_
+     - _positions_
 - Add new _GetBestNumberContext_
  - call _PlaceMarkContext_ with result
 - GUI

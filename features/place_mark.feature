@@ -20,7 +20,7 @@ Feature: Place Mark
       | X |   |   |
       |   |   |   |
       |   |   |   |
-    Then "O" should be the current player
+    Then "O" should be the next player
 
   Scenario: draw
     Given a board state

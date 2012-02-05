@@ -32,7 +32,7 @@ def new_board_state
 end
 
 def place_board_with_single_mark(board)
-  place_mark board_to_next_mark_number(board)
+  place_mark_context board_to_next_mark_number(board)
 end
 
   def board_to_next_mark_number(board)
@@ -47,7 +47,7 @@ def place_board_with_alternating_marks(board)
   numbers_by_marks = board_to_numbers_by_marks(board)
   alternating_mark_sequence = numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
   alternating_mark_sequence.each do |mark|
-    place_mark mark
+    place_mark_context mark
   end
 end
 
@@ -64,19 +64,18 @@ end
   end
 
 def place_alternating_sequence_numbers(sequence)
-  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |mark|
-    place_mark mark
+  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |number|
+    place_mark_context number
   end
 end
 
-def place_mark(mark)
-  @board_state.extend MarkPlacer
-  @board_state.place_mark mark
+def place_mark_context(number)
+  context = PlaceMarkContext.new(@board_state, number)
+  @response_set = context.call
 end
 
 def winner
-  @board_state.extend Winner
-  @board_state.winner
+  @response_set.winner
 end
 
 
@@ -133,15 +132,15 @@ Then /^the game should be a draw$/ do
 end
 
 Then /^I should see the grid:$/ do |data_table|
-  board = positions_to_board(@board_state.positions)
+  board = positions_to_board(@response_set.positions)
   raw_table = board_to_raw_table(board, @board_state.length)
   data_table.raw.should == raw_table
 end
 
-Then /^"([^\"]+)" should be the current player$/ do |mark|
-  @board_state.player.should == Player.new(mark)
+Then /^"([^\"]+)" should be the next player$/ do |mark|
+  @response_set.next_player.should == Player.new(mark)
 end
 
 Then /^the last placed mark should not be valid$/ do
-  @board_state.should_not be_valid_ply
+  @response_set.valid_ply.should == false
 end
