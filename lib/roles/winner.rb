@@ -1,7 +1,11 @@
 module Winner
 
   def winner
-    return winners.first || (Player.draw if full?)
+    return winners.first || (Player.draw if full?) || nil
+  end
+
+  def terminal?
+    !winner.nil?
   end
 
   private

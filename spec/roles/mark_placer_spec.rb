@@ -42,6 +42,15 @@ describe MarkPlacer do
       end
     end
 
+    context 'with placing a mark in the first space' do
+      let(:number) { 1 }
+
+      it 'should remember the last placed position number' do
+        board_state.place_mark number
+        board_state.last_position_number.should == number
+      end
+    end
+
     it 'should have the #next_player take turns' do
       board_state.next_player.should_receive(:turn)
       board_state.place_mark 1

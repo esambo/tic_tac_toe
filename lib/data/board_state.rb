@@ -1,5 +1,5 @@
 class BoardState
-  attr_accessor :next_player, :positions, :length
+  attr_accessor :next_player, :positions, :last_position_number, :length
 
   def initialize(length, empty_space, first_player)
     @length = length

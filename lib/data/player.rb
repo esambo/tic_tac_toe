@@ -40,6 +40,12 @@ Player = Struct.new(:mark) do
     Player.new X? ? :O : :X
   end
 
+  def to_i
+    return  1 if X?
+    return -1 if O?
+    return  0
+  end
+
   def to_s
     draw? ? ' ' : self.mark.to_s
   end

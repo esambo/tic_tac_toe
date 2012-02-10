@@ -49,6 +49,7 @@ end
     player = Player.X
     alternating_sequence_numbers.each do |number|
       board_state.positions[number.to_i - 1] = player
+      board_state.last_position_number = number.to_i
       player = player.turn
     end
   end
@@ -62,43 +63,70 @@ describe Winner do
 
   describe '#winner' do
     context "with 'X' winning" do
-      it "should be return 'X'" do
+      before :each do
         setup_board_state(win_X_grid)
+      end
+
+      it "should return 'X'" do
         board_state.winner.should == Player.X
       end
 
       it "should not be return 'O'" do
-        setup_board_state(win_X_grid)
         board_state.winner.should_not == Player.O
       end
 
       it 'should not be a draw' do
-        setup_board_state(win_X_grid)
         board_state.winner.should_not == Player.draw
+      end
+
+      it 'should be terminal' do
+        board_state.should be_terminal
       end
     end
 
     context "with 'O' winning" do
-      it "should be return 'O'" do
+      before :each do
         setup_board_state(win_O_grid)
+      end
+
+      it "should return 'O'" do
         board_state.winner.should == Player.O
+      end
+
+      it 'should be terminal' do
+        board_state.should be_terminal
       end
     end
 
     context 'with a draw' do
-      it 'should be a draw' do
+      before :each do
         setup_board_state(draw_grid)
+      end
+
+      it 'should be a draw' do
         board_state.should be_full
         board_state.winner.should == Player.draw
+      end
+
+      it 'should be terminal' do
+        board_state.should be_terminal
       end
     end
 
     context 'with eventual draw' do
-      it 'should not yet be a draw and return nil' do
+      before :each do
         setup_board_state(eventual_draw_grid)
+      end
+
+      it 'should not yet be a draw and return nil' do
         board_state.should_not be_full
         board_state.winner.should be_nil
       end
+
+      it 'should not be terminal' do
+        board_state.should_not be_terminal
+      end
+    end
 
     context 'with empty grid' do
       before :each do
@@ -108,6 +136,10 @@ describe Winner do
       it 'should return nil' do
         board_state.should_not be_full
         board_state.winner.should be_nil
+      end
+
+      it 'should be terminal' do
+        board_state.should_not be_terminal
       end
     end
   end

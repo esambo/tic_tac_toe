@@ -78,6 +78,11 @@ def winner
   @response_set.winner
 end
 
+def place_best_position
+  number = BestPositionNumberContext.new(@board_state).call
+  place_mark_context number
+end
+
 
 def positions_to_board(positions)
   positions.map(&:to_s)
@@ -127,6 +132,10 @@ When /^the board is full without a win$/ do
   place_alternating_sequence_numbers draw_grid_sequence
 end
 
+When /^the AI places its best position$/ do
+  place_best_position
+end
+
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
   winner.should     == Player.new(mark) if outcome == 'win'
   winner.should_not == Player.new(mark) if outcome == 'lose'
@@ -139,7 +148,7 @@ end
 Then /^I should see the grid:$/ do |data_table|
   board = positions_to_board(@response_set.positions)
   raw_table = board_to_raw_table(board, @board_state.length)
-  data_table.raw.should == raw_table
+  raw_table.should == data_table.raw
 end
 
 Then /^"([^\"]+)" should be the next player$/ do |mark|

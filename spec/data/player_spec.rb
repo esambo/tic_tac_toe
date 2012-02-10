@@ -118,9 +118,35 @@ describe Player do
       end
     end
 
+    context 'with :O' do
+      it "should be 'O'" do
+        Player.O.to_s.should == 'O'
+      end
+    end
+
     context 'with :none' do
       it "should be ' '" do
         Player.none.to_s.should == ' '
+      end
+    end
+  end
+
+  describe '#to_i' do
+    context 'with :X' do
+      it 'should be 1' do
+        Player.X.to_i.should == 1
+      end
+    end
+
+    context 'with :O' do
+      it 'should be -1' do
+        Player.O.to_i.should == -1
+      end
+    end
+
+    context 'with :draw' do
+      it "should be 0" do
+        Player.none.to_i.should == 0
       end
     end
   end
