@@ -19,7 +19,7 @@ class PlaceMarkContext
     def place_mark
       @board_state.extend MarkPlacer
       @valid_ply   = @board_state.place_mark @number
-      @next_player = @board_state.player
+      @next_player = @board_state.next_player
       @positions   = @board_state.positions
       @valid_ply
     end

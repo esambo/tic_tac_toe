@@ -12,7 +12,7 @@ describe BoardState do
       let(:board_state)  { BoardState.new length, emtpy_space, first_player }
 
       it "should have a default player 'X'" do
-        board_state.player.should be_X
+        board_state.next_player.should be_X
       end
 
       it 'should have size 9' do

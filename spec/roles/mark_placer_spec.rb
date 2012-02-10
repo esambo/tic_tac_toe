@@ -42,8 +42,8 @@ describe MarkPlacer do
       end
     end
 
-    it 'should have the #player take turns' do
-      board_state.player.should_receive(:turn)
+    it 'should have the #next_player take turns' do
+      board_state.next_player.should_receive(:turn)
       board_state.place_mark 1
     end
 

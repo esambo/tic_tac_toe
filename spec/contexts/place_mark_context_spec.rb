@@ -51,7 +51,7 @@ describe PlaceMarkContext do
 
         it 'should include next_player' do
           next_player = double(:Player_O)
-          context.board_state.should_receive(:player) { next_player }
+          context.board_state.should_receive(:next_player) { next_player }
           response_set = context.call
           response_set.next_player.should == next_player
         end
