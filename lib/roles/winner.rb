@@ -10,8 +10,8 @@ module Winner
       marks_to_win_positions.map { |line|
         line.group_by { |player|
           player
-        }.delete_if { |k, v|
-          v.count < self.length
+        }.delete_if { |player, marks|
+          marks.count < self.length or player.none?
         }
       }.map(&:keys).flatten
     end

@@ -28,6 +28,12 @@ def eventual_draw_grid
     3 _ _'.split
 end
 
+def empty_grid
+  ' _ _ _
+    _ _ _
+    _ _ _'.split
+end
+
 
 def board_of_marks_to_sequental_players(grid_of_string_marks)
   grid_of_string_marks.split.map { |mark| Player.new mark }
@@ -90,6 +96,16 @@ describe Winner do
     context 'with eventual draw' do
       it 'should not yet be a draw and return nil' do
         setup_board_state(eventual_draw_grid)
+        board_state.should_not be_full
+        board_state.winner.should be_nil
+      end
+
+    context 'with empty grid' do
+      before :each do
+        setup_board_state(empty_grid)
+      end
+
+      it 'should return nil' do
         board_state.should_not be_full
         board_state.winner.should be_nil
       end
