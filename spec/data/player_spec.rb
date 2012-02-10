@@ -119,8 +119,8 @@ describe Player do
     end
 
     context 'with :none' do
-      it "should be ''" do
-        Player.none.to_s.should == ''
+      it "should be ' '" do
+        Player.none.to_s.should == ' '
       end
     end
   end

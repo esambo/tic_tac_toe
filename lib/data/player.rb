@@ -41,6 +41,6 @@ Player = Struct.new(:mark) do
   end
 
   def to_s
-    draw? ? '' : self.mark.to_s
+    draw? ? ' ' : self.mark.to_s
   end
 end
