@@ -33,7 +33,7 @@ describe Minimax do
     board_state.extend Minimax
   end
 
-  describe '#best_position_number' do
+  describe '#best_position' do
 
     context "with 'X' in winning position" do
       it 'should find that position number' do
@@ -43,7 +43,9 @@ describe Minimax do
           _ _ _'.split
         setup_board_state(sequence)
         board_state.last_position_number.should == 3
-        board_state.best_position_number.should == 3
+        best_position = board_state.best_position
+        best_position.position_number.should == 3
+        best_position.winner.should == Player.X
       end
     end
 
@@ -54,27 +56,26 @@ describe Minimax do
           2 3 _
           B _ _'.split
         setup_board_state(sequence)
-        board_state.best_position_number.should == 6
+        best_position = board_state.best_position
+        best_position.position_number.should == 6
+        best_position.winner.should == Player.X
       end
     end
   end
 
   describe 'internal' do
-    let(:player_X_position) {
-      { :position_number => 1,
-        :player => Player.X.to_i
-      }
-    }
-    let(:player_O_position) {
-      { :position_number => 2,
-        :player => Player.O.to_i
-      }
-    }
-    let(:player_draw_position) {
-      { :position_number => 3,
-        :player => Player.draw.to_i
-      }
-    }
+    let(:player_X_position)    { WinPosition.new.tap do |p|
+        p.position_number = 1
+        p.winner          = Player.X
+    end }
+    let(:player_O_position)    { WinPosition.new.tap do |p|
+        p.position_number = 2
+        p.winner          = Player.O
+    end }
+    let(:player_draw_position) { WinPosition.new.tap do |p|
+        p.position_number = 3
+        p.winner          = Player.draw
+    end }
 
     describe '#max_for_X' do
       context "with 'O'" do
