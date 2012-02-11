@@ -1,3 +1,4 @@
+require 'roles/winner'
 require 'roles/open_ply_finder'
 require 'roles/minimax'
 
@@ -15,6 +16,7 @@ class BestPositionNumberContext
   private
 
     def get_best_position
+      @board_state.extend Winner
       @board_state.extend OpenPlyFinder
       @board_state.extend Minimax
       @board_state.best_position_number
