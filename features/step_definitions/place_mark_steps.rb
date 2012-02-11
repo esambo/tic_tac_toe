@@ -79,10 +79,13 @@ def winner
 end
 
 def place_best_position
-  number = BestPositionNumberContext.new(@board_state).call
+  number = get_best_position.position_number
   place_mark_context number
 end
 
+  def get_best_position
+    BestPositionContext.new(@board_state).call
+  end
 
 def positions_to_board(positions)
   positions.map(&:to_s)
@@ -97,6 +100,10 @@ end
     board.map(&:strip)
   end
 
+
+Given /^an empty board$/ do
+  new_board_state
+end
 
 Given /^a board state$/ do
   new_board_state
@@ -136,6 +143,10 @@ When /^the AI places its best position$/ do
   place_best_position
 end
 
+When /^the AI analyzes the best position$/ do
+  @best_position = get_best_position
+end
+
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
   winner.should     == Player.new(mark) if outcome == 'win'
   winner.should_not == Player.new(mark) if outcome == 'lose'
@@ -158,3 +169,8 @@ end
 Then /^the last placed mark should not be valid$/ do
   @response_set.valid_ply.should == false
 end
+
+Then /^the game should at least be a (\w+)$/ do |game_state|
+  @best_position.winner.should == Player.draw
+end
+

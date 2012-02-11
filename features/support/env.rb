@@ -2,7 +2,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 
 require 'rspec/expectations'
 
-require 'contexts/best_position_number_context'
+require 'contexts/best_position_context'
 require 'contexts/place_mark_context'
 require 'roles/minimax'
 require 'roles/open_ply_finder'
@@ -11,4 +11,5 @@ require 'roles/winner'
 require 'data/board_state'
 require 'data/player'
 require 'data/response_set'
+require 'data/win_position'
 require 'board_mark_converter'

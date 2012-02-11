@@ -1,2 +1,3 @@
 wip: --tags @wip:3 --wip features
 guard: --tags @wip --format progress --wip features
+fast: --tags ~@slow
