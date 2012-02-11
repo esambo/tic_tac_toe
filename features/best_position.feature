@@ -13,3 +13,15 @@ Feature: Best Position
       | X | O | X |
       | O | X | O |
       | O | X | X |
+
+  Scenario: place the winning mark among several empty spaces
+    Given the grid:
+      | X | O |   |
+      | X | O |   |
+      |   |   |   |
+    When the AI places its best position
+    Then I should see the grid:
+      | X | O |   |
+      | X | O |   |
+      | X |   |   |
+
