@@ -2,35 +2,16 @@ require 'spec_helper'
 require 'tic_tac_toe/data/player'
 require 'tic_tac_toe/data/board_state'
 require 'tic_tac_toe/roles/open_ply_finder'
-require 'tic_tac_toe/board_mark_converter'
 
 module TicTacToe
   describe OpenPlyFinder do
-
-    def board_of_marks_to_sequental_players(grid_of_string_marks)
-      grid_of_string_marks.split.map { |mark| Player.new mark }
-    end
-
-    def setup_board_state(sequence)
-      setup_players(
-        BoardMarkConverter.new.to_alternating_sequence_numbers(sequence)
-      )
-    end
-
-      def setup_players(alternating_sequence_numbers)
-        player = Player.X
-        alternating_sequence_numbers.each do |number|
-          board_state.place_mark_at_index number.to_i - 1
-        end
-      end
-
 
     let(:board_state) { BoardState.new 3, Player.none, Player.X }
     before :each do
       board_state.extend OpenPlyFinder
     end
 
-    describe '#successors' do
+    describe '#successors', :include_helpers do
       context 'with last spot empty' do
         it "should return one full board_states with 'X' in the last spot" do
           sequence = '

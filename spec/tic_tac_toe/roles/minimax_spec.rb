@@ -5,27 +5,9 @@ require 'tic_tac_toe/data/win_position'
 require 'tic_tac_toe/roles/winner'
 require 'tic_tac_toe/roles/open_ply_finder'
 require 'tic_tac_toe/roles/minimax'
-require 'tic_tac_toe/board_mark_converter'
 
 module TicTacToe
   describe Minimax do
-
-    def board_of_marks_to_sequental_players(grid_of_string_marks)
-      grid_of_string_marks.split.map { |mark| Player.new mark }
-    end
-
-    def setup_board_state(sequence)
-      setup_players(
-        BoardMarkConverter.new.to_alternating_sequence_numbers(sequence)
-      )
-    end
-
-      def setup_players(alternating_sequence_numbers)
-        player = Player.X
-        alternating_sequence_numbers.each do |number|
-          board_state.place_mark_at_index number.to_i - 1
-        end
-      end
 
     let(:board_state) { BoardState.new 3, Player.none, Player.X }
     before :each do
@@ -34,7 +16,7 @@ module TicTacToe
       board_state.extend Minimax
     end
 
-    describe '#best_position' do
+    describe '#best_position', :include_helpers do
 
       context "with 'X' in winning position" do
         it 'should find that position number' do

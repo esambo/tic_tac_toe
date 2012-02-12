@@ -2,20 +2,9 @@ require 'spec_helper'
 require 'tic_tac_toe/data/player'
 require 'tic_tac_toe/data/board_state'
 require 'tic_tac_toe/roles/mark_placer'
-require 'tic_tac_toe/board_mark_converter'
 
 module TicTacToe
   describe MarkPlacer do
-
-    def board_of_marks_to_sequental_players(grid_of_string_marks)
-      grid_of_string_marks.split.map { |mark| Player.new mark }
-    end
-
-    def setup_board_state(sequence)
-      BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |number|
-        board_state.place_mark number
-      end
-    end
 
     let(:board_state) { BoardState.new 3, Player.none, Player.X }
     before :each do
@@ -29,7 +18,8 @@ module TicTacToe
         end
       end
 
-      context 'with all marks' do
+
+      context 'with all marks', :include_helpers do
         it 'should have each mark in the correct space' do
           sequence = '
             1 2 B
