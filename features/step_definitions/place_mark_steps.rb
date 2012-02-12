@@ -28,7 +28,7 @@ end
 
 
 def new_board_state
-  @board_state = BoardState.new 3, Player.none, Player.X
+  @board_state = TicTacToe::BoardState.new 3, TicTacToe::Player.none, TicTacToe::Player.X
 end
 
 def place_board_with_single_mark(board)
@@ -64,13 +64,13 @@ end
   end
 
 def place_alternating_sequence_numbers(sequence)
-  BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |number|
+  TicTacToe::BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |number|
     place_mark_context number
   end
 end
 
 def place_mark_context(number)
-  context = PlaceMarkContext.new(@board_state, number)
+  context = TicTacToe::PlaceMarkContext.new(@board_state, number)
   @response_set = context.call
 end
 
@@ -84,7 +84,7 @@ def place_best_position
 end
 
   def get_best_position
-    BestPositionContext.new(@board_state).call
+    TicTacToe::BestPositionContext.new(@board_state).call
   end
 
 def positions_to_board(positions)
@@ -102,7 +102,7 @@ end
 
 def board_to_win_position(board)
   board.each_with_index do |space, i|
-    return WinPosition.new(i + 1, Player.X) if space == 'X'
+    return TicTacToe::WinPosition.new(i + 1, TicTacToe::Player.X) if space == 'X'
   end
 end
 
@@ -123,7 +123,7 @@ end
 
 Given /^I am the first player "([^\"]+)"$/ do |mark|
   new_board_state
-  @player = Player.new mark
+  @player = TicTacToe::Player.new mark
 end
 
 Given /^the grid:$/ do |data_table|
@@ -162,12 +162,12 @@ When /^the AI analyzes the best position$/ do
 end
 
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
-  winner.should     == Player.new(mark) if outcome == 'win'
-  winner.should_not == Player.new(mark) if outcome == 'lose'
+  winner.should     == TicTacToe::Player.new(mark) if outcome == 'win'
+  winner.should_not == TicTacToe::Player.new(mark) if outcome == 'lose'
 end
 
 Then /^the game should be a draw$/ do
-  winner.should == Player.draw
+  winner.should == TicTacToe::Player.draw
 end
 
 Then /^I should see the grid:$/ do |data_table|
@@ -177,7 +177,7 @@ Then /^I should see the grid:$/ do |data_table|
 end
 
 Then /^"([^\"]+)" should be the next player$/ do |mark|
-  @response_set.next_player.should == Player.new(mark)
+  @response_set.next_player.should == TicTacToe::Player.new(mark)
 end
 
 Then /^the last placed mark should not be valid$/ do
@@ -186,9 +186,9 @@ end
 
 Then /^the game should at least be a (\w+)$/ do |game_state|
   if game_state == 'win'
-    player = Player.X
+    player = TicTacToe::Player.X
   else
-    player = Player.draw
+    player = TicTacToe::Player.draw
   end
   @best_position.winner.should == player
 end

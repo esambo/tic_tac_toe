@@ -1,1 +1,3 @@
-WinPosition = Struct.new(:position_number, :winner)
+module TicTacToe
+  WinPosition = Struct.new(:position_number, :winner)
+end
