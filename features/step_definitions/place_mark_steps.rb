@@ -17,8 +17,8 @@ def win_O_grid_sequence
 end
 
 
-def grid_sequence_to_win_for_current_player
-  @player.X? ? win_X_grid_sequence : win_O_grid_sequence
+def grid_sequence_to_win_for_player(player)
+  player.X? ? win_X_grid_sequence : win_O_grid_sequence
 end
 
 
@@ -28,11 +28,18 @@ end
 
 
 def new_board_state
-  @board_state = TicTacToe::BoardState.new 3, TicTacToe::Player.none, TicTacToe::Player.X
+  board_state = TicTacToe::BoardState.new(
+                  3,
+                  TicTacToe::Player.none,
+                  TicTacToe::Player.X
+                )
 end
 
-def place_board_with_single_mark(board)
-  place_mark_context board_to_next_mark_number(board)
+def place_board_with_single_mark(board_state, board)
+  response_set = place_mark_context(
+                   board_state,
+                   board_to_next_mark_number(board)
+                 )
 end
 
   def board_to_next_mark_number(board)
@@ -43,12 +50,16 @@ end
     numbers.first
   end
 
-def place_board_with_alternating_marks(board)
+def place_board_with_alternating_marks(board_state, board)
+  response_set = nil
   numbers_by_marks = board_to_numbers_by_marks(board)
-  alternating_mark_sequence = numbers_by_marks_to_alternating_mark_sequence(numbers_by_marks)
-  alternating_mark_sequence.each do |mark|
-    place_mark_context mark
+  alt_mark_seq = numbers_by_marks_to_alternating_mark_sequence(
+                   numbers_by_marks
+                )
+  alt_mark_seq.each do |mark|
+    response_set = place_mark_context board_state, mark
   end
+  response_set
 end
 
   def board_to_numbers_by_marks(board)
@@ -63,29 +74,44 @@ end
     numbers_by_marks['X'].zip(numbers_by_marks['O']).flatten.compact
   end
 
-def place_alternating_sequence_numbers(sequence)
-  TicTacToe::BoardMarkConverter.new.to_alternating_sequence_numbers(sequence).each do |number|
-    place_mark_context number
+def place_alternating_sequence_numbers(board_state, sequence)
+  response_set = nil
+  bmc = TicTacToe::BoardMarkConverter.new
+  bmc.to_alternating_sequence_numbers(sequence).each do |number|
+    response_set = place_mark_context board_state, number
+  end
+  response_set
+end
+
+def place_best_position(board_state)
+  number = get_best_position(board_state).position_number
+  response_set = place_mark_context board_state, number
+end
+
+  def get_best_position(board_state)
+    TicTacToe::BestPositionContext.new(board_state).call
+  end
+
+  def place_mark_context(board_state, number)
+    context = TicTacToe::PlaceMarkContext.new(board_state, number)
+    response_set = context.call
+  end
+
+def board_to_win_position(board)
+  board.each_with_index do |space, i|
+    if space == 'X'
+      return TicTacToe::WinPosition.new(i + 1, TicTacToe::Player.X)
+    end
   end
 end
 
-def place_mark_context(number)
-  context = TicTacToe::PlaceMarkContext.new(@board_state, number)
-  @response_set = context.call
-end
-
-def winner
-  @response_set.winner
-end
-
-def place_best_position
-  number = get_best_position.position_number
-  place_mark_context number
-end
-
-  def get_best_position
-    TicTacToe::BestPositionContext.new(@board_state).call
+def clear_win_position(board, win_position)
+  board.tap do |board|
+    board[win_position.position_number - 1] = '_'
   end
+end
+
+
 
 def positions_to_board(positions)
   positions.map(&:to_s)
@@ -93,81 +119,72 @@ end
 
 def board_to_raw_table(board, groups_of_length)
   board = clean_empty_spaces(board)
-  groups_of_length.times.map{ |i| board[i * groups_of_length, groups_of_length] }
+  groups_of_length.times.map{ |i|
+    board[i * groups_of_length, groups_of_length]
+  }
 end
 
   def clean_empty_spaces(board)
     board.map(&:strip)
   end
 
-def board_to_win_position(board)
-  board.each_with_index do |space, i|
-    return TicTacToe::WinPosition.new(i + 1, TicTacToe::Player.X) if space == 'X'
-  end
-end
-
-def clear_win_position(board)
-  board.tap do |board|
-    board[@win_position.position_number - 1] = '_'
-  end
-end
-
 
 Given /^an empty board$/ do
-  new_board_state
+  @board_state = new_board_state
 end
 
 Given /^a board state$/ do
-  new_board_state
+  @board_state = new_board_state
 end
 
 Given /^I am the first player "([^\"]+)"$/ do |mark|
-  new_board_state
+  @board_state = new_board_state
   @player = TicTacToe::Player.new mark
 end
 
 Given /^the grid:$/ do |data_table|
-  new_board_state
+  @board_state = new_board_state
   board = data_table_to_board(data_table)
-  place_board_with_alternating_marks board
+  place_board_with_alternating_marks @board_state, board
 end
 
 Given /^the grid sequence with the indicated winning mark X:$/ do |data_table|
-  new_board_state
+  @board_state = new_board_state
   board = data_table_to_board(data_table)
   @win_position = board_to_win_position(board)
-  board = clear_win_position(board)
-  place_alternating_sequence_numbers board
+  board = clear_win_position(board, @win_position)
+  place_alternating_sequence_numbers @board_state, board
 end
 
 When /^I place the mark:$/ do |data_table|
   board = data_table_to_board(data_table)
-  place_board_with_single_mark board
+  @response_set = place_board_with_single_mark @board_state, board
 end
 
 When /^I win$/ do
-  place_alternating_sequence_numbers grid_sequence_to_win_for_current_player
+  grid_sequence = grid_sequence_to_win_for_player(@player)
+  @response_set = place_alternating_sequence_numbers @board_state, grid_sequence
 end
 
 When /^the board is full without a win$/ do
-  place_alternating_sequence_numbers draw_grid_sequence
+  @response_set = place_alternating_sequence_numbers @board_state, draw_grid_sequence
 end
 
 When /^the AI places its best position$/ do
-  place_best_position
+  @response_set = place_best_position(@board_state)
 end
 
 When /^the AI analyzes the best position$/ do
-  @best_position = get_best_position
+  @best_position = get_best_position(@board_state)
 end
 
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
-  winner.should     == TicTacToe::Player.new(mark) if outcome == 'win'
-  winner.should_not == TicTacToe::Player.new(mark) if outcome == 'lose'
+  @response_set.winner.should     == TicTacToe::Player.new(mark) if outcome == 'win'
+  @response_set.winner.should_not == TicTacToe::Player.new(mark) if outcome == 'lose'
 end
 
 Then /^the game should be a draw$/ do
-  winner.should == TicTacToe::Player.draw
+  @response_set.winner.should == TicTacToe::Player.draw
 end
 
 Then /^I should see the grid:$/ do |data_table|
