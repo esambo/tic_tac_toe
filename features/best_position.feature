@@ -25,3 +25,10 @@ Feature: Best Position
       | X | O |   |
       | X |   |   |
 
+  Scenario: draw
+    Given the grid:
+      | X | X | O |
+      | O | O | X |
+      | X |   |   |
+    When the AI analyzes the best position
+    Then the game should at least be a draw

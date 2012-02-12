@@ -12,8 +12,6 @@
   - Make use of it
 - Extract _GameTestPresenter_
   - Use DI from Objects on Rails
-- Add new _GetBestPositionContext_
- - call _PlaceMarkContext_ with result
 - GUI
   - Command Line Interface
 - Living Documentation

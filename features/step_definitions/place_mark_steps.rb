@@ -100,6 +100,18 @@ end
     board.map(&:strip)
   end
 
+def board_to_win_position(board)
+  board.each_with_index do |space, i|
+    return WinPosition.new(i + 1, Player.X) if space == 'X'
+  end
+end
+
+def clear_win_position(board)
+  board.tap do |board|
+    board[@win_position.position_number - 1] = '_'
+  end
+end
+
 
 Given /^an empty board$/ do
   new_board_state
@@ -120,9 +132,11 @@ Given /^the grid:$/ do |data_table|
   place_board_with_alternating_marks board
 end
 
-Given /^the grid sequence:$/ do |data_table|
+Given /^the grid sequence with the indicated winning mark X:$/ do |data_table|
   new_board_state
   board = data_table_to_board(data_table)
+  @win_position = board_to_win_position(board)
+  board = clear_win_position(board)
   place_alternating_sequence_numbers board
 end
 
@@ -171,6 +185,14 @@ Then /^the last placed mark should not be valid$/ do
 end
 
 Then /^the game should at least be a (\w+)$/ do |game_state|
-  @best_position.winner.should == Player.draw
+  if game_state == 'win'
+    player = Player.X
+  else
+    player = Player.draw
+  end
+  @best_position.winner.should == player
 end
 
+Then /^it should be at the indicated position$/ do
+  @board_state.last_position_number.should == @win_position.position_number.should
+end
