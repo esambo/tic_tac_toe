@@ -67,6 +67,24 @@ Feature: AI wins
     Then "X" should "win"
     And it should be at the indicated position
 
+  Scenario: 8
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | A | _ |
+      | 2 | _ | _ |
+      | X | B | _ |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 9
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | A | _ |
+      | 2 | _ | _ |
+      | X | _ | B |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
   Scenario: 10
     Given the grid sequence with the indicated winning mark X:
       | 1 | B | A |
@@ -130,11 +148,38 @@ Feature: AI wins
     Then "X" should "win"
     And it should be at the indicated position
 
+  Scenario: 17
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | _ | A |
+      | 2 | _ | _ |
+      | X | B | _ |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 18
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | _ | A |
+      | 2 | _ | _ |
+      | X | _ | B |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
   Scenario: 19
     Given the grid sequence with the indicated winning mark X:
       | 1 | 2 | B |
       | A | 3 | C |
       | _ | X | _ |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 20
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | 2 | B |
+      | A | 3 | _ |
+      | C | X | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
@@ -274,11 +319,38 @@ Feature: AI wins
     Then "X" should "win"
     And it should be at the indicated position
 
+  Scenario: 36
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | B | _ |
+      | _ | 2 | A |
+      | _ | _ | X |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
   Scenario: 37
     Given the grid sequence with the indicated winning mark X:
       | 1 | _ | B |
       | _ | 2 | A |
       | _ | _ | X |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 38
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | _ | _ |
+      | B | 2 | A |
+      | _ | _ | X |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 39
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | _ | _ |
+      | _ | 2 | A |
+      | B | _ | X |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
@@ -324,6 +396,15 @@ Feature: AI wins
       | 1 | X | 3 |
       | _ | 2 | A |
       | _ | C | B |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 45
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | 2 | B |
+      | C | 3 | _ |
+      | A | X | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
@@ -396,6 +477,24 @@ Feature: AI wins
       | 1 | 2 | X |
       | _ | _ | _ |
       | A | _ | B |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 54
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | B | 2 |
+      | C | 3 | _ |
+      | X | A | _ |
+    When the AI places its best position
+    Then "X" should "win"
+    And it should be at the indicated position
+
+  Scenario: 55
+    Given the grid sequence with the indicated winning mark X:
+      | 1 | B | 2 |
+      | _ | 3 | C |
+      | X | A | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
