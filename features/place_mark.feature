@@ -1,7 +1,7 @@
 Feature: Place Mark
-  In order to play Tic Tac Toe
-  As a human player
-  I want to place a mark
+  In order to play Tic Tac Toe  
+  As a human player  
+  I want to place a mark  
 
   Scenario: place a mark
     Given I am the first player "X"

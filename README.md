@@ -14,13 +14,12 @@
   - Use DI from Objects on Rails
 - GUI
   - Command Line Interface
-- Living Documentation
-  - RelishApp
 
 
 ## Design Decisions
 
 - Living Documentation
+  - [Tic-Tac-Toe](http://www.relishapp.com/esambo/tic-tac-toe)
 - Architecture based on
   - DCI
   - MVC

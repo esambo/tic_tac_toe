@@ -1,8 +1,8 @@
 @slow
 Feature: AI wins
-  In order to play Tic Tac Toe
-  As a AI player
-  I want to never lose and win whenever possible
+  In order to play Tic Tac Toe  
+  As an AI player  
+  I want to never lose and win whenever possible  
 
   Scenario: 1
     Given the grid sequence with the indicated winning mark X:
