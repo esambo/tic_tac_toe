@@ -20,6 +20,7 @@ end
 Given /^the grid sequence with the indicated winning mark "([^\"]+)":$/ do |winning_mark, data_table|
   @board_state = new_board_state
   board = data_table_to_board(data_table)
+  place_board_with_alternating_marks @board_state, board
   @win_number = board_to_win_number(board, winning_mark)
   board = clear_win_number(board, @win_number)
   place_alternating_sequence_numbers @board_state, board

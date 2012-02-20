@@ -67,7 +67,7 @@ module TestControllerHelpers
     def board_to_numbers_by_marks(board)
       marks = {'X' => [], 'O' => []}
       board.each_with_index do |space, i|
-        marks[space] << i + 1 unless space.empty?
+        marks[space] << i + 1 if marks.keys.include? space
       end
       marks
     end

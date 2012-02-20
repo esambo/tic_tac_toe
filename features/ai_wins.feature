@@ -1,10 +1,17 @@
 @slow
-Feature: AI wins
-  In order to play Tic Tac Toe  
+Feature: AI places marks in optimal positions
+  In order to win ASAP  
   As an AI player  
-  I want to never lose and win whenever possible  
+  I want to place my marks 'X' in the optimal positions   
 
-  Scenario: 1
+  Numeric marks indicate sequence positions that the AI player 'X' should find and mark.  
+  Alphabetic marks indicate sequence positions that the player 'O' will mark when it is its ply.  
+  'X' marks have previously already been analyzed and can therefore be placed on the initial board in any order.  
+  'O' marks can be placed on the initial board in any order.  
+  '*' indicates the optimal winning position that the AI player 'X' should find based on the marks of player 'O'.  
+  The scenario number indicates the alternating sequence numbers of how 'X' and 'O' place their marks in this game.  
+
+  Scenario: 12437
     Given the grid sequence with the indicated winning mark "*":
       | 1 | A | B |
       | 2 | _ | _ |
@@ -13,632 +20,632 @@ Feature: AI wins
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 2
+  Scenario: 12457
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | _ |
-      | 2 | B | _ |
+      | X | O | _ |
+      | X | O | _ |
       | * | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 3
+  Scenario: 12467
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | _ |
-      | 2 | _ | B |
+      | X | O | _ |
+      | X | _ | O |
       | * | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 4
+  Scenario: 1247536
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | C |
-      | 2 | 3 | * |
-      | B | _ | _ |
+      | X | O | C |
+      | X | 3 | * |
+      | O | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 5
+  Scenario: 1247569
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | _ |
-      | 2 | 3 | C |
-      | B | _ | * |
+      | X | O | _ |
+      | X | X | O |
+      | O | _ | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 6
+  Scenario: 1247586
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | _ |
-      | 2 | 3 | * |
-      | B | C | _ |
+      | X | O | _ |
+      | X | X | * |
+      | O | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 7
+  Scenario: 1247596
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | _ |
-      | 2 | 3 | * |
-      | B | _ | C |
+      | X | O | _ |
+      | X | X | * |
+      | O | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 8
+  Scenario: 12487
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | _ |
-      | 2 | _ | _ |
-      | * | B | _ |
+      | X | O | _ |
+      | X | _ | _ |
+      | * | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 9
+  Scenario: 12497
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | A | _ |
-      | 2 | _ | _ |
-      | * | _ | B |
+      | X | O | _ |
+      | X | _ | _ |
+      | * | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 10
+  Scenario: 13427
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | A |
+      | X | B | O |
       | 2 | _ | _ |
       | * | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 11
+  Scenario: 13457
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | A |
-      | 2 | B | _ |
+      | X | _ | O |
+      | X | O | _ |
       | * | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 12
+  Scenario: 13467
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | A |
-      | 2 | _ | B |
+      | X | _ | O |
+      | X | _ | O |
       | * | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 13
+  Scenario: 1347526
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | C | A |
-      | 2 | 3 | * |
-      | B | _ | _ |
+      | X | C | O |
+      | X | 3 | * |
+      | O | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 14
+  Scenario: 1347569
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | A |
-      | 2 | 3 | C |
-      | B | _ | * |
+      | X | _ | O |
+      | X | X | O |
+      | O | _ | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 15
+  Scenario: 1347586
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | A |
-      | 2 | 3 | * |
-      | B | C | _ |
+      | X | _ | O |
+      | X | X | * |
+      | O | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 16
+  Scenario: 1347596
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | A |
-      | 2 | 3 | * |
-      | B | _ | C |
+      | X | _ | O |
+      | X | X | * |
+      | O | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 17
+  Scenario: 13487
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | A |
-      | 2 | _ | _ |
-      | * | B | _ |
+      | X | _ | O |
+      | X | _ | _ |
+      | * | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 18
+  Scenario: 13497
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | A |
-      | 2 | _ | _ |
-      | * | _ | B |
+      | X | _ | O |
+      | X | _ | _ |
+      | * | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 19
+  Scenario: 1423568
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | A | 3 | C |
+      | X | 2 | B |
+      | O | 3 | C |
       | _ | * | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 20
+  Scenario: 1423578
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | A | 3 | _ |
-      | C | * | _ |
+      | X | X | O |
+      | O | X | _ |
+      | O | * | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 21
+  Scenario: 1423589
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | A | 3 | _ |
-      | _ | C | * |
+      | X | X | O |
+      | O | X | _ |
+      | _ | O | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 22
+  Scenario: 1423598
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | A | 3 | _ |
-      | _ | * | C |
+      | X | X | O |
+      | O | X | _ |
+      | _ | * | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 23
+  Scenario: 14253
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | A | B | _ |
+      | X | X | * |
+      | O | O | _ |
       | _ | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 24
+  Scenario: 14263
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | A | _ | B |
+      | X | X | * |
+      | O | _ | O |
       | _ | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 25
+  Scenario: 14273
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | A | _ | _ |
-      | B | _ | _ |
+      | X | X | * |
+      | O | _ | _ |
+      | O | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 26
+  Scenario: 14283
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | A | _ | _ |
-      | _ | B | _ |
+      | X | X | * |
+      | O | _ | _ |
+      | _ | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 27
+  Scenario: 14293
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | A | _ | _ |
-      | _ | _ | B |
+      | X | X | * |
+      | O | _ | _ |
+      | _ | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 28
+  Scenario: 1523764
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | * | A | C |
+      | X | 2 | B |
+      | * | O | C |
       | 3 | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 29
+  Scenario: 1523784
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | * | A | _ |
-      | 3 | C | _ |
+      | X | X | O |
+      | * | O | _ |
+      | X | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 30
+  Scenario: 1523794
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | * | A | _ |
-      | 3 | _ | C |
+      | X | X | O |
+      | * | O | _ |
+      | X | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 31
+  Scenario: 15243
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | B | A | _ |
+      | X | X | * |
+      | O | O | _ |
       | _ | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 32
+  Scenario: 15263
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | _ | A | B |
+      | X | X | * |
+      | _ | O | O |
       | _ | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 33
+  Scenario: 15273
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | _ | A | _ |
-      | B | _ | _ |
+      | X | X | * |
+      | _ | O | _ |
+      | O | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 34
+  Scenario: 15283
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | _ | A | _ |
-      | _ | B | _ |
+      | X | X | * |
+      | _ | O | _ |
+      | _ | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 35
+  Scenario: 15293
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | _ | A | _ |
-      | _ | _ | B |
+      | X | X | * |
+      | _ | O | _ |
+      | _ | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 36
+  Scenario: 16529
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | _ |
-      | _ | 2 | A |
+      | X | B | _ |
+      | _ | 2 | O |
       | _ | _ | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 37
+  Scenario: 16539
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | B |
-      | _ | 2 | A |
+      | X | _ | O |
+      | _ | X | O |
       | _ | _ | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 38
+  Scenario: 16549
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | _ |
-      | B | 2 | A |
+      | X | _ | _ |
+      | O | X | O |
       | _ | _ | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 39
+  Scenario: 16579
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | _ |
-      | _ | 2 | A |
-      | B | _ | * |
+      | X | _ | _ |
+      | _ | X | O |
+      | O | _ | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 40
+  Scenario: 16589
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | _ | _ |
-      | _ | 2 | A |
-      | _ | B | * |
+      | X | _ | _ |
+      | _ | X | O |
+      | _ | O | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 41
+  Scenario: 1659327
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | C | 3 |
-      | _ | 2 | A |
-      | * | _ | B |
+      | X | C | 3 |
+      | _ | X | O |
+      | * | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 42
+  Scenario: 1659342
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 3 |
-      | C | 2 | A |
-      | _ | _ | B |
+      | X | * | X |
+      | O | X | O |
+      | _ | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 43
+  Scenario: 1659372
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 3 |
-      | _ | 2 | A |
-      | C | _ | B |
+      | X | * | X |
+      | _ | X | O |
+      | O | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 44
+  Scenario: 1659382
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 3 |
-      | _ | 2 | A |
-      | _ | C | B |
+      | X | * | X |
+      | _ | X | O |
+      | _ | O | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 45
+  Scenario: 1723548
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
+      | X | 2 | B |
       | C | 3 | _ |
-      | A | * | _ |
+      | O | * | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 46
+  Scenario: 1723568
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | _ | 3 | C |
-      | A | * | _ |
+      | X | X | O |
+      | _ | X | O |
+      | O | * | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 47
+  Scenario: 1723589
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | _ | 3 | _ |
-      | A | C | * |
+      | X | X | O |
+      | _ | X | _ |
+      | O | O | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 48
+  Scenario: 1723598
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | B |
-      | _ | 3 | _ |
-      | A | * | C |
+      | X | X | O |
+      | _ | X | _ |
+      | O | * | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 49
+  Scenario: 17243
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | B | _ | _ |
-      | A | _ | _ |
+      | X | X | * |
+      | O | _ | _ |
+      | O | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 50
+  Scenario: 17253
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | _ | B | _ |
-      | A | _ | _ |
+      | X | X | * |
+      | _ | O | _ |
+      | O | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 51
+  Scenario: 17263
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
-      | _ | _ | B |
-      | A | _ | _ |
+      | X | X | * |
+      | _ | _ | O |
+      | O | _ | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 52
+  Scenario: 17283
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
+      | X | X | * |
       | _ | _ | _ |
-      | A | B | _ |
+      | O | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 53
+  Scenario: 17293
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | 2 | * |
+      | X | X | * |
       | _ | _ | _ |
-      | A | _ | B |
+      | O | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 54
+  Scenario: 1832547
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
+      | X | B | 2 |
       | C | 3 | _ |
-      | * | A | _ |
+      | * | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 55
+  Scenario: 1832567
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
-      | _ | 3 | C |
-      | * | A | _ |
+      | X | O | X |
+      | _ | X | O |
+      | * | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 56
+  Scenario: 1832579
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
-      | _ | 3 | _ |
-      | C | A | * |
+      | X | O | X |
+      | _ | X | _ |
+      | O | O | * |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 57
+  Scenario: 1832597
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
-      | _ | 3 | _ |
-      | * | A | C |
+      | X | O | X |
+      | _ | X | _ |
+      | * | O | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 58
+  Scenario: 18342
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
-      | B | _ | _ |
-      | _ | A | _ |
+      | X | * | X |
+      | O | _ | _ |
+      | _ | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 59
+  Scenario: 18352
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
-      | _ | B | _ |
-      | _ | A | _ |
+      | X | * | X |
+      | _ | O | _ |
+      | _ | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 60
+  Scenario: 18362
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
-      | _ | _ | B |
-      | _ | A | _ |
+      | X | * | X |
+      | _ | _ | O |
+      | _ | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 61
+  Scenario: 18372
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
+      | X | * | X |
       | _ | _ | _ |
-      | B | A | _ |
+      | O | O | _ |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 62
+  Scenario: 18392
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
+      | X | * | X |
       | _ | _ | _ |
-      | _ | A | B |
+      | _ | O | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 63
+  Scenario: 1932745
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
+      | X | B | 2 |
       | C | * | _ |
-      | 3 | _ | A |
+      | 3 | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 64
+  Scenario: 1932754
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
-      | * | C | _ |
-      | 3 | _ | A |
+      | X | O | X |
+      | * | O | _ |
+      | X | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 65
+  Scenario: 1932764
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
-      | * | _ | C |
-      | 3 | _ | A |
+      | X | O | X |
+      | * | _ | O |
+      | X | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 66
+  Scenario: 1932784
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | B | 2 |
+      | X | O | X |
       | * | _ | _ |
-      | 3 | C | A |
+      | X | O | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 67
+  Scenario: 19342
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
-      | B | _ | _ |
-      | _ | _ | A |
+      | X | * | X |
+      | O | _ | _ |
+      | _ | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 68
+  Scenario: 19352
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
-      | _ | B | _ |
-      | _ | _ | A |
+      | X | * | X |
+      | _ | O | _ |
+      | _ | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 69
+  Scenario: 19362
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
-      | _ | _ | B |
-      | _ | _ | A |
+      | X | * | X |
+      | _ | _ | O |
+      | _ | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 70
+  Scenario: 19372
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
+      | X | * | X |
       | _ | _ | _ |
-      | B | _ | A |
+      | O | _ | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
 
-  Scenario: 71
+  Scenario: 19382
     Given the grid sequence with the indicated winning mark "*":
-      | 1 | * | 2 |
+      | X | * | X |
       | _ | _ | _ |
-      | _ | B | A |
+      | _ | O | O |
     When the AI places its best position
     Then "X" should "win"
     And it should be at the indicated position
