@@ -17,11 +17,11 @@ Given /^the grid:$/ do |data_table|
   place_board_with_alternating_marks @board_state, board
 end
 
-Given /^the grid sequence with the indicated winning mark X:$/ do |data_table|
+Given /^the grid sequence with the indicated winning mark "([^\"]+)":$/ do |winning_mark, data_table|
   @board_state = new_board_state
   board = data_table_to_board(data_table)
-  @win_position = board_to_win_position(board)
-  board = clear_win_position(board, @win_position)
+  @win_number = board_to_win_number(board, winning_mark)
+  board = clear_win_number(board, @win_number)
   place_alternating_sequence_numbers @board_state, board
 end
 
@@ -80,5 +80,5 @@ Then /^the game should at least be a (\w+)$/ do |game_state|
 end
 
 Then /^it should be at the indicated position$/ do
-  @board_state.last_position_number.should == @win_position.position_number.should
+  @board_state.last_position_number.should == @win_number.should
 end

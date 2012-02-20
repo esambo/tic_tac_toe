@@ -99,17 +99,17 @@ module TestControllerHelpers
       response_set = context.call
     end
 
-  def board_to_win_position(board)
+  def board_to_win_number(board, winning_mark)
     board.each_with_index do |space, i|
-      if space == 'X'
-        return TicTacToe::WinPosition.new(i + 1, TicTacToe::Player.X)
+      if space == winning_mark
+        return i + 1
       end
     end
   end
 
-  def clear_win_position(board, win_position)
+  def clear_win_number(board, win_number)
     board.tap do |board|
-      board[win_position.position_number - 1] = '_'
+      board[win_number - 1] = '_'
     end
   end
 end
