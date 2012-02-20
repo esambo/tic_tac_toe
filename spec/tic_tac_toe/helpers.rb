@@ -20,6 +20,7 @@ module TicTacToe
           board_state.positions[number.to_i - 1] = player
           board_state.last_position_number = number.to_i
           player = player.turn
+          board_state.next_player = player
         end
       end
   end
