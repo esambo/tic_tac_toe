@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/bearded/perftools.rb.git
+  revision: df73f93e4dda8953e77ba3be2945f4bf806b07cf
+  branch: perftools-1.8
+  specs:
+    perftools.rb (0.5.6)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -37,6 +44,7 @@ GEM
     rspec-expectations (2.8.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.8.0)
+    ruby-prof (0.10.8)
     ruby_gntp (0.3.4)
     term-ansicolor (1.0.7)
     thor (0.14.6)
@@ -48,6 +56,8 @@ DEPENDENCIES
   cucumber
   guard-cucumber
   guard-rspec
+  perftools.rb!
   relish
   rspec
+  ruby-prof
   ruby_gntp
