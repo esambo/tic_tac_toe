@@ -78,11 +78,15 @@ module TestControllerHelpers
 
   def place_alternating_sequence_numbers(board_state, sequence)
     response_set = nil
-    bmc = TicTacToe::BoardMarkConverter.new
-    bmc.to_alternating_sequence_numbers(sequence).each do |number|
+    board_to_alternating_sequence_numbers(sequence).each do |number|
       response_set = place_mark_context board_state, number
     end
     response_set
+  end
+
+  def board_to_alternating_sequence_numbers(sequence)
+    bmc = TicTacToe::BoardMarkConverter.new
+    bmc.to_alternating_sequence_numbers(sequence)
   end
 
   def place_best_position(board_state)
@@ -98,20 +102,6 @@ module TestControllerHelpers
       context = TicTacToe::PlaceMarkContext.new(board_state, number)
       response_set = context.call
     end
-
-  def board_to_win_number(board, winning_mark)
-    board.each_with_index do |space, i|
-      if space == winning_mark
-        return i + 1
-      end
-    end
-  end
-
-  def clear_win_number(board, win_number)
-    board.tap do |board|
-      board[win_number - 1] = '_'
-    end
-  end
 end
 
 World TestControllerHelpers

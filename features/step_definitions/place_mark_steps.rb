@@ -17,13 +17,11 @@ Given /^the grid:$/ do |data_table|
   place_board_with_alternating_marks @board_state, board
 end
 
-Given /^the grid sequence with the indicated winning mark "([^\"]+)":$/ do |winning_mark, data_table|
+Given /^the grid sequence:$/ do |data_table|
   @board_state = new_board_state
   board = data_table_to_board(data_table)
   place_board_with_alternating_marks @board_state, board
-  @win_number = board_to_win_number(board, winning_mark)
-  board = clear_win_number(board, @win_number)
-  place_alternating_sequence_numbers @board_state, board
+  @alternating_sequence_numbers = board_to_alternating_sequence_numbers(board)
 end
 
 When /^I place the mark:$/ do |data_table|
@@ -46,6 +44,22 @@ end
 
 When /^the AI analyzes the best position$/ do
   @best_position = get_best_position(@board_state)
+end
+
+When /^the AI places its best sequential positions$/ do
+  @positions_placed_by_ai = []
+  begin
+    player_x_position_number = @alternating_sequence_numbers.shift
+    @response_set = place_best_position(@board_state)
+    @positions_placed_by_ai.push(
+    { :expected => player_x_position_number.to_i,
+      :actual   => @board_state.last_position_number
+    })
+    unless @alternating_sequence_numbers.empty?
+      player_o_position_number = @alternating_sequence_numbers.shift
+      place_mark_context @board_state, player_o_position_number
+    end
+  end until @alternating_sequence_numbers.empty?
 end
 
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
@@ -80,6 +94,8 @@ Then /^the game should at least be a (\w+)$/ do |game_state|
   @best_position.winner.should == player
 end
 
-Then /^it should be at the indicated position$/ do
-  @board_state.last_position_number.should == @win_number.should
+Then /^the AI should have placed its marks at the indicated positions$/ do
+  @positions_placed_by_ai.each do |test|
+    test[:actual].should == test[:expected]
+  end
 end
