@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Based on: http://rvm.beginrescueend.com/workflow/rvmrc/
 
-ruby_string="ruby-1.9.3-p0"
+ruby_string="ruby-1.9.3-p125"
 gemset_name="TicTacToe_Emmanuel_Sambo"
 
 if rvm list strings | grep -q "${ruby_string}" ; then
