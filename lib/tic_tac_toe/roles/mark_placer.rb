@@ -3,8 +3,7 @@ module TicTacToe
 
     def place_mark(number)
       return valid_ply = false if move_taken?(number)
-      self.positions[number.to_i - 1] = self.next_player
-      self.last_position_number = number.to_i
+      place_mark_at_index(number.to_i - 1)
       take_turn
       valid_ply = true
     end
@@ -13,6 +12,11 @@ module TicTacToe
 
       def move_taken?(number)
         !self.positions[number.to_i - 1].none?
+      end
+
+      def place_mark_at_index(i)
+        self.positions[i] = self.next_player
+        self.last_position_number = i + 1
       end
 
       def take_turn

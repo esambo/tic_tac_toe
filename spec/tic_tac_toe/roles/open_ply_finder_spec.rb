@@ -93,11 +93,6 @@ module TicTacToe
           board_state.last_position_number.should == number
         end
       end
-
-      it 'should have the #next_player take turns' do
-        board_state.next_player.should_receive(:turn)
-        board_state.place_mark_at_index 1
-      end
     end
   end
 end
