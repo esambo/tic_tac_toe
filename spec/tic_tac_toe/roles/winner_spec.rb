@@ -134,7 +134,6 @@ module TicTacToe
               elements_in_string.split.map(&:to_i)
             }
           end
-
           it 'should have 3 rows, 3 cols and 2 diagonals' do
             board_state.send(:win_positions).should ==
               string_element_array_to_i([
@@ -160,7 +159,6 @@ module TicTacToe
                  6    ',
             ])
           end
-
         end
       end
 
@@ -171,7 +169,6 @@ module TicTacToe
               board_of_marks_to_sequental_players(elements_in_string)
             }
           end
-
           it 'should handle empty marks' do
             sequence = '
               1 A B
@@ -202,7 +199,6 @@ module TicTacToe
                  X    ',
               ])
           end
-
         end
       end
 
