@@ -26,8 +26,8 @@ module TicTacToe
         WinPosition.new.tap do |p|
           p.position_number = self.last_position_number
           p.ply_number      = depth
-          p.winner          = self.winner
           p.rank            = rank(winner, depth)
+          p.winner          = self.winner
         end
       end
 
