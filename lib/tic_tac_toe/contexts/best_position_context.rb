@@ -22,5 +22,6 @@ module TicTacToe
         @board_state.extend Minimax
         @board_state.best_position
       end
+
   end
 end

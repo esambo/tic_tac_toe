@@ -12,6 +12,7 @@ module TicTacToe
     end
 
     describe '#successors', :include_helpers do
+
       context 'with last spot empty' do
         it "should return one full board_states with 'X' in the last spot" do
           sequence = '
@@ -30,6 +31,7 @@ module TicTacToe
       end
 
       context 'with last three spots empty' do
+
         it "should return 3 full board_states with 'X' in one at a time" do
           sequence = '
             1 2 A
@@ -59,10 +61,13 @@ module TicTacToe
             board_states[i].next_player.should == Player.O
           end
         end
+
       end
+
     end
 
     describe '#deep_copy' do
+
       it 'should return a new board state' do
         board_state.object_id.should_not == board_state.deep_copy.object_id
       end
@@ -74,6 +79,7 @@ module TicTacToe
       it 'should still have the extended methods' do
         board_state.deep_copy.respond_to?(:successors).should == true
       end
+
     end
 
     describe '#place_mark_at_index' do
@@ -92,7 +98,9 @@ module TicTacToe
           board_state.place_mark_at_index index
           board_state.last_position_number.should == number
         end
+
       end
     end
+
   end
 end

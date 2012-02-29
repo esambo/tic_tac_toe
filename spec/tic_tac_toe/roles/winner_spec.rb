@@ -37,6 +37,7 @@ module TicTacToe
         it 'should be terminal' do
           board_state.should be_terminal
         end
+
       end
 
       context "with 'O' winning" do
@@ -56,6 +57,7 @@ module TicTacToe
         it 'should be terminal' do
           board_state.should be_terminal
         end
+
       end
 
       context 'with a draw' do
@@ -76,6 +78,7 @@ module TicTacToe
         it 'should be terminal' do
           board_state.should be_terminal
         end
+
       end
 
       context 'with eventual draw' do
@@ -96,6 +99,7 @@ module TicTacToe
         it 'should not be terminal' do
           board_state.should_not be_terminal
         end
+
       end
 
       context 'with empty grid' do
@@ -116,10 +120,13 @@ module TicTacToe
         it 'should be terminal' do
           board_state.should_not be_terminal
         end
+
       end
+
     end
 
     context 'internal ' do
+
       describe '#win_positions' do
         context 'with zero based index' do
           def string_element_array_to_i(array_of_elements_in_string)
@@ -153,6 +160,7 @@ module TicTacToe
                  6    ',
             ])
           end
+
         end
       end
 
@@ -194,8 +202,11 @@ module TicTacToe
                  X    ',
               ])
           end
+
         end
       end
+
     end
+
   end
 end

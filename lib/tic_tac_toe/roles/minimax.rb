@@ -42,5 +42,6 @@ module TicTacToe
       def min_for_O(final_positions)
         final_positions.min_by { |p| p.rank }
       end
+
   end
 end

@@ -29,7 +29,6 @@ module TicTacToe
         before :each do
           win_position.path = '9864732510'
         end
-
         it "should be the second last path position: '1'" do
           win_position.next_position_number.should == 1
         end
@@ -42,12 +41,12 @@ module TicTacToe
           win_position.path = '1'
         end
         let(:position_number) { 2 }
-
         it "should change #path to '12'" do
           win_position.position_number = position_number
           win_position.path.should == '12'
         end
       end
     end
+
   end
 end

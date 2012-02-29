@@ -12,6 +12,7 @@ module TicTacToe
     end
 
     describe '#place_mark' do
+
       context 'with no marks' do
         it 'should have 9 empty player spaces' do
           board_state.positions.should == Array.new(9, Player.none)
@@ -36,7 +37,6 @@ module TicTacToe
 
       context 'with placing a mark in the first space' do
         let(:number) { 1 }
-
         it 'should remember the last placed position number' do
           board_state.place_mark number
           board_state.last_position_number.should == number
@@ -49,6 +49,7 @@ module TicTacToe
       end
 
       describe 'returns valid_ply' do
+
         context 'with place mark on a free space' do
           it 'should be true' do
             valid_ply = board_state.place_mark 1
@@ -63,7 +64,10 @@ module TicTacToe
             valid_ply.should == false
           end
         end
+
       end
+
     end
+
   end
 end

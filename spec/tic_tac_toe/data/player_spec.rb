@@ -24,6 +24,7 @@ module TicTacToe
         it 'should not be #O?' do
           player.should_not be_O
         end
+
       end
 
       context 'with :X' do
@@ -36,11 +37,11 @@ module TicTacToe
         it 'should not be #none?' do
           player.should_not be_none
         end
+
       end
 
       context 'with :O' do
         let(:player) { Player.new :O }
-
         it 'should be #O?' do
           player.should be_O
         end
@@ -48,7 +49,6 @@ module TicTacToe
 
       context "with 'X'" do
         let(:player) { Player.new 'X' }
-
         it 'should be #X?' do
           player.should be_X
         end
@@ -56,7 +56,6 @@ module TicTacToe
 
       context "with 'O'" do
         let(:player) { Player.new 'O' }
-
         it 'should be #O?' do
           player.should be_O
         end
@@ -68,6 +67,7 @@ module TicTacToe
           player.should be_none
         end
       end
+
     end
 
     describe '#X' do
@@ -95,9 +95,9 @@ module TicTacToe
     end
 
     describe '#turn' do
+
       context 'with X' do
         let(:player) { Player.new :X }
-
         it 'should be O' do
           player.turn.should be_O
         end
@@ -105,14 +105,15 @@ module TicTacToe
 
       context 'with O' do
         let(:player) { Player.new :O }
-
         it 'should be X' do
           player.turn.should be_X
         end
       end
+
     end
 
     describe '#to_s' do
+
       context 'with :X' do
         it "should be 'X'" do
           Player.X.to_s.should == 'X'
@@ -130,9 +131,11 @@ module TicTacToe
           Player.none.to_s.should == ' '
         end
       end
+
     end
 
     describe '#to_i' do
+
       context 'with :X' do
         it 'should be 1' do
           Player.X.to_i.should == 1
@@ -150,6 +153,8 @@ module TicTacToe
           Player.none.to_i.should == 0
         end
       end
+
     end
+
   end
 end

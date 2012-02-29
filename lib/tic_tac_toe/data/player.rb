@@ -1,5 +1,6 @@
 module TicTacToe
   Player = Struct.new(:mark) do
+
     def initialize(mark)
       self.mark = mark.upcase.to_sym
       self.mark = :none unless X? or O?
@@ -50,5 +51,6 @@ module TicTacToe
     def to_s
       draw? ? ' ' : self.mark.to_s
     end
+
   end
 end

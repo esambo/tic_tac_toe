@@ -46,5 +46,6 @@ module TicTacToe
         spaces = self.positions.count(Player.none)
         spaces == 0
       end
+
   end
 end

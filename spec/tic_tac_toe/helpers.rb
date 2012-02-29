@@ -2,6 +2,7 @@ require 'tic_tac_toe/board_mark_converter'
 
 module TicTacToe
   module Helpers
+
     def board_of_marks_to_sequental_players(grid_of_string_marks)
       grid_of_string_marks.split.map { |mark| Player.new mark }
     end
@@ -23,5 +24,6 @@ module TicTacToe
           board_state.next_player = player
         end
       end
+
   end
 end

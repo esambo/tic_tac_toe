@@ -58,6 +58,8 @@ module TicTacToe
           numbers.uniq.count.should == 9
         end
       end
+
     end
+
   end
 end

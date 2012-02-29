@@ -6,6 +6,7 @@ require 'tic_tac_toe/contexts/best_position_context'
 
 module TicTacToe
   class AiNeverLoses
+
     def call
       next_player = Player.X
       space       = Player.none
@@ -13,5 +14,6 @@ module TicTacToe
       context     = BestPositionContext.new board_state
       context.call
     end
+
   end
 end

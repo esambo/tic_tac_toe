@@ -10,6 +10,7 @@ module TicTacToe
     end
 
     describe '#call' do
+
       context 'with a position number' do
         let(:number) { 5 }
         let(:context) { PlaceMarkContext.new(board_state, number) }
@@ -23,7 +24,6 @@ module TicTacToe
           before :each do
             context.board_state.stub(:place_mark) { true }
           end
-
           it 'should call #winner' do
             context.board_state.should_receive(:winner)
             context.call
@@ -34,7 +34,6 @@ module TicTacToe
           before :each do
             context.board_state.stub(:place_mark) { false }
           end
-
           it 'should not call #winner' do
             context.board_state.should_not_receive(:winner)
             context.call
@@ -89,6 +88,7 @@ module TicTacToe
               response_set = context.call
               response_set.terminal.should == terminal
             end
+
           end
 
           context 'without a valid ply' do
@@ -109,9 +109,14 @@ module TicTacToe
               response_set = context.call
               response_set.winner.should == winner
             end
+
           end
+
         end
+
       end
+
     end
+
   end
 end

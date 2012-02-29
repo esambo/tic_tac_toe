@@ -10,11 +10,11 @@ module TicTacToe
 
     describe '#call' do
       let(:context) { BestPositionContext.new(board_state) }
-
       it 'should calls #best_position' do
         context.board_state.should_receive(:best_position)
         context.call
       end
     end
+
   end
 end
