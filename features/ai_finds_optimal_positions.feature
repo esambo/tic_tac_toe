@@ -4,15 +4,16 @@ Feature: AI finds optimal positions
   As an AI player  
   I want to place my numerical marks in the optimal positions   
 
-  Numeric marks indicate sequence positions that the AI player 'X' should find and mark.  
-  Alphabetic marks indicate sequence positions that the player 'O' will mark when it is its ply.  
-  'X' marks have previously already been analyzed and can therefore be placed on the initial board in any order.  
-  'O' marks can be placed on the initial board in any order.  
-  '*' indicates the optimal winning position that the AI player 'X' should find based on the marks of player 'O'.  
-  The scenario number indicates the alternating sequence numbers of how 'X' and 'O' place their marks in this game.  
-  Based on [Wikipedia optimal decision tree for player X in Tic-Tac-Toe](http://upload.wikimedia.org/wikipedia/commons/d/de/Tictactoe-X.svg) 
-  without the two draws and reduced requirements for: 
-  1652 (163 is similar combination to 12**7 (163.transform.reverse))
+- Numeric marks indicate sequence positions that the AI player `X` should find and mark.  
+- Alphabetic marks indicate sequence positions that the player `O` will mark when it is its ply.  
+- `X` marks have previously already been analyzed and can therefore be placed on the initial board in any order.  
+- `O` marks can be placed on the initial board in any order.  
+- `*` indicates the optimal winning position that the AI player `X` should find based on the marks of player `O`.  
+- The scenario number indicates the alternating sequence numbers of how player `X` and `O` place their marks in this game.  
+- Based on [Wikipedia optimal decision tree for player X in Tic-Tac-Toe](http://upload.wikimedia.org/wikipedia/commons/d/de/Tictactoe-X.svg) without:  
+    - the two draws  
+    - reduced requirements for:  
+         - 1652 (163 is similar combination to 12**7 (163.transform.reverse))  
 
   Scenario: 12437
     Given the grid sequence:
