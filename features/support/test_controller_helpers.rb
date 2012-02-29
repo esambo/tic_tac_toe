@@ -90,7 +90,7 @@ module TestControllerHelpers
   end
 
   def place_best_position(board_state)
-    number = get_best_position(board_state).position_number
+    number = get_best_position(board_state).next_position_number
     response_set = place_mark_context board_state, number
   end
 

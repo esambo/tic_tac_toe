@@ -12,6 +12,7 @@ module TicTacToe
       else
         best = min_for_O(final_positions)
       end
+      best.position_number = self.last_position_number
       best
     end
 

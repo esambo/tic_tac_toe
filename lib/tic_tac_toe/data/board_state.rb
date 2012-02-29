@@ -6,6 +6,7 @@ module TicTacToe
       @length = length
       @positions = Array.new(size, empty_space)
       @next_player = first_player
+      @last_position_number = 0
     end
 
     def size

@@ -17,64 +17,53 @@ module TicTacToe
     end
 
     describe '#best_position', :include_helpers do
-
-      context "with 'X' in winning position" do
-        it 'should find that position number' do
-          sequence = '
-            1 2 3
-            A B _
-            _ _ _'.split
-          setup_board_state(sequence)
-          board_state.last_position_number.should == 3
-          best_position = board_state.best_position
-          best_position.position_number.should == 3
-          best_position.winner.should == Player.X
-        end
-      end
-
       context "with 'X' winning in next move" do
-        it 'should find that position number' do
-          sequence = '
+        let(:best_position) {
+          sequence_124753 = '
             1 A C
             2 3 _
             B _ _'.split
-          setup_board_state(sequence)
+          setup_board_state(sequence_124753)
           best_position = board_state.best_position
-          best_position.position_number.should == 6
+        }
+
+        it 'should find that position number' do
+          best_position.next_position_number.should == 6
+        end
+
+        it "should win with 'X'" do
           best_position.winner.should == Player.X
+        end
+
+        it "should have a game tree descendants path '63'" do
+          best_position.path.should == '63'
         end
       end
 
       context "with 'X' winning in ply number 7 or 9" do
-        it 'should win ASAP' do
-          sequence = '
+        let(:best_position) {
+          sequence_142357 = '
             1 2 B
             A 3 _
             C _ _'.split
-          setup_board_state(sequence)
+          setup_board_state(sequence_142357)
           best_position = board_state.best_position
+        }
+
+        it "should win with 'X' ASAP" do
           best_position.winner.should == Player.X
+        end
+
+        it 'should find ply number 7' do
           best_position.ply_number.should == 7
         end
       end
     end
 
     describe 'internal' do
-      let(:player_X_rank_9)    { WinPosition.new.tap do |p|
-          p.position_number = 1
-          p.rank            = 9
-          p.winner          = Player.X
-      end }
-      let(:player_O_rank_8)    { WinPosition.new.tap do |p|
-          p.position_number = 2
-          p.rank            = -8
-          p.winner          = Player.O
-      end }
-      let(:player_draw) { WinPosition.new.tap do |p|
-          p.position_number = 4
-          p.rank            = 0
-          p.winner          = Player.draw
-      end }
+      let(:player_X_rank_9) { WinPosition.new.tap do |p| p.rank =  9 end }
+      let(:player_O_rank_8) { WinPosition.new.tap do |p| p.rank = -8 end }
+      let(:player_draw)     { WinPosition.new.tap do |p| p.rank =  0 end }
 
       describe '#max_for_X' do
         context "with 'O'" do
