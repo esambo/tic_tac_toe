@@ -12,5 +12,11 @@ module TicTacToe
     def size
       @length * @length
     end
+
+    def place_mark_at_index(i)
+      self.positions[i] = self.next_player
+      self.last_position_number = i + 1
+    end
+
   end
 end

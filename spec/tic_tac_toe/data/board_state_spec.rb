@@ -33,5 +33,34 @@ module TicTacToe
       end
     end
 
+    describe '#place_mark_at_index' do
+      context 'with index 0' do
+        let(:index) { 0 }
+        it 'should place a mark in the first position' do
+          board_state.place_mark_at_index(index)
+          board_state.positions[index].should_not be_none
+        end
+      end
+    end
+
+    describe '#last_position_number' do
+
+      context 'with empty board' do
+        it 'should be 0 (invalid, non-positive number)' do
+          board_state.last_position_number.should == 0
+        end
+      end
+
+      context 'with one mark at index 0' do
+        before :each do
+          board_state.place_mark_at_index(0)
+        end
+        it 'should be 1' do
+          board_state.last_position_number.should == 1
+        end
+      end
+
+    end
+
   end
 end

@@ -20,11 +20,6 @@ module TicTacToe
         next_board_state
       end
 
-      def place_mark_at_index(i)
-        self.positions[i] = self.next_player
-        self.last_position_number = i + 1
-      end
-
       def take_turn
         self.next_player = self.next_player.turn
       end
