@@ -63,8 +63,13 @@ When /^the AI places its best sequential positions$/ do
 end
 
 Then /^"([^"]*)" should "([^"]*)"$/ do |mark, outcome|
-  @response_set.winner.should     == TicTacToe::Player.new(mark) if outcome == 'win'
-  @response_set.winner.should_not == TicTacToe::Player.new(mark) if outcome == 'lose'
+  player = TicTacToe::Player.new mark
+  failure_message = "expected winner: #{player.inspect}\n     got winner: #{@response_set.winner.inspect}\nin response_set: #{@response_set.inspect}\n"
+  if outcome == 'win'
+    @response_set.winner.should     eq(player), failure_message
+  elsif outcome == 'lose'
+    @response_set.winner.should_not == player
+  end
 end
 
 Then /^the game should be a draw$/ do
