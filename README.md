@@ -12,7 +12,7 @@
   - Make use of it
 - Extract _GameTestPresenter_
   - Use DI from Objects on Rails
-- GUI
+- UI
   - Command Line Interface
 
 

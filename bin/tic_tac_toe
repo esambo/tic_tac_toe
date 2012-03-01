@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+
+$: << File.expand_path(File.join(File.dirname(__FILE__), %w(.. lib)))
+require 'tic_tac_toe'
+
+module TicTacToe
+  game = UI::GameController.new STDOUT
+  game.start
+end
