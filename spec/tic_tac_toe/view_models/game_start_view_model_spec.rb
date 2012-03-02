@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'tic_tac_toe/view_model/game_start_view_model'
+require 'tic_tac_toe/view_models/game_start_view_model'
 
 module TicTacToe
   module UI
