@@ -4,7 +4,6 @@ module TicTacToe
     def place_mark(number)
       return valid_ply = false if move_taken?(number)
       self.place_mark_at_index(number.to_i - 1)
-      self.take_turn
       valid_ply = true
     end
 

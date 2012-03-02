@@ -12,7 +12,7 @@ module TicTacToe
     end
 
     def call
-      place_mark and winner
+      place_mark and take_turns and winner
       response
     end
 
@@ -20,11 +20,14 @@ module TicTacToe
 
       def place_mark
         @board_state.extend MarkPlacer
+        @positions = @board_state.positions
+        @valid_ply = @board_state.place_mark @number
+      end
+
+      def take_turns
         @board_state.extend TakeTurns
-        @valid_ply   = @board_state.place_mark @number
+        @board_state.take_turn
         @next_player = @board_state.next_player
-        @positions   = @board_state.positions
-        @valid_ply
       end
 
       def winner

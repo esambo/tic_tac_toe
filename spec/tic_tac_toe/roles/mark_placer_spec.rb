@@ -44,11 +44,6 @@ module TicTacToe
         end
       end
 
-      it 'should have the #next_player take turns' do
-        board_state.should_receive(:take_turn)
-        board_state.place_mark 1
-      end
-
       describe 'returns valid_ply' do
 
         context 'with place mark on a free space' do
