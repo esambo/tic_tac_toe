@@ -1,15 +1,5 @@
-require 'tic_tac_toe/controllers/game_controller'
-require 'tic_tac_toe/view_model/game_start_view_model'
-require 'tic_tac_toe/view/game_start_view'
-require 'tic_tac_toe/contexts/best_position_context'
-require 'tic_tac_toe/contexts/place_mark_context'
-require 'tic_tac_toe/roles/minimax'
-require 'tic_tac_toe/roles/open_ply_finder'
-require 'tic_tac_toe/roles/mark_placer'
-require 'tic_tac_toe/roles/winner'
-require 'tic_tac_toe/roles/take_turns'
-require 'tic_tac_toe/data/board_state'
-require 'tic_tac_toe/data/player'
-require 'tic_tac_toe/data/response_set'
-require 'tic_tac_toe/data/win_position'
-require 'tic_tac_toe/board_mark_converter'
+lib = File.expand_path(File.dirname(__FILE__))
+lib_rb_files = File.join(lib, 'tic_tac_toe', '**', '*.rb')
+Dir.glob(lib_rb_files).each do |f|
+  require f
+end
