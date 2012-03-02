@@ -9,17 +9,21 @@ module TicTacToe
     let(:board_state) { BoardState.new 3, Player.none, Player.X }
     before :each do
       board_state.extend OpenPlyFinder
+      board_state.stub  :take_turn
     end
 
     describe '#successors', :include_helpers do
 
       context 'with last spot empty' do
-        it "should return one full board_states with 'X' in the last spot" do
+        before :each do
           sequence = '
             1 2 A
             B 3 4
             D C _'.split
           setup_board_state(sequence)
+        end
+
+        it "should return one full board_states with 'X' in the last spot" do
           board_states = board_state.successors
           board_states.count.should == 1
           board_states.first.positions.map(&:to_s).should == '
@@ -28,16 +32,23 @@ module TicTacToe
             O O X
           '.split
         end
+
+        it 'should have the players take turns' do
+          board_state.should_receive(:take_turn).at_least(:once)
+          board_state.successors
+        end
+
       end
 
       context 'with last three spots empty' do
-
-        it "should return 3 full board_states with 'X' in one at a time" do
+        before :each do
           sequence = '
             1 2 A
             B C 3
             _ _ _'.split
           setup_board_state(sequence)
+        end
+        it "should return 3 full board_states with 'X' in one at a time" do
           board_states = board_state.successors
           board_states.count.should == 3
           board_states[0].positions.map(&:to_s).should == [
@@ -53,15 +64,6 @@ module TicTacToe
             'O', 'O', 'X',
             ' ', ' ', 'X']
         end
-
-        it 'should have switched the players' do
-          board_state.next_player.should == Player.X
-          board_states = board_state.successors
-          3.times do |i|
-            board_states[i].next_player.should == Player.O
-          end
-        end
-
       end
 
     end

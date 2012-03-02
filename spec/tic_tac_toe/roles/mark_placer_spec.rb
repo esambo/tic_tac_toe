@@ -9,6 +9,7 @@ module TicTacToe
     let(:board_state) { BoardState.new 3, Player.none, Player.X }
     before :each do
       board_state.extend MarkPlacer
+      board_state.stub(:take_turn)
     end
 
     describe '#place_mark' do
@@ -44,7 +45,7 @@ module TicTacToe
       end
 
       it 'should have the #next_player take turns' do
-        board_state.next_player.should_receive(:turn)
+        board_state.should_receive(:take_turn)
         board_state.place_mark 1
       end
 

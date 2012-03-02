@@ -3,6 +3,7 @@ require 'tic_tac_toe/data/player'
 require 'tic_tac_toe/data/board_state'
 require 'tic_tac_toe/data/win_position'
 require 'tic_tac_toe/roles/winner'
+require 'tic_tac_toe/roles/take_turns'
 require 'tic_tac_toe/roles/open_ply_finder'
 require 'tic_tac_toe/roles/minimax'
 
@@ -12,6 +13,7 @@ module TicTacToe
     let(:board_state) { BoardState.new 3, Player.none, Player.X }
     before :each do
       board_state.extend Winner
+      board_state.extend TakeTurns
       board_state.extend OpenPlyFinder
       board_state.extend Minimax
     end

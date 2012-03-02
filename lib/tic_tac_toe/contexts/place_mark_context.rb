@@ -1,5 +1,6 @@
 require 'tic_tac_toe/roles/mark_placer'
 require 'tic_tac_toe/roles/winner'
+require 'tic_tac_toe/roles/take_turns'
 
 module TicTacToe
   class PlaceMarkContext
@@ -19,6 +20,7 @@ module TicTacToe
 
       def place_mark
         @board_state.extend MarkPlacer
+        @board_state.extend TakeTurns
         @valid_ply   = @board_state.place_mark @number
         @next_player = @board_state.next_player
         @positions   = @board_state.positions
