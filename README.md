@@ -8,12 +8,22 @@
 
 ## ToDo
 
-- Rename _BoardMarkConverter_ to _GameTestController_
-  - Make use of it
-- Extract _GameTestPresenter_
-  - Use DI from Objects on Rails
-- UI
-  - Command Line Interface
+- PlyController.new
+  - add parameter
+     - length
+- Performance tuning
+  - Cache combinations to prevent calculations of all permutations
+  - Remove reotations & reflections
+  - Alpha Beta cutoff based on depth rank of fround winners 
+     - perhaps only for first couple of plies
+  - NegaMax to DRY up code?
+  - DCI
+     - Include instead of extend for critical parts
+     - SimpleDelegator, none standard, to get self.*
+     - Remove Kernel#dup/clone
+  - Keep track of potential marks by individual positions instead of board_state to reduce memory consumption and garbage collection activity
+  - Cacke first few depth of the game tree
+- Side effect free functions
 
 
 ## Design Decisions
