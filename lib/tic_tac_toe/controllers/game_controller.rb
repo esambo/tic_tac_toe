@@ -5,6 +5,7 @@ module TicTacToe
 
       def initialize(output)
         @output = output
+        @length = 3
       end
 
       def start
@@ -26,12 +27,11 @@ module TicTacToe
         end
 
           def board_state_factory
-            length = 3
-            @board_state_factory ||= BoardStateFactory.new length
+            @board_state_factory ||= BoardStateFactory.new @length
           end
 
         def new_ply_controller
-          ply_controller_source.call(@output)
+          ply_controller_source.call(@output, @length)
         end
 
           def ply_controller_source

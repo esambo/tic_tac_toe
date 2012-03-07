@@ -8,9 +8,6 @@
 
 ## ToDo
 
-- PlyController.new
-  - add parameter
-     - length
 - Performance tuning
   - Cache combinations to prevent calculations of all permutations
   - Remove reotations & reflections

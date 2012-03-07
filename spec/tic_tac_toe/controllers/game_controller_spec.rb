@@ -29,7 +29,7 @@ module TicTacToe
           game.stub(:new_board_state)
           ply = double('new_ply_controller')
           ply.should_receive(:ai_vs_human)
-          game.ply_controller_source = ->(output){ ply }
+          game.ply_controller_source = ->(output, length){ ply }
           game.start
         end
 

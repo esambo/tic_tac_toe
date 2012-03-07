@@ -8,30 +8,31 @@ require 'tic_tac_toe/data/player'
 module TicTacToe
   module UI
     describe PlyController do
+      let(:length) { 3 }
 
       describe '#new' do
         let(:output) { double('output').as_null_object }
-        let(:ply)    { PlyController.new output }
+        let(:ply)    { PlyController.new output, length }
         it 'should set @output' do
           ply.instance_variable_get(:@output).should == output
         end
       end
 
       describe '#ai_vs_human' do
-        let(:ply) { PlyController.new output }
+        let(:ply) { PlyController.new output, length }
         let(:output) { double('output').as_null_object }
 
         it 'should call #render_board' do
           ply.stub(:ai_ply)
           ply.should_receive(:render_board).with(an_instance_of Array)
-          board_state = double :board_state, :positions => [], :length => 3
+          board_state = double :board_state, :positions => []
           ply.ai_vs_human board_state
         end
 
         it 'should call #ai_ply' do
           ply.stub(:render_board)
           ply.should_receive(:ai_ply)
-          board_state = double :board_state, :positions => nil, :length => 3
+          board_state = double :board_state, :positions => nil
           ply.ai_vs_human board_state
         end
 
@@ -39,7 +40,7 @@ module TicTacToe
 
       describe '#ai_ply' do
         let(:output) { double(:output).as_null_object }
-        let(:ply)    { PlyController.new output }
+        let(:ply)    { PlyController.new output, length }
         let(:number) { 1 }
         let(:best)   { double :win_position, :next_position_number => number }
 
@@ -93,11 +94,10 @@ module TicTacToe
             @output ||= [].extend PutString
           end
         end
-        let(:ply) { PlyController.new output }
+        let(:ply) { PlyController.new output, length }
 
         describe '#render_board' do
           it 'should output board' do
-            ply.length = 3
             positions = ['X', 'X', 'X', 'O', 'O', 'O', ' ', ' ', ' ']
             ply.send :render_board, positions
             output.should include('+---+---+---+')

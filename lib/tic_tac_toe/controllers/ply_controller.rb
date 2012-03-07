@@ -2,14 +2,13 @@ module TicTacToe
   module UI
     class PlyController
       attr_writer :best_position_context_source, :place_mark_context_source
-      attr_writer :length
 
-      def initialize(output)
+      def initialize(output, length)
         @output = output
+        @length = length
       end
 
       def ai_vs_human(board_state)
-        @length = board_state.length
         render_board board_state.positions
         response = ai_ply(board_state)
       end
