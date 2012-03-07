@@ -28,6 +28,7 @@ GEM
       guard (>= 0.8.3)
     guard-rspec (0.6.0)
       guard (>= 0.10.0)
+    hirb (0.6.0)
     json (1.6.5)
     mime-types (1.17.2)
     relish (0.5.3)
@@ -56,6 +57,7 @@ DEPENDENCIES
   cucumber
   guard-cucumber
   guard-rspec
+  hirb
   perftools.rb!
   relish
   rspec

@@ -2,14 +2,13 @@ module TicTacToe
   module UI
     class GameStartView
 
-      def initialize(output, view_model)
-        @output     = output
-        @view_model = view_model
+      def initialize(output, message)
+        @output  = output
+        @message = message
       end
 
       def render
-        @output.puts @view_model.welcome_message
-        @output.puts ''
+        @output.puts @message
       end
 
     end

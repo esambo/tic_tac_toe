@@ -1,5 +1,7 @@
 source :rubygems
 
+gem 'hirb'
+
 gem 'rspec'
 gem 'cucumber'
 gem 'guard-rspec'
