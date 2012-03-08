@@ -2,6 +2,7 @@ module TicTacToe
   module UI
     class GameController
       attr_writer :board_state_factory, :ply_controller_source
+      attr_writer :game_start_view_source
 
       def initialize(output)
         @output = output
@@ -15,8 +16,8 @@ module TicTacToe
       end
 
         def render_welcome_message
-          welcome_message = 'Tic-Tac-Toe'
-          view = GameStartView.new @output, welcome_message
+          message = 'Tic-Tac-Toe'
+          view = new_game_start_view @output, message
           view.render
         end
 
@@ -36,6 +37,14 @@ module TicTacToe
 
           def ply_controller_source
             @ply_controller_source ||= PlyController.public_method :new
+          end
+
+        def new_game_start_view(output, message)
+          game_start_view_source.call output, message
+        end
+
+          def game_start_view_source
+            @game_start_view_source ||= GameStartView.public_method :new
           end
 
     end

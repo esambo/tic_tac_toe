@@ -10,10 +10,12 @@ module TicTacToe
 
       describe '#start' do
 
-        it 'should render welcome message' do
+        it 'should call GameStartView.new#render' do
           game.stub(:new_board_state)
           game.stub_chain(:new_ply_controller, :ai_vs_human)
-          output.should_receive(:puts).with('Tic-Tac-Toe')
+          view = double('game_start_view', :new => nil)
+          view.should_receive(:render)
+          game.game_start_view_source = ->(output, message){ view }
           game.start
         end
 

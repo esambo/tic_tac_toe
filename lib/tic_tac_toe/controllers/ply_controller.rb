@@ -2,6 +2,8 @@ module TicTacToe
   module UI
     class PlyController
       attr_writer :best_position_context_source, :place_mark_context_source
+      attr_writer :ply_board_presenter_source
+      attr_writer :ply_board_view_source, :ply_position_view_source
 
       def initialize(output, length)
         @output = output
@@ -47,16 +49,37 @@ module TicTacToe
             end
 
         def render_board(positions)
-          presenter = PlyBoardPresenter.new positions, @length
-          board     = presenter.call
-          view      = PlyBoardView.new @output, board
-          view.render
+          board = new_ply_board_presenter(positions, @length).call
+          new_ply_board_view(@output, board).render
         end
 
+          def new_ply_board_presenter(positions, length)
+            ply_board_presenter_source.call(positions, length)
+          end
+
+            def ply_board_presenter_source
+              @ply_board_presenter_source ||= PlyBoardPresenter.public_method :new
+            end
+
+          def new_ply_board_view(output, board)
+            ply_board_view_source.call(output, board)
+          end
+
+            def ply_board_view_source
+              @ply_board_view_source ||= PlyBoardView.public_method :new
+            end
+
         def render_position(player_mark, number)
-          view = PlyPositionView.new @output, player_mark, number
-          view.render
+          new_ply_position_view(@output, player_mark, number).render
         end
+
+          def new_ply_position_view(output, player_mark, number)
+            ply_position_view_source.call(output, player_mark, number)
+          end
+
+            def ply_position_view_source
+              @ply_position_view_source ||= PlyPositionView.public_method :new
+            end
 
     end
   end

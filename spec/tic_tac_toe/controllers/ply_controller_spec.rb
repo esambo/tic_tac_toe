@@ -24,8 +24,8 @@ module TicTacToe
 
         it 'should call #render_board' do
           ply.stub(:ai_ply)
-          ply.should_receive(:render_board).with(an_instance_of Array)
-          board_state = double :board_state, :positions => []
+          ply.should_receive(:render_board)
+          board_state = double :board_state, :positions => nil
           ply.ai_vs_human board_state
         end
 
@@ -44,7 +44,7 @@ module TicTacToe
         let(:number) { 1 }
         let(:best)   { double :win_position, :next_position_number => number }
 
-        it 'should call BestPositionContext' do
+        it 'should call BestPositionContext.new#call' do
           ply.stub(:place_mark) { double :response, :positions => [] }
           ply.stub :render_board
           context = double :best_position_context
@@ -53,15 +53,17 @@ module TicTacToe
           ply.ai_ply double(:board_state)
         end
 
-        it 'should call #render_position' do
+        it 'should call PlyPositionView.new#render' do
           ply.stub(:place_mark) { double :response, :positions => [] }
           ply.stub :render_board
-          ply.best_position_context_source = ->(board_state){ double(:best_position_context, :call => best) }
-          ply.should_receive(:render_position).with('X', an_instance_of(Fixnum))
+          ply.stub(:best_position) { best }
+          position_view = double :ply_position_view
+          position_view.should_receive(:render)
+          ply.ply_position_view_source = ->(output, player_mark, number){ position_view }
           ply.ai_ply double(:board_state)
         end
 
-        it 'should call PlaceMarkContext' do
+        it 'should call PlaceMarkContext.new#call' do
           ply.stub(:best_position) { best }
           ply.stub :render_board
           response_set = double :response_set, :positions => [], :terminal => false
@@ -72,47 +74,28 @@ module TicTacToe
           ply.ai_ply board_state
         end
 
-        it 'should call #render_board' do
+        it 'should call PlyBoardView.new#render' do
           ply.stub(:best_position) { best }
           response = double :response, :positions => [], :terminal => false
           ply.stub(:place_mark) { response }
-          ply.should_receive(:render_board).with(an_instance_of Array)
+          board_view = double :ply_board_view
+          board_view.should_receive(:render)
+          ply.ply_board_view_source = ->(output, board){ board_view }
           board_state = double :board_state
+          ply.stub(:new_ply_board_presenter) { double :presenter, :call => nil }
           ply.ai_ply board_state
         end
 
-      end
-
-      describe 'integration with view ' do
-        before :each do
-          module PutString
-            def puts(str)
-              self << str
-            end
-          end
-          def output
-            @output ||= [].extend PutString
-          end
-        end
-        let(:ply) { PlyController.new output, length }
-
-        describe '#render_board' do
-          it 'should output board' do
-            positions = ['X', 'X', 'X', 'O', 'O', 'O', ' ', ' ', ' ']
-            ply.send :render_board, positions
-            output.should include('+---+---+---+')
-          end
-        end
-
-        describe '#render_position' do
-          context "with player 'X' at position number 8" do
-            let(:player_mark) { 'X' }
-            let(:number)      {  8  }
-            it 'should output player mark and position number' do
-              ply.send :render_position, player_mark, number
-              output.should include('X player ply position number: 8')
-            end
-          end
+        it 'should call PlyBoardPresenter.new#call' do
+          ply.stub(:best_position) { best }
+          response = double :response, :positions => [], :terminal => false
+          ply.stub(:place_mark) { response }
+          board_presenter = double :ply_board_presenter
+          board_presenter.should_receive(:call)
+          ply.ply_board_presenter_source = ->(positions, length){ board_presenter }
+          board_state = double :board_state
+          ply.stub(:new_ply_board_view) { double :view, :render => nil }
+          ply.ai_ply board_state
         end
 
       end
