@@ -4,7 +4,8 @@ Feature: Human Starts Game
   I want to start the game  
 
   Scenario: start game
-    When I start the game (with some pre-fills)
+    When I start a game
     Then I should see "Tic-Tac-Toe"
-    And I should see the grid
+    And I should see the grid next
     And I should see the position number of player "X"
+    And I should see the grid next
