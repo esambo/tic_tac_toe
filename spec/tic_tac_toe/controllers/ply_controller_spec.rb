@@ -19,16 +19,24 @@ module TicTacToe
         let(:ply)         { PlyController.new output, length }
         let(:output)      { double('output').as_null_object }
         let(:board_state) { double(:board_state, :positions => nil) }
+        before :each do
+          ply.stub(:ai_ply)
+          ply.stub(:render_board)
+          ply.stub(:human_ply)
+        end
 
         it 'should call #render_board' do
-          ply.stub(:ai_ply)
           ply.should_receive(:render_board)
           ply.ai_vs_human(board_state)
         end
 
         it 'should call #ai_ply' do
-          ply.stub(:render_board)
           ply.should_receive(:ai_ply)
+          ply.ai_vs_human(board_state)
+        end
+
+        it 'should call #human_ply' do
+          ply.should_receive(:human_ply)
           ply.ai_vs_human(board_state)
         end
 
@@ -76,6 +84,18 @@ module TicTacToe
             ply.should_receive(:render_board).ordered
             ply.ai_ply(board_state)
           end
+        end
+
+      end
+
+      describe '#human_ply' do
+        let(:output)      { double(:output).as_null_object }
+        let(:ply)         { PlyController.new output, length }
+        let(:board_state) { double :board_state }
+
+        it 'should call #render_position' do
+          ply.should_receive :render_position
+          ply.human_ply board_state
         end
 
       end

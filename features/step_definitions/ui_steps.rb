@@ -9,6 +9,15 @@ def output
 end
 
 
+def validate_incrementally(find_in, find, index)
+  index ||= 0
+  find_in[index..-1].should include(find)
+  i = find_in[index..-1].index(find)
+  index += i + 1 unless i.nil?
+  index
+end
+
+
 When /^I start a game$/ do
   game = TicTacToe::UI::GameController.new output
   length   = 3
@@ -23,27 +32,18 @@ Then /^I should see "([^\"]+)"$/ do |text|
 end
 
 Then /^I should see the grid next$/ do
-  grid_border     = '+---+---+---+'
-  occurances      = 2
-  found_all       = false
-  @output_index ||= 0
-  occurances.times do |o|
-    i = output[@output_index..-1].index(grid_border)
-    unless i.nil?
-      @output_index += i + 1
-      found_all = (occurances == o + 1)
-    end
-  end
-  unless found_all
-    failure_message    = "Expected: #{output}\nto include: #{grid_border}\n#{occurances} times."
-    failure_message   += "\nGot:\n"
-    output[@output_index..-1].each do |e|
-      failure_message += "#{e.inspect}\n"
-    end
-    fail failure_message
+  grid_border = '+---+---+---+'
+  2.times do
+    @output_index = validate_incrementally(output, grid_border, @output_index)
   end
 end
 
-Then /^I should see the position number of player "([^\"]+)"$/ do |mark|
-  output.should include("#{mark} player ply position number: 6")
+Then /^I should see the position number of player "([^\"]+)" next$/ do |mark|
+  text = "#{mark} player ply position number: 6"
+  @output_index = validate_incrementally(output, text, @output_index)
+end
+
+Then /^I should see that the next ply is for player "([^\"]+)" next$/ do |mark|
+  text = "#{mark} player ply position number: "
+  @output_index = validate_incrementally(output, text, @output_index)
 end

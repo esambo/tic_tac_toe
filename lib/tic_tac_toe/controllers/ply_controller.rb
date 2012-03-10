@@ -13,6 +13,7 @@ module TicTacToe
       def ai_vs_human(board_state)
                    render_board(board_state.positions)
         response = ai_ply(board_state)
+                   human_ply(board_state)
       end
 
         def ai_ply(board_state)
@@ -21,6 +22,11 @@ module TicTacToe
                         render_position(player_mark, best.next_position_number)
           response    = place_mark(board_state, best.next_position_number)
                         render_board(response.positions)
+        end
+
+        def human_ply(board_state)
+          player_mark = Player.O.to_s
+                        render_position(player_mark, nil)
         end
 
       private
