@@ -10,7 +10,8 @@ module TicTacToe
 
       def render
         @output.puts ''
-        @output.puts "#{@player_mark} player ply position number: #{@number}"
+        @output.print "#{@player_mark} player position number: #{@number}"
+        @output.print "\n" unless @number.nil?
       end
 
     end

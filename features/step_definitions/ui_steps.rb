@@ -2,6 +2,10 @@ module PutString
   def puts(str)
     self << str
   end
+
+  def print(str)
+    self << str
+  end
 end
 
 module GetChar
@@ -60,12 +64,12 @@ Then /^I should see the grid next$/ do
 end
 
 Then /^I should see the position number of player "([^\"]+)" next$/ do |mark|
-  text = "#{mark} player ply position number: 6"
+  text = "#{mark} player position number: 6"
   @output_index = validate_incrementally(output, text, @output_index)
 end
 
 Then /^I should see that the next ply is for player "([^\"]+)" next$/ do |mark|
-  text = "#{mark} player ply position number: "
+  text = "#{mark} player position number: "
   @output_index = validate_incrementally(output, text, @output_index)
 end
 
