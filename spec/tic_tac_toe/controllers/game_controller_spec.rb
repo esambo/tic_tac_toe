@@ -5,8 +5,22 @@ require 'tic_tac_toe/views/game_start_view'
 module TicTacToe
   module UI
     describe GameController do
-      let(:output) { double('output').as_null_object }
-      let(:game)   { GameController.new output }
+      let(:input)  { double :input }
+      let(:output) { double(:output).as_null_object }
+      let(:game)   { GameController.new input, output }
+
+      describe '#ply_controller' do
+        context 'after #start' do
+          let(:ply_controller) { double :ply, :ai_vs_human => nil }
+          let(:ply_controller_source) { ->(input, output, length, board_state){ ply_controller } }
+          it 'should return it' do
+            game.stub :render_welcome_message
+            game.ply_controller_source =  ply_controller_source
+            game.start
+            game.ply_controller.should == ply_controller
+          end
+        end
+      end
 
       describe '#start' do
 
@@ -20,7 +34,8 @@ module TicTacToe
         end
 
         it 'should call new BoardState' do
-          game.stub_chain(:new_ply_controller, :ai_vs_human)
+          ply_controller = double :ply, :ai_vs_human => nil
+          game.ply_controller_source = ->(input, output, length, board_state){ ply_controller }
           factory = double('BoardStateFactory.new')
           factory.should_receive(:call)
           game.board_state_factory = factory
@@ -31,7 +46,7 @@ module TicTacToe
           game.stub(:new_board_state)
           ply = double('new_ply_controller')
           ply.should_receive(:ai_vs_human)
-          game.ply_controller_source = ->(output, length){ ply }
+          game.ply_controller_source = ->(input, output, length, board_state){ ply }
           game.start
         end
 

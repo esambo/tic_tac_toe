@@ -4,49 +4,60 @@ module TicTacToe
       attr_writer :best_position_context_source, :place_mark_context_source
       attr_writer :ply_board_presenter_source
       attr_writer :ply_board_view_source, :ply_position_view_source
+      attr_writer :input
+      attr_reader :board_state
 
-      def initialize(output, length)
-        @output = output
-        @length = length
+      def initialize(input, output, length, board_state)
+        @input       = input
+        @output      = output
+        @length      = length
+        @board_state = board_state
       end
 
-      def ai_vs_human(board_state)
-                   render_board(board_state.positions)
-        response = ai_ply(board_state)
-                   human_ply(board_state)
+      def ai_vs_human
+        render_board(@board_state.positions)
+        ai_ply
+        human_ply
       end
 
-        def ai_ply(board_state)
+        def ai_ply
           player_mark = Player.X.to_s
-          best        = best_position(board_state)
+          best        = best_position
                         render_position(player_mark, best.next_position_number)
-          response    = place_mark(board_state, best.next_position_number)
+          response    = place_mark(best.next_position_number)
                         render_board(response.positions)
         end
 
-        def human_ply(board_state)
+        def human_ply
           player_mark = Player.O.to_s
                         render_position(player_mark, nil)
+          position    = get_position
+          response    = place_mark(position)
+                        render_board(response.positions)
         end
 
       private
 
-        def best_position(board_state)
-          new_best_position_context(board_state).call
+        def get_position
+          @input.getc
         end
-          def new_best_position_context(board_state)
-            best_position_context_source.call(board_state)
+
+        def best_position
+          new_best_position_context.call
+        end
+          def new_best_position_context
+            best_position_context_source.call(@board_state)
           end
             def best_position_context_source
               @best_position_context_source ||= BestPositionContext.public_method(:new)
             end
 
-        def place_mark(board_state, number)
-          new_place_mark_context(board_state, number).call
+        def place_mark(number)
+          new_place_mark_context(number).call
         end
 
-          def new_place_mark_context(board_state, number)
-            place_mark_context_source.call(board_state, number)
+          def new_place_mark_context(number)
+            place_mark_context_source.call(@board_state, number)
           end
 
             def place_mark_context_source

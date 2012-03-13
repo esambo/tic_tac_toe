@@ -7,6 +7,6 @@ $: << File.expand_path(File.join(File.dirname(__FILE__), %w(.. lib)))
 require 'tic_tac_toe'
 
 module TicTacToe
-  game = UI::GameController.new STDOUT
+  game = UI::GameController.new STDIN, STDOUT
   game.start
 end

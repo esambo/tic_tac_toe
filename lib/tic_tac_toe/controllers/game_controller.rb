@@ -3,16 +3,18 @@ module TicTacToe
     class GameController
       attr_writer :board_state_factory, :ply_controller_source
       attr_writer :game_start_view_source
+      attr_reader :ply_controller
 
-      def initialize(output)
+      def initialize(input, output)
+        @input  = input
         @output = output
         @length = 3
       end
 
       def start
         render_welcome_message
-        board_state = new_board_state
-        new_ply_controller.ai_vs_human board_state
+        @ply_controller = new_ply_controller
+        @ply_controller.ai_vs_human
       end
 
         def render_welcome_message
@@ -23,21 +25,21 @@ module TicTacToe
 
       private
 
-        def new_board_state
-          board_state_factory.call
-        end
-
-          def board_state_factory
-            @board_state_factory ||= BoardStateFactory.new @length
-          end
-
         def new_ply_controller
-          ply_controller_source.call(@output, @length)
+          ply_controller_source.call(@input, @output, @length, new_board_state)
         end
 
           def ply_controller_source
             @ply_controller_source ||= PlyController.public_method :new
           end
+
+          def new_board_state
+            board_state_factory.call
+          end
+
+            def board_state_factory
+              @board_state_factory ||= BoardStateFactory.new @length
+            end
 
         def new_game_start_view(output, message)
           game_start_view_source.call output, message
