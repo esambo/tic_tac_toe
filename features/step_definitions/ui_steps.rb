@@ -35,21 +35,26 @@ def validate_incrementally(find_in, find, index)
   index
 end
 
-
-When /^I start a game$/ do
-  game = TicTacToe::UI::GameController.new input, output
-  length   = 3
-  sequence = '124753'.chars
-  factory  = TicTacToe::BoardStateSequenceFactory.new length, sequence
-  game.board_state_factory = factory
-  game.start
-  @ply = game.ply_controller
+def new_game
+  TicTacToe::UI::GameController.new input, output
 end
 
-When /^I mark an open position$/ do
-  @open_position_number = @ply.board_state.positions.index(TicTacToe::Player.none) + 1
-  @ply.input = append_to_input [@open_position_number]
-  @ply.human_ply
+def new_board_state_factory(sequence)
+  length  = 3
+  TicTacToe::BoardStateSequenceFactory.new length, sequence
+end
+
+Given /^I will mark an open position$/ do
+  @open_position_number = 6
+  append_to_input [@open_position_number]
+end
+
+When /^I start a game$/ do
+  sequence = '124753'.chars
+  game = new_game
+  game.board_state_factory = new_board_state_factory(sequence)
+  game.start
+  @ply = game.ply_controller
 end
 
 Then /^I should see "([^\"]+)"$/ do |text|
