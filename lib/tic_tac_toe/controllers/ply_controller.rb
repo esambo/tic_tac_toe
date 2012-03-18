@@ -4,6 +4,7 @@ module TicTacToe
       attr_writer :best_position_context_source, :place_mark_context_source
       attr_writer :ply_board_presenter_source
       attr_writer :ply_board_view_source, :ply_position_view_source
+      attr_writer :ai_vs_human_strategy_source
       attr_writer :input
       attr_reader :board_state
 
@@ -15,28 +16,12 @@ module TicTacToe
       end
 
       def ai_vs_human
-        render_board(@board_state.positions)
-        ai_ply
-        human_ply
+        ai_vs_human_strategy
       end
 
-        def ai_ply
-          player_mark = Player.X.to_s
-          best        = best_position
-                        render_position(player_mark, best.next_position_number)
-          response    = place_mark(best.next_position_number)
-                        render_board(response.positions)
+        def ai_vs_human_strategy
+          new_ai_vs_human_strategy.call
         end
-
-        def human_ply
-          player_mark = Player.O.to_s
-                        render_position(player_mark, nil)
-          position    = get_position
-          response    = place_mark(position)
-                        render_board(response.positions)
-        end
-
-      private
 
         def get_position
           @input.getc
@@ -45,29 +30,45 @@ module TicTacToe
         def best_position
           new_best_position_context.call
         end
-          def new_best_position_context
-            best_position_context_source.call(@board_state)
-          end
-            def best_position_context_source
-              @best_position_context_source ||= BestPositionContext.public_method(:new)
-            end
 
         def place_mark(number)
           new_place_mark_context(number).call
         end
+
+        def render_board(positions)
+          board = new_ply_board_presenter(positions, @length).call
+          new_ply_board_view(@output, board).render
+        end
+
+        def render_position(player_mark, number)
+          new_ply_position_view(@output, player_mark, number).render
+        end
+
+        private
+
+          def new_ai_vs_human_strategy
+            ai_vs_human_strategy_source.call(self)
+          end
+
+            def ai_vs_human_strategy_source
+              @ai_vs_human_strategy_source ||= AiVsHumanStrategy.public_method :new
+            end
+
+          def new_best_position_context
+            best_position_context_source.call(@board_state)
+          end
+
+            def best_position_context_source
+              @best_position_context_source ||= BestPositionContext.public_method :new
+            end
 
           def new_place_mark_context(number)
             place_mark_context_source.call(@board_state, number)
           end
 
             def place_mark_context_source
-              @place_mark_context_source ||= PlaceMarkContext.public_method(:new)
+              @place_mark_context_source ||= PlaceMarkContext.public_method :new
             end
-
-        def render_board(positions)
-          board = new_ply_board_presenter(positions, @length).call
-          new_ply_board_view(@output, board).render
-        end
 
           def new_ply_board_presenter(positions, length)
             ply_board_presenter_source.call(positions, length)
@@ -84,10 +85,6 @@ module TicTacToe
             def ply_board_view_source
               @ply_board_view_source ||= PlyBoardView.public_method :new
             end
-
-        def render_position(player_mark, number)
-          new_ply_position_view(@output, player_mark, number).render
-        end
 
           def new_ply_position_view(output, player_mark, number)
             ply_position_view_source.call(output, player_mark, number)
