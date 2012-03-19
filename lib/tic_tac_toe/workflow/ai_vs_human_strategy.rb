@@ -13,7 +13,7 @@ module TicTacToe
           :render_board, :render_position,
           :get_position,
           :place_mark, :best_position,
-          :board_state, :response
+          :board_state
 
       def call
         render_board(board_state.positions)
