@@ -1,6 +1,7 @@
 source :rubygems
 
 gem 'hirb'
+gem 'hookr'
 
 gem 'rspec'
 gem 'cucumber'

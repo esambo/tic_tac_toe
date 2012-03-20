@@ -10,8 +10,3 @@ Feature: Human Starts Game
     And I should see the position number of player "X" next
     And I should see the grid next
     And I should see that the next ply is for player "O" next
-
-  Scenario: mark open position
-    Given I will mark an open position
-    And I start a game
-    Then it should get marked

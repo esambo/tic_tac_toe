@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'tic_tac_toe/controllers/ply_controller'
-require 'tic_tac_toe/workflow/ai_vs_human_strategy'
+require 'tic_tac_toe/services/ai_vs_human_service'
 
 module TicTacToe
   module UI
@@ -32,50 +32,77 @@ module TicTacToe
       end
 
       describe '#ai_vs_human' do
-        let(:ply) { PlyController.new nil, nil, nil, nil }
-          let(:strategy) { AiVsHumanStrategy.new ply }
-          it 'should call #ai_vs_human_strategy' do
-            ply.should_receive(:ai_vs_human_strategy)
+        let(:ply)     { PlyController.new nil, nil, nil, nil }
+        before :each do
+          ply.stub :new_ai_vs_human_service
+          ply.stub :register_callbacks
+          ply.stub :start
+        end
+
+          it 'should call #new_ai_vs_human_service' do
+            ply.should_receive(:new_ai_vs_human_service)
             ply.ai_vs_human
           end
+
+          it 'should call #register_callbacks' do
+            ply.should_receive(:register_callbacks)
+            ply.ai_vs_human
+          end
+
+          it 'should call #start' do
+            ply.should_receive(:start)
+            ply.ai_vs_human
+          end
+
       end
 
       describe 'integration' do
 
-        context 'with workflow' do
+        context 'with services ' do
           let(:ply) { PlyController.new nil, nil, nil, nil }
-          describe '#ai_vs_human_strategy' do
-            it 'should call AiVsHumanStrategy.new#call' do
-              strategy = double :ai_vs_human_strategy
-              strategy.should_receive :call
-              ply.ai_vs_human_strategy_source = ->(ply){ strategy }
-              ply.ai_vs_human
-            end
-          end
-        end
 
-        context 'with contexts ' do
-          let(:input)       { double :input }
-          let(:output)      { double :output }
-          let(:board_state) { double :board_state }
-          let(:ply)         { PlyController.new input, output, length, board_state }
-          let(:number)      { 1 }
-
-          describe '#best_position' do
-            it 'should call BestPositionContext.new#call' do
-              context = double :best_position_context
-              context.should_receive :call
-              ply.best_position_context_source = ->(board_state){ context }
-              ply.best_position
+          describe '#new_ai_vs_human_service' do
+            let(:service) { double :ai_vs_human_service }
+            it 'should call AiVsHumanService.new' do
+              board_state = double :board_state
+              ply.stub(:new_ai_vs_human_service_source) { service }
+              ply.ai_vs_human_service_source = ->(board_state){ service }
+              ply.send(:new_ai_vs_human_service).should == service
             end
           end
 
-          describe '#place_mark' do
-            it 'should call PlaceMarkContext.new#call' do
-              context = double :place_mark_context
-              context.should_receive :call
-              ply.place_mark_context_source = ->(board_state, number){ context }
-              ply.place_mark number
+          describe '#register_callbacks' do
+            let(:service) { AiVsHumanService.new double(:board_state) }
+
+            it 'should call #get_position on AiVsHumanService#get_position' do
+              ply.should_receive :get_position
+              ply.instance_variable_set :@service, service
+              ply.register_callbacks
+              service.send :get_position
+            end
+
+            it 'should call #render_board on AiVsHumanService#render_board' do
+              ply.should_receive :render_board
+              ply.instance_variable_set :@service, service
+              ply.register_callbacks
+              service.send :render_board, double(:positions)
+            end
+
+            it 'should call #render_position on AiVsHumanService#render_position' do
+              ply.should_receive :render_position
+              ply.instance_variable_set :@service, service
+              ply.register_callbacks
+              service.send :render_position, double(:mark), double(:number)
+            end
+
+          end
+
+          describe '#start' do
+            let(:service) { AiVsHumanService.new double(:board_state) }
+            it 'should call AiVsHumanService#call' do
+              service.should_receive :call
+              ply.instance_variable_set :@service, service
+              ply.start
             end
           end
 

@@ -1,10 +1,9 @@
 module TicTacToe
   module UI
     class PlyController
-      attr_writer :best_position_context_source, :place_mark_context_source
       attr_writer :ply_board_presenter_source
       attr_writer :ply_board_view_source, :ply_position_view_source
-      attr_writer :ai_vs_human_strategy_source
+      attr_writer :ai_vs_human_service_source
       attr_writer :input
       attr_reader :board_state
 
@@ -16,58 +15,54 @@ module TicTacToe
       end
 
       def ai_vs_human
-        ai_vs_human_strategy
+        @service = new_ai_vs_human_service
+
+        register_callbacks
+
+        start
       end
 
-        def ai_vs_human_strategy
-          new_ai_vs_human_strategy.call
+        def start
+          @service.call
         end
 
-        def get_position
-          @input.getc
-        end
 
-        def best_position
-          new_best_position_context.call
-        end
+          def get_position
+            @input.getc
+          end
 
-        def place_mark(number)
-          new_place_mark_context(number).call
-        end
+          def render_board(positions)
+            board = new_ply_board_presenter(positions, @length).call
+            new_ply_board_view(@output, board).render
+          end
 
-        def render_board(positions)
-          board = new_ply_board_presenter(positions, @length).call
-          new_ply_board_view(@output, board).render
-        end
+          def render_position(player_mark, number)
+            new_ply_position_view(@output, player_mark, number).render
+          end
 
-        def render_position(player_mark, number)
-          new_ply_position_view(@output, player_mark, number).render
+        def register_callbacks
+          @service.on_get_position do |event|
+            event.next
+            get_position
+          end
+
+          @service.on_render_board do |event, positions|
+            render_board positions
+          end
+
+          @service.on_render_position do |event, mark, number|
+            render_position mark, number
+          end
         end
 
         private
 
-          def new_ai_vs_human_strategy
-            ai_vs_human_strategy_source.call(self)
+          def new_ai_vs_human_service
+            ai_vs_human_service_source.call(board_state)
           end
 
-            def ai_vs_human_strategy_source
-              @ai_vs_human_strategy_source ||= AiVsHumanStrategy.public_method :new
-            end
-
-          def new_best_position_context
-            best_position_context_source.call(@board_state)
-          end
-
-            def best_position_context_source
-              @best_position_context_source ||= BestPositionContext.public_method :new
-            end
-
-          def new_place_mark_context(number)
-            place_mark_context_source.call(@board_state, number)
-          end
-
-            def place_mark_context_source
-              @place_mark_context_source ||= PlaceMarkContext.public_method :new
+            def ai_vs_human_service_source
+              @ai_vs_human_service_source ||= AiVsHumanService.public_method :new
             end
 
           def new_ply_board_presenter(positions, length)
