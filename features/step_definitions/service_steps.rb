@@ -26,9 +26,9 @@ class AiVsHumanServiceListener
     @events << { :name   => __method__ }
   end
 
-  def on_render_terminal(mark)
+  def on_render_terminal(player)
     @events << { :name   => __method__,
-                 :mark   => mark }
+                 :player => player }
   end
 
   def on_get_position

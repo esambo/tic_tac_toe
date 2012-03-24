@@ -8,8 +8,13 @@ module TicTacToe
       end
 
       def render
-        @output.puts ''
-        @output.puts "Game over. Player #{@player.to_s} won!"
+        @output.puts  ''
+        @output.print 'Game over. '
+        if @player.draw?
+          @output.puts 'It was a draw!'
+        else
+          @output.puts "Player #{@player.to_s} won!"
+        end
       end
 
     end

@@ -15,3 +15,8 @@ Feature: Human Starts Game
     Given I will mark an already taken position
     And I start a game
     Then I should see that it was invalid
+
+  Scenario: draw game
+    When I start a draw game
+    Then I should see the player "X" go next
+    And the game should be a draw next

@@ -58,6 +58,14 @@ When /^I start a game$/ do
   @ply = game.ply_controller
 end
 
+When /^I start a draw game$/ do
+  sequence = '15237468'.chars
+  game = new_game
+  game.board_state_factory = new_board_state_factory(sequence)
+  game.start
+  @ply = game.ply_controller
+end
+
 Then /^I should see "([^\"]+)"$/ do |text|
   output.should include(text)
 end
@@ -81,3 +89,9 @@ Then /^I should see that it was invalid$/ do
   @ply.board_state.positions[@open_position_number - 1].should == TicTacToe::Player.X
   input.getc.should == nil
 end
+
+Then /^the game should be a draw next$/ do
+  text = "It was a draw!"
+  @output_index = validate_incrementally(output, text, @output_index)
+end
+

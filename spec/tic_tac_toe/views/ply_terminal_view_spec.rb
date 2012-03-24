@@ -11,9 +11,25 @@ module TicTacToe
 
         context "with player 'X'" do
           let(:player) { Player.X }
-          let(:view) { PlyTerminalView.new output, player }
-          it 'should output the player' do
-            output.should_receive(:puts).with("Game over. Player X won!")
+          let(:view)   { PlyTerminalView.new output, player }
+
+          it 'should output game over' do
+            output.should_receive(:print).with('Game over. ')
+            view.render
+          end
+
+          it 'should output the winning player' do
+            output.should_receive(:puts).with('Player X won!')
+            view.render
+          end
+
+        end
+
+        context 'with player :draw' do
+          let(:player) { Player.draw }
+          let(:view)   { PlyTerminalView.new output, player }
+          it 'should output draw' do
+            output.should_receive(:puts).with('It was a draw!')
             view.render
           end
         end
