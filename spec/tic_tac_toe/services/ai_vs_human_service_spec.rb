@@ -51,15 +51,23 @@ module TicTacToe
           service.stub(:place_mark)    { response }
         end
 
+        it 'should call #render_player hook' do
+          controller.should_receive :render_player
+          service.on_render_player do |event, mark|
+            controller.render_player mark
+          end
+          service.ai_ply
+        end
+
         it 'should call #best_position' do
           service.should_receive(:best_position) { best }
           service.ai_ply
         end
 
-        it 'should call #render_player hook' do
-          controller.should_receive :render_player
-          service.on_render_player do |event, mark, number|
-            controller.render_player mark, number
+        it 'should call #render_position hook' do
+          controller.should_receive :render_position
+          service.on_render_position do |event, number|
+            controller.render_position number
           end
           service.ai_ply
         end
@@ -78,9 +86,10 @@ module TicTacToe
         end
 
         context 'workflow' do
-          it 'should call #best_position, #render_player, #place_mark, #render_board in that order' do
-            service.should_receive(:best_position).ordered { best }
+          it 'should call #render_player, #best_position, #render_position, #place_mark, #render_board in that order' do
             service.should_receive(:render_player).ordered
+            service.should_receive(:best_position).ordered { best }
+            service.should_receive(:render_position).ordered
             service.should_receive(:place_mark).ordered { response }
             service.should_receive(:render_board).ordered
             service.ai_ply
@@ -96,8 +105,8 @@ module TicTacToe
 
         it 'should call #render_player hook' do
           controller.should_receive :render_player
-          service.on_render_player do |event, mark, number|
-            controller.render_player mark, number
+          service.on_render_player do |event, mark|
+            controller.render_player mark
           end
           service.human_ply
         end

@@ -69,12 +69,7 @@ Then /^I should see the grid next$/ do
   end
 end
 
-Then /^I should see the position number of player "([^\"]+)" next$/ do |mark|
-  text = "#{mark} player position number: 6"
-  @output_index = validate_incrementally(output, text, @output_index)
-end
-
-Then /^I should see that the next ply is for player "([^\"]+)" next$/ do |mark|
+Then /^I should see the player "([^\"]+)" go next$/ do |mark|
   text = "#{mark} player position number: "
   @output_index = validate_incrementally(output, text, @output_index)
 end

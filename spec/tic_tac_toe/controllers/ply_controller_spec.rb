@@ -92,7 +92,14 @@ module TicTacToe
               ply.should_receive :render_player
               ply.instance_variable_set :@service, service
               ply.register_callbacks
-              service.send :render_player, double(:mark), double(:number)
+              service.send :render_player, double(:mark)
+            end
+
+            it 'should call #render_position on AiVsHumanService#render_position' do
+              ply.should_receive :render_position
+              ply.instance_variable_set :@service, service
+              ply.register_callbacks
+              service.send :render_position, double(:number)
             end
 
             it 'should call #render_invalid_position on AiVsHumanService#render_invalid_position' do
@@ -126,10 +133,19 @@ module TicTacToe
 
           describe '#render_player' do
             it 'should call PlyPlayerView.new#render' do
-              position_view = double :ply_player_view
+              player_view = double :ply_player_view
+              player_view.should_receive :render
+              ply.ply_player_view_source = ->(output, player_mark){ player_view }
+              ply.render_player 'X'
+            end
+          end
+
+          describe '#render_position' do
+            it 'should call PlyPositionView.new#render' do
+              position_view = double :ply_position_view
               position_view.should_receive :render
-              ply.ply_player_view_source = ->(output, player_mark, number){ position_view }
-              ply.render_player 'X', number
+              ply.ply_position_view_source = ->(output, number){ position_view }
+              ply.render_position 'X'
             end
           end
 

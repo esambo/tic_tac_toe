@@ -1,7 +1,8 @@
 module TicTacToe
   module UI
     class GameController
-      attr_writer :board_state_factory, :ply_controller_source
+      attr_writer :board_state_factory
+      attr_writer :ply_controller_source
       attr_writer :game_start_view_source
       attr_reader :ply_controller
 

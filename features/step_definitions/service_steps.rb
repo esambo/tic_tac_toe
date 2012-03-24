@@ -12,9 +12,13 @@ class AiVsHumanServiceListener
                  :positions => positions.map(&:to_s) }
   end
 
-  def on_render_player(mark, number)
+  def on_render_player(mark)
     @events << { :name   => __method__,
-                 :mark   => mark,
+                 :mark   => mark }
+  end
+
+  def on_render_position(number)
+    @events << { :name   => __method__,
                  :number => number }
   end
 

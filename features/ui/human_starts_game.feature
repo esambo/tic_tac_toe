@@ -7,9 +7,9 @@ Feature: Human Starts Game
     When I start a game
     Then I should see "Tic-Tac-Toe"
     And I should see the grid next
-    And I should see the position number of player "X" next
+    And I should see the player "X" go next
     And I should see the grid next
-    And I should see that the next ply is for player "O" next
+    And I should see the player "O" go next
 
   Scenario: mark already taken position
     Given I will mark an already taken position
