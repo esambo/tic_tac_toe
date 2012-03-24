@@ -44,6 +44,12 @@ def new_board_state_factory(sequence)
   TicTacToe::BoardStateSequenceFactory.new length, sequence
 end
 
+
+Given /^I will mark an already taken position$/ do
+  @open_position_number = 1
+  append_to_input [@open_position_number]
+end
+
 When /^I start a game$/ do
   sequence = '124753'.chars
   game = new_game
@@ -71,4 +77,12 @@ end
 Then /^I should see that the next ply is for player "([^\"]+)" next$/ do |mark|
   text = "#{mark} player position number: "
   @output_index = validate_incrementally(output, text, @output_index)
+end
+
+Then /^I should see that it was invalid$/ do
+  text = "Invalid position number! Please try again..."
+  @output_index = validate_incrementally(output, text, @output_index)
+
+  @ply.board_state.positions[@open_position_number - 1].should == TicTacToe::Player.X
+  input.getc.should == nil
 end

@@ -91,7 +91,7 @@ module TicTacToe
 
       describe '#human_ply' do
         before :each do
-          service.stub(:place_mark) { stub :response, :positions => [] }
+          service.stub(:place_mark) { stub :response, :positions => [], :valid_ply => true }
         end
 
         it 'should call #render_position hook' do
@@ -117,6 +117,33 @@ module TicTacToe
           position = service.send :get_position
           called.should == 2
           position.should == 9
+        end
+
+        context 'with already taken position number once' do
+          let(:taken)                { 1 }
+          let(:free)                 { 3 }
+          let(:valid_ply_response)   { stub :response, :valid_ply => false, :positions => [], :size => 'hello' }
+          let(:invalid_ply_response) { stub :response, :valid_ply => true,  :positions => [] }
+          before :each do
+            service.stub(:get_position).and_return(taken,              free)
+            service.stub(:place_mark  ).and_return(valid_ply_response, invalid_ply_response)
+            service.stub(:render_board)
+          end
+
+          it 'should call #get_position twice' do
+            service.should_receive(:render_position).twice
+            service.human_ply
+          end
+
+          it 'should call #render_invalid_position hook' do
+            service.stub(:render_position)
+            controller.should_receive :render_invalid_position
+            service.on_render_invalid_position do |event|
+              controller.render_invalid_position
+            end
+            service.human_ply
+          end
+
         end
 
         it 'should call #place_mark' do

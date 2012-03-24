@@ -2,7 +2,7 @@ module TicTacToe
   module UI
     class PlyController
       attr_writer :ply_board_presenter_source
-      attr_writer :ply_board_view_source, :ply_position_view_source
+      attr_writer :ply_board_view_source, :ply_position_view_source, :ply_invalid_position_view_source
       attr_writer :ai_vs_human_service_source
       attr_writer :input
       attr_reader :board_state
@@ -30,16 +30,16 @@ module TicTacToe
           def get_position
             @input.getc
           end
-
           def render_board(positions)
             board = new_ply_board_presenter(positions, @length).call
             new_ply_board_view(@output, board).render
           end
-
           def render_position(player_mark, number)
             new_ply_position_view(@output, player_mark, number).render
           end
-
+          def render_invalid_position
+            new_ply_invalid_position_view(@output).render
+          end
         def register_callbacks
           @service.on_get_position do |event|
             event.next
@@ -52,6 +52,10 @@ module TicTacToe
 
           @service.on_render_position do |event, mark, number|
             render_position mark, number
+          end
+
+          @service.on_render_invalid_position do |event|
+            render_invalid_position
           end
         end
 
@@ -87,6 +91,14 @@ module TicTacToe
 
             def ply_position_view_source
               @ply_position_view_source ||= PlyPositionView.public_method :new
+            end
+
+          def new_ply_invalid_position_view(output)
+            ply_invalid_position_view_source.call(output)
+          end
+
+            def ply_invalid_position_view_source
+              @ply_invalid_position_view_source ||= PlyInvalidPositionView.public_method :new
             end
 
     end

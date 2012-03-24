@@ -10,3 +10,8 @@ Feature: Human Starts Game
     And I should see the position number of player "X" next
     And I should see the grid next
     And I should see that the next ply is for player "O" next
+
+  Scenario: mark already taken position
+    Given I will mark an already taken position
+    And I start a game
+    Then I should see that it was invalid
