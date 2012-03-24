@@ -149,7 +149,7 @@ module TicTacToe
               position_view = double :ply_position_view
               position_view.should_receive :render
               ply.ply_position_view_source = ->(output, number){ position_view }
-              ply.render_position 'X'
+              ply.render_position 1
             end
           end
 

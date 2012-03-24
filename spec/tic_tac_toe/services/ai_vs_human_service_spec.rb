@@ -42,7 +42,7 @@ module TicTacToe
           service.call
         end
 
-        it 'should all board_state#terminal' do
+        it 'should all response#terminal' do
           response.should_receive :terminal
           service.call
         end

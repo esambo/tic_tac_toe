@@ -7,7 +7,7 @@ module TicTacToe
       let(:output) { double('output').as_null_object }
 
       describe '#render' do
-        context 'with place_mark' do
+        context 'with player_mark' do
           let(:player_mark) { 'X' }
           let(:view) { PlyPlayerView.new output, player_mark }
           it 'should output the player' do
