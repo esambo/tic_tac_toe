@@ -56,10 +56,10 @@ module TicTacToe
           service.ai_ply
         end
 
-        it 'should call #render_position hook' do
-          controller.should_receive :render_position
-          service.on_render_position do |event, mark, number|
-            controller.render_position mark, number
+        it 'should call #render_player hook' do
+          controller.should_receive :render_player
+          service.on_render_player do |event, mark, number|
+            controller.render_player mark, number
           end
           service.ai_ply
         end
@@ -78,9 +78,9 @@ module TicTacToe
         end
 
         context 'workflow' do
-          it 'should call #best_position, #render_position, #place_mark, #render_board in that order' do
+          it 'should call #best_position, #render_player, #place_mark, #render_board in that order' do
             service.should_receive(:best_position).ordered { best }
-            service.should_receive(:render_position).ordered
+            service.should_receive(:render_player).ordered
             service.should_receive(:place_mark).ordered { response }
             service.should_receive(:render_board).ordered
             service.ai_ply
@@ -94,10 +94,10 @@ module TicTacToe
           service.stub(:place_mark) { stub :response, :positions => [], :valid_ply => true }
         end
 
-        it 'should call #render_position hook' do
-          controller.should_receive :render_position
-          service.on_render_position do |event, mark, number|
-            controller.render_position mark, number
+        it 'should call #render_player hook' do
+          controller.should_receive :render_player
+          service.on_render_player do |event, mark, number|
+            controller.render_player mark, number
           end
           service.human_ply
         end
@@ -131,12 +131,12 @@ module TicTacToe
           end
 
           it 'should call #get_position twice' do
-            service.should_receive(:render_position).twice
+            service.should_receive(:render_player).twice
             service.human_ply
           end
 
           it 'should call #render_invalid_position hook' do
-            service.stub(:render_position)
+            service.stub(:render_player)
             controller.should_receive :render_invalid_position
             service.on_render_invalid_position do |event|
               controller.render_invalid_position

@@ -1,6 +1,6 @@
 module TicTacToe
   module UI
-    class PlyPositionView
+    class PlyPlayerView
 
       def initialize(output, player_mark, number)
         @output      = output

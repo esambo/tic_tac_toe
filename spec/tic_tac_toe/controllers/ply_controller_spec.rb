@@ -88,11 +88,11 @@ module TicTacToe
               service.send :render_board, double(:positions)
             end
 
-            it 'should call #render_position on AiVsHumanService#render_position' do
-              ply.should_receive :render_position
+            it 'should call #render_player on AiVsHumanService#render_player' do
+              ply.should_receive :render_player
               ply.instance_variable_set :@service, service
               ply.register_callbacks
-              service.send :render_position, double(:mark), double(:number)
+              service.send :render_player, double(:mark), double(:number)
             end
 
             it 'should call #render_invalid_position on AiVsHumanService#render_invalid_position' do
@@ -124,12 +124,12 @@ module TicTacToe
           let(:best)        { double :win_position, :next_position_number => number }
           let(:positions)   { [] }
 
-          describe '#render_position' do
-            it 'should call PlyPositionView.new#render' do
-              position_view = double :ply_position_view
+          describe '#render_player' do
+            it 'should call PlyPlayerView.new#render' do
+              position_view = double :ply_player_view
               position_view.should_receive :render
-              ply.ply_position_view_source = ->(output, player_mark, number){ position_view }
-              ply.render_position 'X', number
+              ply.ply_player_view_source = ->(output, player_mark, number){ position_view }
+              ply.render_player 'X', number
             end
           end
 

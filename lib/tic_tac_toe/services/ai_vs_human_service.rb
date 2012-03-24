@@ -4,7 +4,7 @@ module TicTacToe
   class AiVsHumanService
     include HookR::Hooks
     define_hook :on_render_board, :positions
-    define_hook :on_render_position, :mark, :number
+    define_hook :on_render_player, :mark, :number
     define_hook :on_render_invalid_position
     define_hook :on_get_position
     attr_writer :best_position_context_source, :place_mark_context_source
@@ -22,7 +22,7 @@ module TicTacToe
       def ai_ply
         mark     = Player.X.to_s
         best     = best_position
-                   render_position(mark, best.next_position_number)
+                   render_player(mark, best.next_position_number)
         response = place_mark(best.next_position_number)
                    render_board(response.positions)
       end
@@ -30,7 +30,7 @@ module TicTacToe
       def human_ply
         begin
           mark     = Player.O.to_s
-                     render_position(mark, nil)
+                     render_player(mark, nil)
           position = get_position
           response = place_mark(position)
                      render_invalid_position unless response.valid_ply
@@ -44,8 +44,8 @@ module TicTacToe
           execute_hook :on_render_board, positions
         end
 
-        def render_position(mark, number)
-          execute_hook :on_render_position, mark, number
+        def render_player(mark, number)
+          execute_hook :on_render_player, mark, number
         end
 
         def render_invalid_position

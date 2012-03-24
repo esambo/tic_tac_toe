@@ -12,7 +12,7 @@ class AiVsHumanServiceListener
                  :positions => positions.map(&:to_s) }
   end
 
-  def on_render_position(mark, number)
+  def on_render_player(mark, number)
     @events << { :name   => __method__,
                  :mark   => mark,
                  :number => number }
@@ -53,8 +53,8 @@ When /^the game continuous$/ do
 end
 
 Then /^player "([^\"]+)" should go next$/ do |mark|
-  render_positions = @listener.events.map { |e| e[:mark] if e[:name] == :on_render_position }
-  @event_index = validate_incrementally(render_positions, mark, @event_index)
+  render_player = @listener.events.map { |e| e[:mark] if e[:name] == :on_render_player }
+  @event_index = validate_incrementally(render_player, mark, @event_index)
 end
 
 Then /^the grid should update$/ do

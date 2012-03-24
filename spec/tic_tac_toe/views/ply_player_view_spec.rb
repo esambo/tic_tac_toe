@@ -1,15 +1,15 @@
 require 'spec_helper'
-require 'tic_tac_toe/views/ply_position_view'
+require 'tic_tac_toe/views/ply_player_view'
 
 module TicTacToe
   module UI
-    describe PlyPositionView do
+    describe PlyPlayerView do
       let(:output) { double('output').as_null_object }
 
       describe '#render' do
         context 'with place_mark' do
           let(:player_mark) { 'X' }
-          let(:view)  { PlyPositionView.new output, player_mark, number }
+          let(:view)  { PlyPlayerView.new output, player_mark, number }
 
           context 'with number' do
             let(:number) { 1 }
