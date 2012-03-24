@@ -17,7 +17,7 @@ module TicTacToe
 
       describe '#call' do
         let(:board_state) { double :board_state, :positions => [] }
-        let(:response)    { double :response, :terminal => true }
+        let(:response)    { double :response, :terminal => true, :winner => nil }
         before :each do
           service.stub :ai_ply    => response
           service.stub :human_ply => response
@@ -49,7 +49,7 @@ module TicTacToe
 
         context 'with 3 plies (ai, human, ai) before terminal game' do
           let(:board_state) { double :board_state, :positions => [] }
-          let(:response)    { double :response }
+          let(:response)    { double :response,    :winner    => nil }
           before :each do
             response.stub(:terminal).and_return false, false, true
             service.stub  :ai_ply    => response
@@ -64,7 +64,7 @@ module TicTacToe
 
         context 'with 4 plies (ai, human, ai, human) before terminal game' do
           let(:board_state) { double :board_state, :positions => [] }
-          let(:response)    { double :response }
+          let(:response)    { double :response,    :winner    => nil }
           before :each do
             response.stub(:terminal).and_return false, false, false, true
             service.stub  :ai_ply    => response
@@ -75,6 +75,14 @@ module TicTacToe
             service.should_receive(:human_ply).twice
             service.call
           end
+        end
+
+        it 'should call #render_terminal hook' do
+          controller.should_receive :render_terminal
+          service.on_render_terminal do |event, player|
+            controller.render_terminal player
+          end
+          service.call
         end
 
       end

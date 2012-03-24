@@ -50,3 +50,4 @@ Feature: Players take turns
     Then player "X" should go next
     And player "O" should go next
     And player "X" should go next
+    And the game should be terminal next

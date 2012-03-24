@@ -26,6 +26,11 @@ class AiVsHumanServiceListener
     @events << { :name   => __method__ }
   end
 
+  def on_render_terminal(mark)
+    @events << { :name   => __method__,
+                 :mark   => mark }
+  end
+
   def on_get_position
     @events << { :name   => __method__,
                  :number => @input.first }
@@ -74,4 +79,9 @@ end
 Then /^the position number should be invalid$/ do
   render_invalid_position = @listener.events.map { |e| 'invalid' if e[:name] == :on_render_invalid_position }
   @event_index = validate_incrementally(render_invalid_position, 'invalid', @event_index)
+end
+
+Then /^the game should be terminal next$/ do
+  render_terminal = @listener.events.map { |e| 'terminal' if e[:name] == :on_render_terminal }
+  @event_index = validate_incrementally(render_terminal, 'terminal', @event_index)
 end

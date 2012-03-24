@@ -7,6 +7,7 @@ module TicTacToe
     define_hook :on_render_player, :mark
     define_hook :on_render_position, :number
     define_hook :on_render_invalid_position
+    define_hook :on_render_terminal, :player
     define_hook :on_get_position
     attr_writer :best_position_context_source
     attr_writer :place_mark_context_source
@@ -21,6 +22,7 @@ module TicTacToe
         response = ai_ply
         response = human_ply unless response.terminal
       end until response.terminal
+      render_terminal(response.winner)
     end
 
       def ai_ply
@@ -61,6 +63,10 @@ module TicTacToe
 
         def render_invalid_position
           execute_hook :on_render_invalid_position
+        end
+
+        def render_terminal(player)
+          execute_hook :on_render_terminal, player
         end
 
         def get_position

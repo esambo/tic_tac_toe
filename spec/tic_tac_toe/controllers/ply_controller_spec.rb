@@ -73,40 +73,44 @@ module TicTacToe
 
           describe '#register_callbacks' do
             let(:service) { AiVsHumanService.new double(:board_state) }
+            before :each do
+              ply.instance_variable_set :@service, service
+            end
 
             it 'should call #get_position on AiVsHumanService#get_position' do
               ply.should_receive :get_position
-              ply.instance_variable_set :@service, service
               ply.register_callbacks
               service.send :get_position
             end
 
             it 'should call #render_board on AiVsHumanService#render_board' do
               ply.should_receive :render_board
-              ply.instance_variable_set :@service, service
               ply.register_callbacks
               service.send :render_board, double(:positions)
             end
 
             it 'should call #render_player on AiVsHumanService#render_player' do
               ply.should_receive :render_player
-              ply.instance_variable_set :@service, service
               ply.register_callbacks
               service.send :render_player, double(:mark)
             end
 
             it 'should call #render_position on AiVsHumanService#render_position' do
               ply.should_receive :render_position
-              ply.instance_variable_set :@service, service
               ply.register_callbacks
               service.send :render_position, double(:number)
             end
 
             it 'should call #render_invalid_position on AiVsHumanService#render_invalid_position' do
               ply.should_receive :render_invalid_position
-              ply.instance_variable_set :@service, service
               ply.register_callbacks
               service.send :render_invalid_position
+            end
+
+            it 'should call #render_terminal on AiVsHumanService#render_terminal' do
+              ply.should_receive :render_terminal
+              ply.register_callbacks
+              service.send :render_terminal, double(:player)
             end
 
           end
@@ -176,6 +180,15 @@ module TicTacToe
               ply.render_board positions
             end
 
+          end
+
+          describe '#render_terminal' do
+            it 'should call PlyTerminalView.new#render' do
+              terminal_view = double :ply_terminal_view
+              terminal_view.should_receive :render
+              ply.ply_terminal_view_source = ->(output, player){ terminal_view }
+              ply.render_terminal 'Player.X'
+            end
           end
 
         end

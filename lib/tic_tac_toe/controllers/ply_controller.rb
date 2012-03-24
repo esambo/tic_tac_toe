@@ -6,6 +6,7 @@ module TicTacToe
       attr_writer :ply_player_view_source
       attr_writer :ply_position_view_source
       attr_writer :ply_invalid_position_view_source
+      attr_writer :ply_terminal_view_source
       attr_writer :ai_vs_human_service_source
       attr_writer :input
       attr_reader :board_state
@@ -46,6 +47,9 @@ module TicTacToe
           def render_invalid_position
             new_ply_invalid_position_view(@output).render
           end
+          def render_terminal(player)
+            new_ply_terminal_view(@output, player).render
+          end
         def register_callbacks
           @service.on_get_position do |event|
             event.next
@@ -66,6 +70,10 @@ module TicTacToe
 
           @service.on_render_invalid_position do |event|
             render_invalid_position
+          end
+
+          @service.on_render_terminal do |event, player|
+            render_terminal player
           end
         end
 
@@ -117,6 +125,14 @@ module TicTacToe
 
             def ply_invalid_position_view_source
               @ply_invalid_position_view_source ||= PlyInvalidPositionView.public_method :new
+            end
+
+          def new_ply_terminal_view(output, player)
+            ply_terminal_view_source.call(output, player)
+          end
+
+            def ply_terminal_view_source
+              @ply_terminal_view_source ||= PlyTerminalView.public_method :new
             end
 
     end
