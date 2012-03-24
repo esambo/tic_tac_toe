@@ -21,10 +21,7 @@ Feature: Players take turns
       | O |   |   |
     And I will mark position number "3"
     When the game continuous
-    Then the grid should update
-    And player "X" should go next
-    And the grid should update
-    And player "O" should go next
+    Then player "O" should go next
     And the next position number provided should be "3"
     And the grid should update
 
@@ -36,10 +33,7 @@ Feature: Players take turns
     And I will mark position number "1"
     And I will mark position number "3"
     When the game continuous
-    Then the grid should update
-    And player "X" should go next
-    And the grid should update
-    And player "O" should go next
+    Then player "O" should go next
     And the next position number provided should be "1"
     And the position number should be invalid
     And player "O" should go next

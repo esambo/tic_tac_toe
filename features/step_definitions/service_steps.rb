@@ -53,25 +53,21 @@ When /^the game continuous$/ do
 end
 
 Then /^player "([^\"]+)" should go next$/ do |mark|
-  # render_positions = @listener.events.map { |e| e[:mark] if e[:name] == :on_render_position }
-  # @event_index = validate_incrementally(render_positions, mark, @event_index)
-  @event_index = validate_next_event(@listener.events, :on_render_position, :mark, mark, @event_index)
+  render_positions = @listener.events.map { |e| e[:mark] if e[:name] == :on_render_position }
+  @event_index = validate_incrementally(render_positions, mark, @event_index)
 end
 
 Then /^the grid should update$/ do
-  # render_boards = @listener.events.map { |e| 'board' if e[:name] == :on_render_board }
-  # @event_index = validate_incrementally(render_boards, 'board', @event_index)
-  @event_index = validate_next_event(@listener.events, :on_render_board, :positions, 'X', @event_index)
+  render_boards = @listener.events.map { |e| 'board' if e[:name] == :on_render_board }
+  @event_index = validate_incrementally(render_boards, 'board', @event_index)
 end
 
 Then /^the next position number provided should be "([^\"]+)"$/ do |number|
-  # get_positions = @listener.events.map { |e| e[:number] if e[:name] == :on_get_position }
-  # @event_index = validate_incrementally(get_positions, number, @event_index)
-  @event_index = validate_next_event(@listener.events, :on_get_position, :number, number, @event_index)
+  get_positions = @listener.events.map { |e| e[:number] if e[:name] == :on_get_position }
+  @event_index = validate_incrementally(get_positions, number, @event_index)
 end
 
 Then /^the position number should be invalid$/ do
-  # render_invalid_position = @listener.events.map { |e| 'invalid' if e[:name] == :on_render_invalid_position }
-  # @event_index = validate_incrementally(render_invalid_position, 'invalid', @event_index)
-  @event_index = validate_next_event(@listener.events, :on_render_invalid_position, nil, nil, @event_index)
+  render_invalid_position = @listener.events.map { |e| 'invalid' if e[:name] == :on_render_invalid_position }
+  @event_index = validate_incrementally(render_invalid_position, 'invalid', @event_index)
 end
