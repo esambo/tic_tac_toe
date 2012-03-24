@@ -32,7 +32,7 @@ module TicTacToe
 
 
           def get_position
-            @input.getc
+            @input.gets.chomp
           end
           def render_board(positions)
             board = new_ply_board_presenter(positions, @length).call

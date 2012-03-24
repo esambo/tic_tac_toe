@@ -8,9 +8,9 @@ module PutString
   end
 end
 
-module GetChar
-  def getc
-    self.shift
+module GetString
+  def gets
+    self.shift.to_s
   end
 end
 
@@ -20,11 +20,11 @@ end
 
 def append_to_input(inputs)
   @input = input + inputs
-  @input.extend(GetChar)
+  @input.extend(GetString)
 end
 
 def input
-  @input ||= [].extend GetChar
+  @input ||= [].extend GetString
 end
 
 def validate_incrementally(find_in, find, index)
@@ -87,7 +87,7 @@ Then /^I should see that it was invalid$/ do
   @output_index = validate_incrementally(output, text, @output_index)
 
   @ply.board_state.positions[@open_position_number - 1].should == TicTacToe::Player.X
-  input.getc.should == nil
+  input.gets.should == ''
 end
 
 Then /^the game should be a draw next$/ do

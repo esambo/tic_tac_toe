@@ -199,9 +199,9 @@ module TicTacToe
           let(:board_state) { double :board_state }
           let(:ply)         { PlyController.new input, output, length, board_state }
           describe '#get_position' do
-            it 'should call #getc' do
-              input.should_receive(:getc) { 1 }
-              ply.get_position
+            it 'should call #gets.chomp' do
+              input.stub(:gets) { "1\n" }
+              ply.get_position.should == '1'
             end
           end
         end
