@@ -17,9 +17,10 @@ module TicTacToe
 
       describe '#call' do
         let(:board_state) { double :board_state, :positions => [] }
+        let(:response)    { double :response, :terminal => true }
         before :each do
-          service.stub(:ai_ply)
-          service.stub(:human_ply)
+          service.stub :ai_ply    => response
+          service.stub :human_ply => response
         end
 
         it 'should call #render_board hook' do
@@ -36,8 +37,44 @@ module TicTacToe
         end
 
         it 'should call #human_ply' do
+          service.stub(:ai_ply).and_return double :response, :terminal => false
           service.should_receive(:human_ply)
           service.call
+        end
+
+        it 'should all board_state#terminal' do
+          response.should_receive :terminal
+          service.call
+        end
+
+        context 'with 3 plies (ai, human, ai) before terminal game' do
+          let(:board_state) { double :board_state, :positions => [] }
+          let(:response)    { double :response }
+          before :each do
+            response.stub(:terminal).and_return false, false, true
+            service.stub  :ai_ply    => response
+            service.stub  :human_ply => response
+          end
+          it 'should call #ai_ply twice' do
+            service.should_receive(:ai_ply).twice
+            service.should_receive(:human_ply).once
+            service.call
+          end
+        end
+
+        context 'with 4 plies (ai, human, ai, human) before terminal game' do
+          let(:board_state) { double :board_state, :positions => [] }
+          let(:response)    { double :response }
+          before :each do
+            response.stub(:terminal).and_return false, false, false, true
+            service.stub  :ai_ply    => response
+            service.stub  :human_ply => response
+          end
+          it 'should call #ai_ply twice' do
+            service.should_receive(:ai_ply).twice
+            service.should_receive(:human_ply).twice
+            service.call
+          end
         end
 
       end

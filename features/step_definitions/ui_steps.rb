@@ -51,7 +51,7 @@ Given /^I will mark an already taken position$/ do
 end
 
 When /^I start a game$/ do
-  sequence = '124753'.chars
+  sequence = '1247'.chars
   game = new_game
   game.board_state_factory = new_board_state_factory(sequence)
   game.start

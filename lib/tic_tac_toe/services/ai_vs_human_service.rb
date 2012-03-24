@@ -17,8 +17,10 @@ module TicTacToe
 
     def call
       render_board(@board_state.positions)
-      ai_ply
-      human_ply
+      begin
+        response = ai_ply
+        response = human_ply unless response.terminal
+      end until response.terminal
     end
 
       def ai_ply
@@ -28,6 +30,7 @@ module TicTacToe
                    render_position(best.next_position_number)
         response = place_mark(best.next_position_number)
                    render_board(response.positions)
+        response
       end
 
       def human_ply
@@ -39,6 +42,7 @@ module TicTacToe
                      render_invalid_position unless response.valid_ply
         end until response.valid_ply
         render_board(response.positions)
+        response
       end
 
       private

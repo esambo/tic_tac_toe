@@ -39,3 +39,14 @@ Feature: Players take turns
     And player "O" should go next
     And the next position number provided should be "3"
     And the grid should update
+
+  Scenario: take turns until terminal game 1247536
+    Given the grid:
+      | X | O |   |
+      | X |   |   |
+      | O |   |   |
+    And I will mark position number "3"
+    When the game continuous
+    Then player "X" should go next
+    And player "O" should go next
+    And player "X" should go next
