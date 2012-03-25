@@ -8,6 +8,7 @@ Feature: Players take turns
       | X | O |   |
       | X |   |   |
       | O |   |   |
+    And I will mark position number "3"
     When the game continuous
     Then the grid should update
     And player "X" should go next
@@ -39,6 +40,32 @@ Feature: Players take turns
     And player "O" should go next
     And the next position number provided should be "3"
     And the grid should update
+
+  Scenario: mark empty position number
+    Given the grid:
+      | X | O |   |
+      | X |   |   |
+      | O |   |   |
+    And I will mark position number ""
+    And I will mark position number "3"
+    When the game continuous
+    Then player "O" should go next
+    And the next position number provided should be ""
+    And the position number should be invalid
+    And player "O" should go next
+
+  Scenario: mark too big of a position number
+    Given the grid:
+      | X | O |   |
+      | X |   |   |
+      | O |   |   |
+    And I will mark position number "10"
+    And I will mark position number "3"
+    When the game continuous
+    Then player "O" should go next
+    And the next position number provided should be "10"
+    And the position number should be invalid
+    And player "O" should go next
 
   Scenario: take turns until terminal game 1247536
     Given the grid:

@@ -4,6 +4,7 @@ Feature: Human Starts Game
   I want to start the game  
 
   Scenario: start game
+    Given I will mark an empty position
     When I start a game
     Then I should see "Tic-Tac-Toe"
     And I should see the grid next
@@ -13,6 +14,7 @@ Feature: Human Starts Game
 
   Scenario: mark already taken position
     Given I will mark an already taken position
+    Given I will mark an empty position
     And I start a game
     Then I should see that it was invalid
 

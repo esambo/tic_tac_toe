@@ -61,6 +61,38 @@ module TicTacToe
           end
         end
 
+        context 'with empty number' do
+          let(:number) { '' }
+          it 'shuold be false' do
+            valid_ply = board_state.place_mark number
+            valid_ply.should == false
+          end
+        end
+
+        context 'with no number' do
+          let(:number) { nil }
+          it 'should be false' do
+            valid_ply = board_state.place_mark number
+            valid_ply.should == false
+          end
+        end
+
+        context 'with number above upper limit' do
+          let(:number) { 10 }
+          it 'should be false' do
+            valid_ply = board_state.place_mark number
+            valid_ply.should == false
+          end
+        end
+
+        context 'with number in upper limit' do
+          let(:number) { 9 }
+          it 'should be ture' do
+            valid_ply = board_state.place_mark number
+            valid_ply.should == true
+          end
+        end
+
       end
 
     end

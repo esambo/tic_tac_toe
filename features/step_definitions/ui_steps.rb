@@ -50,6 +50,10 @@ Given /^I will mark an already taken position$/ do
   append_to_input [@open_position_number]
 end
 
+Given /^I will mark an empty position$/ do
+  append_to_input [3]
+end
+
 When /^I start a game$/ do
   sequence = '1247'.chars
   game = new_game

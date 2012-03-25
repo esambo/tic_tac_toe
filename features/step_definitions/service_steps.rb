@@ -49,7 +49,7 @@ def validate_next_event(events, event_name, event_value, find, index)
 end
 
 
-Given /^I will mark position number "([^\"]+)"$/ do |number|
+Given /^I will mark position number "([^\"]*)"$/ do |number|
   @position_numbers ||= []
   @position_numbers <<  number
 end
@@ -71,7 +71,7 @@ Then /^the grid should update$/ do
   @event_index = validate_incrementally(render_boards, 'board', @event_index)
 end
 
-Then /^the next position number provided should be "([^\"]+)"$/ do |number|
+Then /^the next position number provided should be "([^\"]*)"$/ do |number|
   get_positions = @listener.events.map { |e| e[:number] if e[:name] == :on_get_position }
   @event_index = validate_incrementally(get_positions, number, @event_index)
 end
