@@ -176,7 +176,7 @@ module TicTacToe
         context 'with already taken position number once' do
           let(:taken)                { 1 }
           let(:free)                 { 3 }
-          let(:valid_ply_response)   { stub :response, :valid_ply => false, :positions => [], :size => 'hello' }
+          let(:valid_ply_response)   { stub :response, :valid_ply => false, :positions => [] }
           let(:invalid_ply_response) { stub :response, :valid_ply => true,  :positions => [] }
           before :each do
             service.stub(:get_position).and_return(taken,              free)
