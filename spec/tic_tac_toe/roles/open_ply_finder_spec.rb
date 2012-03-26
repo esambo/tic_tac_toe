@@ -12,7 +12,7 @@ module TicTacToe
       board_state.stub  :take_turn
     end
 
-    describe '#successors', :include_helpers do
+    describe '#empty_spaces', :include_helpers do
 
       context 'with last spot empty' do
         before :each do
@@ -22,22 +22,9 @@ module TicTacToe
             D C _'.split
           setup_board_state(sequence)
         end
-
-        it "should return one full board_states with 'X' in the last spot" do
-          board_states = board_state.successors
-          board_states.count.should == 1
-          board_states.first.positions.map(&:to_s).should == '
-            X X O
-            O X X
-            O O X
-          '.split
+        it 'should return the last positions' do
+          board_state.empty_spaces.should == [9 - 1]
         end
-
-        it 'should have the players take turns' do
-          board_state.should_receive(:take_turn).at_least(:once)
-          board_state.successors
-        end
-
       end
 
       context 'with last three spots empty' do
@@ -48,60 +35,11 @@ module TicTacToe
             _ _ _'.split
           setup_board_state(sequence)
         end
-        it "should return 3 full board_states with 'X' in one at a time" do
-          board_states = board_state.successors
-          board_states.count.should == 3
-          board_states[0].positions.map(&:to_s).should == [
-            'X', 'X', 'O',
-            'O', 'O', 'X',
-            'X', ' ', ' ']
-          board_states[1].positions.map(&:to_s).should == [
-            'X', 'X', 'O',
-            'O', 'O', 'X',
-            ' ', 'X', ' ']
-          board_states[2].positions.map(&:to_s).should == [
-            'X', 'X', 'O',
-            'O', 'O', 'X',
-            ' ', ' ', 'X']
+        it 'should return last three positions' do
+          board_state.empty_spaces.should == [6, 7, 8]
         end
       end
 
-    end
-
-    describe '#deep_copy' do
-
-      it 'should return a new board state' do
-        board_state.object_id.should_not == board_state.deep_copy.object_id
-      end
-
-      it 'should have new #object_id values for the positions' do
-        board_state.positions.object_id.should_not == board_state.deep_copy.positions.object_id
-      end
-
-      it 'should still have the extended methods' do
-        board_state.deep_copy.respond_to?(:successors).should == true
-      end
-
-    end
-
-    describe '#place_mark_at_index' do
-      context 'with placing a mark in the first space' do
-        let(:number) { 1 }
-
-        it 'should place a mark' do
-          index = number - 1
-          board_state.positions[index].should == Player.none
-          board_state.place_mark_at_index index
-          board_state.positions[index].should == Player.X
-        end
-
-        it 'should remember the last placed position number' do
-          index = number - 1
-          board_state.place_mark_at_index index
-          board_state.last_position_number.should == number
-        end
-
-      end
     end
 
   end

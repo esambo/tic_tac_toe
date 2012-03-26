@@ -6,7 +6,7 @@ module TicTacToe
     def best_position(depth = nil)
       depth ||= ply_number
       return final_position(depth) if self.terminal?
-      final_positions = self.successors.map { |s| s.best_position(depth + 1) }
+      final_positions = successors(depth)
       if self.next_player.X?
         best = max_for_X(final_positions)
       else
@@ -17,6 +17,18 @@ module TicTacToe
     end
 
     private
+
+      def successors(depth)
+        final_positions = []
+        self.empty_spaces.each do |s|
+          self.place_mark_at_index(s)
+          self.take_turn
+          final_positions << self.best_position(depth + 1)
+          self.take_turn
+          self.undoo_mark_at_index(s)
+        end
+        final_positions
+      end
 
       def ply_number
         self.positions.count { |p| !p.none? }

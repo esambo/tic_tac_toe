@@ -18,8 +18,7 @@ module TicTacToe
       def setup_players(alternating_sequence_numbers)
         player = Player.X
         alternating_sequence_numbers.each do |number|
-          board_state.positions[number.to_i - 1] = player
-          board_state.last_position_number = number.to_i
+          board_state.place_mark_at_index(number.to_i - 1)
           player = player.turn
           board_state.next_player = player
         end

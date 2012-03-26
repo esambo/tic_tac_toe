@@ -1,12 +1,13 @@
 module TicTacToe
   class BoardState
-    attr_accessor :next_player, :positions, :last_position_number, :length
+    attr_accessor :next_player, :positions, :sequence_numbers, :length
 
     def initialize(length, empty_space, first_player)
       @length = length
       @positions = Array.new(size, empty_space)
       @next_player = first_player
-      @last_position_number = 0
+      @sequence_numbers = []
+      @empty_space = empty_space
     end
 
     def size
@@ -15,7 +16,16 @@ module TicTacToe
 
     def place_mark_at_index(i)
       self.positions[i] = self.next_player
-      self.last_position_number = i + 1
+      self.sequence_numbers << i + 1
+    end
+
+    def undoo_mark_at_index(i)
+      self.positions[i] = @empty_space
+      self.sequence_numbers.pop
+    end
+
+    def last_position_number
+      self.sequence_numbers.last.to_i
     end
 
   end

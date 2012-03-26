@@ -10,17 +10,14 @@
 
 - Performance tuning
   - Cache combinations to prevent calculations of all permutations
-  - Remove reotations & reflections
-  - Alpha Beta cutoff based on depth rank of fround winners 
+  - Remove rotations & reflections
+  - Alpha Beta cutoff based on depth rank of found winners 
      - perhaps only for first couple of plies
   - NegaMax to DRY up code?
   - DCI
      - Include instead of extend for critical parts
      - SimpleDelegator, none standard, to get self.*
-     - Remove Kernel#dup/clone
-  - Keep track of potential marks by individual positions instead of board_state to reduce memory consumption and garbage collection activity
-  - Cacke first few depth of the game tree
-- Side effect free functions
+  - Cache first few depth of the game tree
 
 
 ## Design Decisions
