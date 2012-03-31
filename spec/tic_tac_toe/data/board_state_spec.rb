@@ -43,7 +43,7 @@ module TicTacToe
       end
     end
 
-    describe '#undoo_mark_at_index' do
+    describe '#undo_mark_at_index' do
 
       context 'with index 3' do
         let(:index) { 3 }
@@ -52,12 +52,12 @@ module TicTacToe
         end
 
         it 'should clear out positions' do
-          board_state.undoo_mark_at_index(index)
+          board_state.undo_mark_at_index(index)
           board_state.positions.map(&:to_s).should == [Player.none.to_s] * 9
         end
 
         it 'should clear out #last_position_number' do
-          board_state.undoo_mark_at_index(index)
+          board_state.undo_mark_at_index(index)
           board_state.last_position_number.should == 0
         end
 
@@ -74,12 +74,12 @@ module TicTacToe
           end
 
           it 'should only have first positions' do
-            board_state.undoo_mark_at_index(index)
+            board_state.undo_mark_at_index(index)
             board_state.positions.map(&:to_s).should == [Player.X.to_s] + [Player.none.to_s] * 8
           end
 
           it 'should have first position in #last_position_number' do
-            board_state.undoo_mark_at_index(index)
+            board_state.undo_mark_at_index(index)
             board_state.last_position_number.should == 1
           end
 

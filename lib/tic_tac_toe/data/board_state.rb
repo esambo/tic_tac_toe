@@ -19,7 +19,7 @@ module TicTacToe
       self.sequence_numbers << i + 1
     end
 
-    def undoo_mark_at_index(i)
+    def undo_mark_at_index(i)
       self.positions[i] = @empty_space
       self.sequence_numbers.pop
     end

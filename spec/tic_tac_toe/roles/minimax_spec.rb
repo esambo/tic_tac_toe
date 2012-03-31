@@ -20,7 +20,7 @@ module TicTacToe
 
     describe '#best_position', :include_helpers do
 
-      context "with 'X' winning in next move" do
+      context "with 'X' winning in next ply" do
         let(:best_position) {
           sequence_124753 = '
             1 A C
@@ -38,8 +38,8 @@ module TicTacToe
           best_position.winner.should == Player.X
         end
 
-        it "should have a game tree descendants path '63'" do
-          best_position.path.should == '63'
+        it 'should have a game tree sequence' do
+          best_position.path.should == '124753 6'
         end
 
       end

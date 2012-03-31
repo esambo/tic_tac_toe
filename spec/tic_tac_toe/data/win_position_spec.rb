@@ -25,25 +25,12 @@ module TicTacToe
     end
 
     describe '#next_position_number' do
-      context "with path '986473251'" do
+      context "with path '98647325 1'" do
         before :each do
-          win_position.path = '9864732510'
+          win_position.path = '98647325 10'
         end
-        it "should be the second last path position: '1'" do
+        it "should be the first position in the last section: '1'" do
           win_position.next_position_number.should == 1
-        end
-      end
-    end
-
-    describe '#position_number' do
-      context "with path '1' and position number 2" do
-        before :each do
-          win_position.path = '1'
-        end
-        let(:position_number) { 2 }
-        it "should change #path to '12'" do
-          win_position.position_number = position_number
-          win_position.path.should == '12'
         end
       end
     end

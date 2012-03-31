@@ -27,16 +27,16 @@ module TicTacToe
         end
       end
 
-      context 'with last three spots empty' do
+      context 'with first three spots empty' do
         before :each do
           sequence = '
+            _ _ _
             1 2 A
-            B C 3
-            _ _ _'.split
+            B C 3'.split
           setup_board_state(sequence)
         end
-        it 'should return last three positions' do
-          board_state.empty_spaces.should == [6, 7, 8]
+        it 'should return first three positions' do
+          board_state.empty_spaces.should == [0, 1, 2]
         end
       end
 
