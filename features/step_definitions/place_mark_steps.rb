@@ -90,13 +90,12 @@ Then /^the last placed mark should not be valid$/ do
   @response_set.valid_ply.should == false
 end
 
-Then /^the game should at least be a (\w+)$/ do |game_state|
-  if game_state == 'win'
-    player = TicTacToe::Player.X
-  else
-    player = TicTacToe::Player.draw
-  end
-  @best_position.winner.should == player
+Then /^the game should at least be a win$/ do
+  @best_position.winner.should == TicTacToe::Player.X
+end
+
+Then /^the game should at least be a draw$/ do
+  @best_position.winner.should_not == TicTacToe::Player.O
 end
 
 Then /^the AI should have placed its marks at the indicated positions$/ do

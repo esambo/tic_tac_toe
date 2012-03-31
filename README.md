@@ -10,13 +10,6 @@
 
 - Performance tuning
   - Cache combinations to prevent calculations of all permutations
-  - Remove rotations & reflections
-  - Alpha Beta cutoff based on depth rank of found winners 
-     - perhaps only for first couple of plies
-  - NegaMax to DRY up code?
-  - DCI
-     - Include instead of extend for critical parts
-     - SimpleDelegator, none standard, to get self.*
   - Cache first few depth of the game tree
 
 

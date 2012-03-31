@@ -3,9 +3,9 @@ require 'tic_tac_toe/data/win_position'
 module TicTacToe
   module Minimax
 
-    def best_position(depth = ply_number)
+    def best_position(depth = ply_number, depth_cutoff = self.size)
       return final_position(depth) if self.terminal?
-      successor(depth)
+      successor(depth, depth_cutoff)
     end
 
     private
@@ -32,27 +32,33 @@ module TicTacToe
           (self.size - depth + 1) * winner.to_i
         end
 
-      def successor(depth)
+      def successor(depth, depth_cutoff)
         best = nil
         self.empty_spaces.each do |s|
-          n = next_position(s, depth)
+          break if purge?(depth, depth_cutoff)
+          n = next_position(s, depth, depth_cutoff)
           best = best(best, n)
+          depth_cutoff = best.ply_number if !best.nil? and depth_cutoff > best.ply_number
         end
         best
       end
 
-        def next_position(space, depth)
+        def purge?(depth, depth_cutoff)
+          depth_cutoff <= depth
+        end
+
+        def next_position(space, depth, depth_cutoff)
           self.place_mark_at_index(space)
             self.take_turn
-              position = self.best_position(depth + 1)
+              position = self.best_position(depth + 1, depth_cutoff)
             self.take_turn
           self.undo_mark_at_index(space)
           position
         end
 
         def best(prev_position, next_position)
-          return next_position if prev_position.nil?
-          final_positions = [prev_position] + [next_position]
+          final_positions = ([prev_position] + [next_position]).compact
+          return final_positions.first if final_positions.length < 2
           best = nil
           if self.next_player.X?
             best = max_for_X(final_positions)

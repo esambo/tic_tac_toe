@@ -12,8 +12,7 @@ Feature: AI finds optimal positions
 - The scenario number indicates the alternating sequence numbers of how player `X` and `O` place their marks in this game.  
 - Based on [Wikipedia optimal decision tree for player X in Tic-Tac-Toe](http://upload.wikimedia.org/wikipedia/commons/d/de/Tictactoe-X.svg) without:  
     - the two draws  
-    - reduced requirements for:  
-         - 1652 (163 is similar combination to 12**7 (163.transform.reverse))  
+    - reduced requirements for: 1347, 1423, 152376, 1652, 165932, 172354, 183254, 193274
 
   Scenario: 12437
     Given the grid sequence:
@@ -125,8 +124,8 @@ Feature: AI finds optimal positions
 
   Scenario: 1347526
     Given the grid sequence:
-      | X | C | O |
-      | X | 3 | 4 |
+      | X | O | O |
+      | X | X | 4 |
       | O | _ | _ |
     When the AI places its best sequential positions
     Then the AI should have placed its marks at the indicated positions
@@ -179,7 +178,7 @@ Feature: AI finds optimal positions
 
   Scenario: 1423568
     Given the grid sequence:
-      | X | 2 | B |
+      | X | X | O |
       | O | 3 | C |
       | _ | 4 | _ |
     When the AI places its best sequential positions
@@ -260,9 +259,9 @@ Feature: AI finds optimal positions
 
   Scenario: 1523764
     Given the grid sequence:
-      | X | 2 | B |
-      | 4 | O | C |
-      | 3 | _ | _ |
+      | X | X | O |
+      | 4 | O | O |
+      | X | _ | _ |
     When the AI places its best sequential positions
     Then the AI should have placed its marks at the indicated positions
     And "X" should "win"
@@ -377,7 +376,7 @@ Feature: AI finds optimal positions
 
   Scenario: 1659327
     Given the grid sequence:
-      | X | C | 3 |
+      | X | O | X |
       | _ | X | O |
       | 4 | _ | O |
     When the AI places its best sequential positions
@@ -413,8 +412,8 @@ Feature: AI finds optimal positions
 
   Scenario: 1723548
     Given the grid sequence:
-      | X | 2 | B |
-      | C | 3 | _ |
+      | X | X | O |
+      | O | X | _ |
       | O | 4 | _ |
     When the AI places its best sequential positions
     Then the AI should have placed its marks at the indicated positions
@@ -494,8 +493,8 @@ Feature: AI finds optimal positions
 
   Scenario: 1832547
     Given the grid sequence:
-      | X | B | 2 |
-      | C | 3 | _ |
+      | X | O | X |
+      | O | X | _ |
       | 4 | O | _ |
     When the AI places its best sequential positions
     Then the AI should have placed its marks at the indicated positions
@@ -575,9 +574,9 @@ Feature: AI finds optimal positions
 
   Scenario: 1932745
     Given the grid sequence:
-      | X | B | 2 |
-      | C | 4 | _ |
-      | 3 | _ | O |
+      | X | O | X |
+      | O | 4 | _ |
+      | X | _ | O |
     When the AI places its best sequential positions
     Then the AI should have placed its marks at the indicated positions
     And "X" should "win"
