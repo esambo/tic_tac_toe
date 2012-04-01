@@ -2,7 +2,7 @@ require 'hirb'
 
 module TicTacToe
   module UI
-    class PlyBoardPresenter
+    class BoardPresenter
 
       def initialize(positions, groups_of_length)
         @positions        = positions

@@ -1,13 +1,13 @@
 require 'spec_helper'
-require 'tic_tac_toe/presenters/ply_board_presenter'
+require 'tic_tac_toe/presenters/board_presenter'
 
 module TicTacToe
   module UI
-    describe PlyBoardPresenter do
+    describe BoardPresenter do
       context "with positions ['X', 'X', 'X', 'O', 'O', 'O', ' ', ' ', ' ']" do
         let(:length)    { 3 }
         let(:positions) {     ['X', 'X', 'X', 'O', 'O', 'O', ' ', ' ', ' '] }
-        let(:presenter) { PlyBoardPresenter.new positions, length }
+        let(:presenter) { BoardPresenter.new positions, length }
 
         describe '#as_matrix' do
           it 'should convert array to matrix' do

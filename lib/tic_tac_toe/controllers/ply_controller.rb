@@ -1,7 +1,7 @@
 module TicTacToe
   module UI
     class PlyController
-      attr_writer :ply_board_presenter_source
+      attr_writer :board_presenter_source
       attr_writer :ply_board_view_source
       attr_writer :ply_player_view_source
       attr_writer :ply_position_view_source
@@ -35,7 +35,7 @@ module TicTacToe
             @input.gets.chomp
           end
           def render_board(positions)
-            board = new_ply_board_presenter(positions, @length).call
+            board = new_board_presenter(positions, @length).call
             new_ply_board_view(@output, board).render
           end
           def render_player(player_mark)
@@ -87,12 +87,12 @@ module TicTacToe
               @ai_vs_human_service_source ||= AiVsHumanService.public_method :new
             end
 
-          def new_ply_board_presenter(positions, length)
-            ply_board_presenter_source.call(positions, length)
+          def new_board_presenter(positions, length)
+            board_presenter_source.call(positions, length)
           end
 
-            def ply_board_presenter_source
-              @ply_board_presenter_source ||= PlyBoardPresenter.public_method :new
+            def board_presenter_source
+              @board_presenter_source ||= BoardPresenter.public_method :new
             end
 
           def new_ply_board_view(output, board)

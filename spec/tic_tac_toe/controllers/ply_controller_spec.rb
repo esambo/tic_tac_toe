@@ -168,14 +168,14 @@ module TicTacToe
               board_view = double :ply_board_view
               board_view.should_receive :render
               ply.ply_board_view_source = ->(output, board){ board_view }
-              ply.stub(:new_ply_board_presenter) { double :presenter, :call => nil }
+              ply.stub(:new_board_presenter) { double :presenter, :call => nil }
               ply.render_board positions
             end
 
-            it 'should call PlyBoardPresenter.new#call' do
-              board_presenter = double :ply_board_presenter
+            it 'should call BoardPresenter.new#call' do
+              board_presenter = double :board_presenter
               board_presenter.should_receive :call
-              ply.ply_board_presenter_source = ->(positions, length){ board_presenter }
+              ply.board_presenter_source = ->(positions, length){ board_presenter }
               ply.stub(:new_ply_board_view) { double :view, :render => nil }
               ply.render_board positions
             end
