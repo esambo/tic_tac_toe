@@ -86,6 +86,11 @@ Then /^I should see the player "([^\"]+)" go next$/ do |mark|
   @output_index = validate_incrementally(output, text, @output_index)
 end
 
+Then /^I should see the directions$/ do
+  text = "Directions:"
+  @output_index = validate_incrementally(output, text, @output_index)
+end
+
 Then /^I should see that it was invalid$/ do
   text = "Invalid position number! Please try again..."
   @output_index = validate_incrementally(output, text, @output_index)

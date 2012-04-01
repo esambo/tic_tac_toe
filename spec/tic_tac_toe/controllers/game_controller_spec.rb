@@ -23,13 +23,24 @@ module TicTacToe
       end
 
       describe '#start' do
+        let(:new_ply_controller) { double :new_ply_controller, :ai_vs_human => nil }
+        before :each do
+          game.board_presenter_source = ->(positions, length){ double :board_presenter, :call => '' }
+        end
 
         it 'should call GameStartView.new#render' do
-          game.stub(:new_board_state)
-          game.stub_chain(:new_ply_controller, :ai_vs_human)
+          game.stub(:new_ply_controller) { new_ply_controller }
           view = double('game_start_view', :new => nil)
           view.should_receive(:render)
           game.game_start_view_source = ->(output, message){ view }
+          game.start
+        end
+
+        it 'should call BoardPresenter.new#call' do
+          game.stub(:new_ply_controller) { new_ply_controller }
+          board_presenter = double :board_presenter, :call => ''
+          board_presenter.should_receive :call
+          game.board_presenter_source = ->(positions, length){ board_presenter }
           game.start
         end
 

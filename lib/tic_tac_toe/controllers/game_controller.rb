@@ -4,6 +4,7 @@ module TicTacToe
       attr_writer :board_state_factory
       attr_writer :ply_controller_source
       attr_writer :game_start_view_source
+      attr_writer :board_presenter_source
       attr_reader :ply_controller
 
       def initialize(input, output)
@@ -19,12 +20,22 @@ module TicTacToe
       end
 
         def render_welcome_message
-          message = 'Tic-Tac-Toe'
-          view = new_game_start_view @output, message
+          position_numbers = (1..@length*@length).to_a
+          presenter = new_board_presenter(position_numbers, @length)
+          positions = presenter.call
+          view = new_game_start_view @output, positions
           view.render
         end
 
       private
+
+        def new_board_presenter(positions, length)
+          board_presenter_source.call(positions, length)
+        end
+
+          def board_presenter_source
+            @board_presenter_source ||= BoardPresenter.public_method :new
+          end
 
         def new_ply_controller
           ply_controller_source.call(@input, @output, @length, new_board_state)
@@ -42,8 +53,8 @@ module TicTacToe
               @board_state_factory ||= BoardStateFactory.new @length
             end
 
-        def new_game_start_view(output, message)
-          game_start_view_source.call output, message
+        def new_game_start_view(output, positions)
+          game_start_view_source.call output, positions
         end
 
           def game_start_view_source

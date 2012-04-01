@@ -6,7 +6,8 @@ Feature: Human Starts Game
   Scenario: start game
     Given I will mark an empty position
     When I start a game
-    Then I should see "Tic-Tac-Toe"
+    Then I should see the directions
+    And I should see "Tic-Tac-Toe"
     And I should see the grid next
     And I should see the player "X" go next
     And I should see the grid next
