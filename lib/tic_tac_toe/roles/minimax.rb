@@ -38,7 +38,7 @@ module TicTacToe
           break if purge?(depth, depth_cutoff)
           n = next_position(s, depth, depth_cutoff)
           best = best(best, n)
-          depth_cutoff = best.ply_number if !best.nil? and depth_cutoff > best.ply_number
+          depth_cutoff = min_depth_for_X_to_win(best, depth_cutoff)
         end
         best
       end
@@ -75,6 +75,14 @@ module TicTacToe
           def min_for_O(final_positions)
             final_positions.min_by { |p| p.rank }
           end
+
+        def min_depth_for_X_to_win(win, depth_cutoff)
+          if win and win.winner.X?
+            win.ply_number
+          else
+            depth_cutoff
+          end
+        end
 
   end
 end

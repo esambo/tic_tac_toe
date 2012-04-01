@@ -32,3 +32,14 @@ Feature: Best Position
       | X |   |   |
     When the AI analyzes the best position
     Then the game should at least be a draw
+
+  Scenario: prevent O from winning next 173259 48
+    Given the grid:
+      | X | O | X |
+      |   | X |   |
+      | O |   | O |
+    When the AI places its best position
+    Then I should see the grid:
+      | X | O | X |
+      |   | X |   |
+      | O | X | O |
