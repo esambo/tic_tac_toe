@@ -8,7 +8,6 @@ module TicTacToe
       end
 
       def render
-        @output.puts ''
         @board.each_line do |line|
           @output.puts line.chomp
         end

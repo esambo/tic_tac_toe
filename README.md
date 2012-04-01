@@ -6,13 +6,6 @@
 - never lose.  Furthermore, it should win whenever possible
 
 
-## ToDo
-
-- Performance tuning
-  - Cache combinations to prevent calculations of all permutations
-  - Cache first few depth of the game tree
-
-
 ## Design Decisions
 
 - Living Documentation

@@ -8,7 +8,6 @@ module TicTacToe
       end
 
       def render
-        @output.puts ''
         @output.puts "#{@number}"
       end
 
