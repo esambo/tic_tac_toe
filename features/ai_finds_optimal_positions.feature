@@ -12,7 +12,7 @@ Feature: AI finds optimal positions
 - The scenario number indicates the alternating sequence numbers of how player `X` and `O` place their marks in this game.  
 - Based on [Wikipedia optimal decision tree for player X in Tic-Tac-Toe](http://upload.wikimedia.org/wikipedia/commons/d/de/Tictactoe-X.svg) without:  
     - the two draws  
-    - reduced requirements for: 1347, 1423, 1523, 1652, 1659, 1723, 1832, 193274
+    - reduced requirements for: 1342, 1347, 1423, 1523, 1652, 1659, 1723, 1832, 193274
 
   Scenario: 12437
     Given the grid sequence:
@@ -97,8 +97,8 @@ Feature: AI finds optimal positions
 
   Scenario: 13427
     Given the grid sequence:
-      | X | B | O |
-      | 2 | _ | _ |
+      | X | O | O |
+      | X | _ | _ |
       | 3 | _ | _ |
     When the AI places its best sequential positions
     Then the AI should have placed its marks at the indicated positions

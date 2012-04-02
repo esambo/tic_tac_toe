@@ -5,7 +5,7 @@ module TicTacToe
 
     def best_position(depth = ply_number, depth_cutoff = self.size)
       return final_position(depth) if self.terminal?
-      successor(depth, depth_cutoff)
+      successor(depth, depth_cutoff) unless purge?(depth, depth_cutoff)
     end
 
     private
@@ -32,20 +32,19 @@ module TicTacToe
           (self.size - depth + 1) * winner.to_i
         end
 
+      def purge?(depth, depth_cutoff)
+        depth_cutoff < depth
+      end
+
       def successor(depth, depth_cutoff)
         best = nil
         self.empty_spaces.each do |s|
-          break if purge?(depth, depth_cutoff)
           n = next_position(s, depth, depth_cutoff)
           best = best(best, n)
           depth_cutoff = min_depth_for_X_to_win(best, depth_cutoff)
         end
         best
       end
-
-        def purge?(depth, depth_cutoff)
-          depth_cutoff <= depth
-        end
 
         def next_position(space, depth, depth_cutoff)
           self.place_mark_at_index(space)

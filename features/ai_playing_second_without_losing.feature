@@ -4,22 +4,6 @@ Feature: AI playing second without losing
   As an AI player  
   I want to never lose and win whenever possible  
 
-  Scenario: analyze the second ply with a corner
-    Given the grid:
-      | X |   |   |
-      |   |   |   |
-      |   |   |   |
-    When the AI analyzes the best position
-    Then the game should at least be a draw
-
-  Scenario: analyze the second ply with a side
-    Given the grid:
-      |   | X |   |
-      |   |   |   |
-      |   |   |   |
-    When the AI analyzes the best position
-    Then the game should at least be a draw
-
   Scenario: analyze the second ply with a center
     Given the grid:
       |   |   |   |
